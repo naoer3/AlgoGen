@@ -1,7 +1,6 @@
 package algorithme;
 
 import java.util.ArrayList;
-import sun.security.util.Debug;
 
 public class MyIndividu{
 	
@@ -36,7 +35,7 @@ public class MyIndividu{
 	@Override
 	public String toString() {
 		
-		return "x : " + Coords.get(0)+ "y : "+ Coords.get(1);
+		return "x : " + Coords.get(0)+ " , f(x) : "+ Coords.get(1);
 		
 	}
 

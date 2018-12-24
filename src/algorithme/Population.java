@@ -3,32 +3,35 @@ package algorithme;
 import java.util.ArrayList;
 
 public class Population {
-	private int nbIndividu;
 	private ArrayList<MyIndividu> myPopulation = null;
 	
-	public Population() {
-		setNbIndividu(100);
+	public Population(int nbIndividu) {
 		myPopulation = new ArrayList<MyIndividu>(); 
-		setMyPopulation();
-		for(int i=0;i<=nbIndividu;i++) {
-			System.out.println(myPopulation.get(i).toString());
-		}
+		setMyPopulation(nbIndividu);
 	}
 	public int getNbIndividu() {
-		return nbIndividu;
+		return myPopulation.size();
 	}
-	public void setNbIndividu(int nbIndividu) {
-		this.nbIndividu = nbIndividu;
-	}
+	
 	public ArrayList<MyIndividu> getMyPopulation() {
 		return myPopulation;
 	}
-	public void setMyPopulation() {
-		for(int i=0;i<=nbIndividu;i++) {
+	public void setMyPopulation(int size) {
+		for(int i=0;i<size;i++) {
 			//double number = Math.random() * ( 100 - 2 );
 			MyIndividu e =new MyIndividu(i);
 			myPopulation.add(e);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String str="";
+		for(int i=0;i<getNbIndividu();i++) {
+			str+=myPopulation.get(i).toString()+"\n";
+		}
+		return str;
+		
 	}
 
 }
