@@ -20,7 +20,7 @@ public class Population<T> {
 	private Function<T,Individu> constructeur_indiv = null;
 	
 	/**
-	 * Fonction à évaluer dans l'algorithme
+	 * Fonction a evaluer dans l'algorithme
 	 */
 	private Function<Individu,T> fct_eval = null;
 	
@@ -42,7 +42,7 @@ public class Population<T> {
 	 * @param param Paramètres à donner au constructeur d'individu
 	 * @param eval Fonction d'évaluation de l'algorithme
 	 */
-	public Population(int taille, Function<T,Individu> fct, T param, Function<Individu,T> eval) {
+	public Population(int taille, Function<T,Individu> fct, Function<Individu,T> eval) {
 		this.taillePop = taille;
 		this.constructeur_indiv = fct;
 		this.fct_eval = eval;
@@ -50,21 +50,21 @@ public class Population<T> {
 		population = new ArrayList<Individu>();
 		
 		for(int i = 0; i < taillePop; i++) {
-			population.add(constructeur_indiv.apply(param));
+			population.add(constructeur_indiv.apply(null));
 		}
 	}
 
 	/**
 	 * Evalue la fitness de chaque individu avec la fonction d'évaluation
 	 */
-	public void Evaluate() {
+	public void EvaluatePopulation() {
 		for(Individu indiv : population) {
 			indiv.setFitness(fct_eval.apply(indiv));
 		}
 	}
   
     public int getNbIndividu() {
-		return myPopulation.size();
+		return population.size();
 	}
 	
 	public List<Individu> getMyPopulation() {
@@ -79,6 +79,13 @@ public class Population<T> {
 		}
 		return str;
 		
+	}
+	
+	public void AjoutIndividus(List<Individu> liste)
+	{
+		for(Individu indiv: liste) {
+			population.add(indiv);
+		}
 	}
 }
 

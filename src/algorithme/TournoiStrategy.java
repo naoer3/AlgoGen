@@ -1,6 +1,6 @@
 package algorithme;
 
-public class TournoiStrategy extends EvalMethode {
+public class TournoiStrategy extends SelectionMethode {
 		
 	private int myPourcentage = 100;
 	
@@ -10,7 +10,7 @@ public class TournoiStrategy extends EvalMethode {
 	}
 	
 	@Override
-	public Population methodeEvaluation(Population p) { 
+	public Population methodeSelection(Population p) { 
 		double produit=(myPourcentage*p.getMyPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
 		int lastIndex = p.getMyPopulation().size();
