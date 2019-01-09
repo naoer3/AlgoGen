@@ -37,7 +37,7 @@ public class Population<T> {
 	private int taillePop = 0;
 	
 	/**
-	 * Numéro de la génération en cours
+	 * NumÃ©ro de la gÃ©nÃ©ration en cours
 	 */
 	private int current_generation = 0;
 	
@@ -55,7 +55,7 @@ public class Population<T> {
 		
 		population = new ArrayList<>();
 		
-		//Création d'une nouvelle population
+		//CrÃ©ation d'une nouvelle population
 		for(int i = 0; i < taillePop; i++) {
 			population.add(constructeur_indiv.get());
 		}
@@ -101,7 +101,7 @@ public class Population<T> {
 	/// Getter et Setter
 	
 	/**
-	 * Getter de l'attribut population qui définit tous les individus de notre population
+	 * Getter de l'attribut population qui dÃ©finit tous les individus de notre population
 	 * @return population
 	 */
 	public List<Individu<T>> getPopulation() {
@@ -125,7 +125,7 @@ public class Population<T> {
 	}
 	
 	/**
-	 * Getter de l'attribut taillePop qui décrit la taille de la population souhaitée
+	 * Getter de l'attribut taillePop qui dÃ©crit la taille de la population souhaitÃ©e
 	 * @return taillePop
 	 */
 	public int getTaillePop() {
@@ -133,7 +133,7 @@ public class Population<T> {
 	}
 	
 	/**
-	 * Getter de l'attribut current_generation qui décrit le numéro de génération en cours
+	 * Getter de l'attribut current_generation qui dÃ©crit le numÃ©ro de gÃ©nÃ©ration en cours
 	 * @return current_generation
 	 */
 	public int getCurrent_generation() {
@@ -149,7 +149,5 @@ public class Population<T> {
 		}
 		return str;		
 	}
-
-	
 }
 

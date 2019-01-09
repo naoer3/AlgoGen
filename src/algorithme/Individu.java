@@ -1,9 +1,6 @@
 package algorithme;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
 
 /**
  * Définit un individu
@@ -18,11 +15,7 @@ public class Individu<T> {
 	 * Score de l'individu
 	 */
 	private T fitness;
-	
-	/**
-	 * Retourne le score de l'individu
-	 * @return fitness de l'individu
-	 */
+
 	public T getFitness() {
 		return fitness;
 	}
@@ -48,7 +41,6 @@ public class Individu<T> {
 	public String toString() {
 		
 		return "x : " + Coords.get(0)+"  , y : " + Coords.get(1)+ " , f(x,y) : "+ Coords.get(2);
-			
 	}
 	
 }

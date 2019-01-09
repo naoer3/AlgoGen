@@ -12,7 +12,6 @@ public class LoterieStrategy extends SelectionMethode {
 		setMyPourcentage(Pourcentage);
 	}
 	
-
 	@Override
 	public Population methodeSelection(Population p) {
 		Collections.shuffle(p.getPopulation()); 
