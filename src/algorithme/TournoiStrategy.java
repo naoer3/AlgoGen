@@ -31,4 +31,3 @@ public class TournoiStrategy extends EvalMethode {
 	}
 }
 
-

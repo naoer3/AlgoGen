@@ -1,24 +1,18 @@
 package algorithme;
 
-import java.util.ArrayList;
-
-public class MyIndividu extends Individu{
-
-	public MyIndividu(double x, double y) {
-		Coords = new ArrayList<Double>(); 
-		setCoords(x,y);
-	}
+public class MyIndividu<T> extends Individu {
 	
+	private T fitness;
 
-	public double getScore() {
-		return score;
+	public T getFitness() {
+		return fitness;
 	}
 
-	public void setScore(double score) {
-		this.score = score;
+	public void setFitness(T fitness) {
+		this.fitness = fitness;
 	}
-
-	public ArrayList<Double> getCoords() {
+  
+  	public ArrayList<Double> getCoords() {
 		return Coords;
 	}
 
@@ -34,11 +28,5 @@ public class MyIndividu extends Individu{
 		return "x : " + Coords.get(0)+"  , y : " + Coords.get(1)+ " , f(x,y) : "+ Coords.get(2);
 		
 	}
-
-
 	
-
-
-	
-
 }
