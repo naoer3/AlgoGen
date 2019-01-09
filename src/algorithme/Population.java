@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
- * Classe représentant un ensemble d'individus qui constitue une population
+ * Classe reprÃ©sentant un ensemble d'individus qui constitue une population
  * @author mathp
  * @version 1.0
  * @since 1.0
@@ -20,7 +20,7 @@ public class Population<T> {
 	private Function<T,Individu> constructeur_indiv = null;
 	
 	/**
-	 * Fonction à évaluer dans l'algorithme
+	 * Fonction Ã  Ã©valuer dans l'algorithme
 	 */
 	private Function<Individu,T> fct_eval = null;
 	
@@ -30,17 +30,17 @@ public class Population<T> {
 	private List<Individu> population = null;
 	
 	/**
-	 * Taille souhaitée de la population
+	 * Taille souhaitÃ©e de la population
 	 */
 	private int taillePop = 0;
 	
 	/**
 	 * Constructeur de la classe
 	 * Initialise une population
-	 * @param taille Taille souhaitée de la population
-	 * @param fct Fonction créant de nouveaux individus
-	 * @param param Paramètres à donner au constructeur d'individu
-	 * @param eval Fonction d'évaluation de l'algorithme
+	 * @param taille Taille souhaitÃ©e de la population
+	 * @param fct Fonction crÃ©ant de nouveaux individus
+	 * @param param ParamÃ¨tres Ã  donner au constructeur d'individu
+	 * @param eval Fonction d'Ã©valuation de l'algorithme
 	 */
 	public Population(int taille, Function<T,Individu> fct, T param, Function<Individu,T> eval) {
 		this.taillePop = taille;
@@ -55,7 +55,7 @@ public class Population<T> {
 	}
 
 	/**
-	 * Evalue la fitness de chaque individu avec la fonction d'évaluation
+	 * Evalue la fitness de chaque individu avec la fonction d'Ã©valuation
 	 */
 	public void Evaluate() {
 		for(Individu indiv : population) {
