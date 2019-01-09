@@ -8,7 +8,7 @@ import java.util.function.Function;
 public abstract class Individu<T, R> {
 	
 	/**
-	 * Définit un individu
+	 * DÃ©finit un individu
 	 * @version 1.0
 	 * @since 1.0
 	 */
