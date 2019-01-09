@@ -1,5 +1,8 @@
 package algorithme;
 
+
+import java.util.ArrayList;
+
 public class TournoiStrategy extends SelectionMethode {
 		
 	private int myPourcentage = 100;
@@ -11,12 +14,12 @@ public class TournoiStrategy extends SelectionMethode {
 	
 	@Override
 	public Population methodeSelection(Population p) { 
-		double produit=(myPourcentage*p.getMyPopulation().size());
+		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
-		int lastIndex = p.getMyPopulation().size();
+		int lastIndex = p.getPopulation().size();
 		
 		for(int index=firstIndex ; index<=lastIndex;index++) {
-			p.getMyPopulation().remove(p.getMyPopulation().size()-1);
+			p.getPopulation().remove(p.getPopulation().size()-1);
 		}
 		
 		return p;
@@ -29,5 +32,6 @@ public class TournoiStrategy extends SelectionMethode {
 	public void setMyPourcentage(int myPourcentage) {
 		this.myPourcentage = myPourcentage;
 	}
+
 }
 

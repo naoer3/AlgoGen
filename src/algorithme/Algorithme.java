@@ -14,16 +14,16 @@ import java.util.function.Function;
 public class Algorithme {
 
 	/***
-	 * Création des variables
+	 * CrÃ©ation des variables
 	 * population: Liste des individus
-	 * methode: méthode de sélection des individus parents
-	 * taille_pop: Taille de la population utilisée au sein de l'algorithme
-	 * mutation: Pourcentage d'éléments mutés
-	 * croisement: Pourcentage d'éléments croisés
-	 * Bornes_inf: Borne définissant la limite inférieure dans laquelle devront se situer les nouveaux individus 
-	 * Bornes_sup: Borne définissant la limite supérieure dans laquelle devront se situer les nouveaux individus
-	 * type_selection: Définition du type de sélection des individus (élitiste, tournoi, loterie)
-	 * fct_crea_individu: Fonction permettant la création d'individus au sein de la population 
+	 * methode: mÃ©thode de sÃ©lection des individus parents
+	 * taille_pop: Taille de la population utilisÃ©e au sein de l'algorithme
+	 * mutation: Pourcentage d'Ã©lÃ©ments mutÃ©s
+	 * croisement: Pourcentage d'Ã©lÃ©ments croisÃ©s
+	 * Bornes_inf: Borne dÃ©finissant la limite infÃ©rieure dans laquelle devront se situer les nouveaux individus 
+	 * Bornes_sup: Borne dÃ©finissant la limite supÃ©rieure dans laquelle devront se situer les nouveaux individus
+	 * type_selection: DÃ©finition du type de sÃ©lection des individus (Ã©litiste, tournoi, loterie)
+	 * fct_crea_individu: Fonction permettant la crÃ©ation d'individus au sein de la population 
 	 */
 	private List<Individu> liste_selection = new ArrayList<>();
 	private List<Individu> liste_croisement = new ArrayList<>();
@@ -51,7 +51,7 @@ public class Algorithme {
 	public Algorithme() {}
 	
 	/***
-	 * Méthode contenant l'ensemble de l'algorithme génétique à faire tourner
+	 * MÃ©thode contenant l'ensemble de l'algorithme gÃ©nÃ©tique Ã  faire tourner
 	 * @param les_individus
 	 * @param methode
 	 */
@@ -64,7 +64,7 @@ public class Algorithme {
 				selection_parent = new LoterieStrategy(taille_pop);
 			case 1:
 				selection_parent = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_sélection que 0 ou 1. 
+			default: // TODO: Generer Exception si autre type_sÃ©lection que 0 ou 1. 
 		}		
 		
 		switch(type_selection_population) {
@@ -72,7 +72,7 @@ public class Algorithme {
 				selection_population = new LoterieStrategy(taille_pop);
 			case 1:
 				selection_population = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_sélection que 0 ou 1. 
+			default: // TODO: Generer Exception si autre type_sÃ©lection que 0 ou 1. 
 		}
 
 		do{
@@ -138,7 +138,7 @@ public class Algorithme {
 	}
 
 	/***
-	 * Setter sur la taille de la population souhaitée
+	 * Setter sur la taille de la population souhaitÃ©e
 	 * @param taille_pop
 	 */
 	public void setTaille_pop(int taille_pop) {
@@ -179,7 +179,7 @@ public class Algorithme {
 
 	/***
 	 * Getter de la liste de bornes inferieures concernant l'encadrement des nouveaux individus
-	 * @return les bornes inférieures
+	 * @return les bornes infÃ©rieures
 	 */
 	public ArrayList<Object> getBornes_inf() {
 		return bornes_inf;

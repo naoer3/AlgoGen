@@ -15,7 +15,6 @@ public class Main {
 		setMyLoterie(new TournoiStrategy(5));
 		myLoterie.methodeSelection(myPop);
 		System.out.println(myPop.toString());
-
 	}
 
 	public static Population getMyPop() {
