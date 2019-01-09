@@ -2,7 +2,7 @@ package algorithme;
 
 
 
-public class ElitisteStrategy extends EvalMethode{
+public class ElitisteStrategy extends SelectionMethode{
 
 	private int myPourcentage = 100;
 	
@@ -12,13 +12,13 @@ public class ElitisteStrategy extends EvalMethode{
 	}
 	
 	@Override
-	public Population methodeEvaluation(Population p) { 
-		double produit=(myPourcentage*p.getMyPopulation().size());
+	public Population methodeSelection(Population p) { 
+		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
-		int lastIndex = p.getMyPopulation().size();
+		int lastIndex = p.getPopulation().size();
 		
 		for(int index=firstIndex ; index<=lastIndex;index++) {
-			p.getMyPopulation().remove(p.getMyPopulation().size()-1);
+			p.getPopulation().remove(p.getPopulation().size()-1);
 		}
 		
 		return p;

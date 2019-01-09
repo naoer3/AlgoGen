@@ -26,7 +26,7 @@ public class Algorithme {
 	 * fct_crea_individu: Fonction permettant la création d'individus au sein de la population 
 	 */
 	private ArrayList<Population> population = new ArrayList<>();
-	private EvalMethode methode;
+	private SelectionMethode methode;
 	private int taille_pop;
 	private double mutation;
 	private double croisement;
@@ -48,7 +48,7 @@ public class Algorithme {
 	 * @param les_individus
 	 * @param methode
 	 */
-	public void LancerAlgorithme(ArrayList<Population> population, EvalMethode methode, int NbRestant)
+	public void LancerAlgorithme(ArrayList<Population> population, SelectionMethode methode, int NbRestant)
 	{	
 		
 		
@@ -71,11 +71,11 @@ public class Algorithme {
 		this.population = population;
 	}
 
-	public EvalMethode getMethode() {
+	public SelectionMethode getMethode() {
 		return methode;
 	}
 
-	public void setMethode(EvalMethode methode) {
+	public void setMethode(SelectionMethode methode) {
 		this.methode = methode;
 	}
 
@@ -134,7 +134,5 @@ public class Algorithme {
 	public void setFct_crea_individu(Function fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
-	
-
 
 }
