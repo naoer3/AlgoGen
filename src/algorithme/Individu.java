@@ -5,13 +5,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+/**
+ * Définit un individu
+ * @version 1.0
+ * @since 1.0
+ */
 public abstract class Individu<T, R> {
 	
-	/**
-	 * Définit un individu
-	 * @version 1.0
-	 * @since 1.0
-	 */
+  protected ArrayList<Double> Coords = null;
+	
+	public void setCoords() {
+	}
+	
 	
 	/**
 	 * Score de l'individu

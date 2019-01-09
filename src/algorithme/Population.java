@@ -62,4 +62,23 @@ public class Population<T> {
 			indiv.setFitness(fct_eval.apply(indiv));
 		}
 	}
+  
+    public int getNbIndividu() {
+		return myPopulation.size();
+	}
+	
+	public List<Individu> getMyPopulation() {
+		return population;
+	}
+  
+	@Override
+	public String toString() {
+		String str="";
+		for(int i=0;i<taillePop;i++) {
+			str+=population.get(i).toString()+"\n";
+		}
+		return str;
+		
+	}
 }
+
