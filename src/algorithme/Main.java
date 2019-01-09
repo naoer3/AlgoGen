@@ -11,7 +11,8 @@ public class Main {
 		
 		setMyPop(new Population(100));
 		//setMyLoterie(new LoterieStrategy(10));
-		setMyLoterie(new ElitisteStrategy(5));
+		//setMyLoterie(new ElitisteStrategy(5));
+		setMyLoterie(new TournoiStrategy(5));
 		myLoterie.methodeEvaluation(myPop);
 		System.out.println(myPop.toString());
 
