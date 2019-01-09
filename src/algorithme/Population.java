@@ -3,23 +3,23 @@ package algorithme;
 import java.util.ArrayList;
 
 public class Population {
-	private ArrayList<MyIndividu> myPopulation = null;
+	private ArrayList<Individu> myPopulation = null;
 	
 	public Population(int nbIndividu) {
-		myPopulation = new ArrayList<MyIndividu>(); 
+		myPopulation = new ArrayList<Individu>(); 
 		setMyPopulation(nbIndividu);
 	}
 	public int getNbIndividu() {
 		return myPopulation.size();
 	}
 	
-	public ArrayList<MyIndividu> getMyPopulation() {
+	public ArrayList<Individu> getMyPopulation() {
 		return myPopulation;
 	}
 	public void setMyPopulation(int size) {
 		for(int i=0;i<size;i++) {
 			//double number = Math.random() * ( 100 - 2 );
-			MyIndividu e =new MyIndividu(i);
+			MyIndividu2 e =new MyIndividu2(i);
 			myPopulation.add(e);
 		}
 	}

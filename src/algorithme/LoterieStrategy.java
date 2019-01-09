@@ -16,8 +16,9 @@ public class LoterieStrategy extends EvalMethode {
 	@Override
 	public Population methodeEvaluation(Population p) {
 		Collections.shuffle(p.getMyPopulation()); 
-		double firstIndex2=(myPourcentage*p.getMyPopulation().size());
-		int firstIndex=(int)Math.round(firstIndex2/100)+1;
+		
+		double produit=(myPourcentage*p.getMyPopulation().size());
+		int firstIndex=(int)Math.round(produit/100)+1;
 		int lastIndex = p.getMyPopulation().size();
 		
 		for(int index=firstIndex ; index<=lastIndex;index++) {

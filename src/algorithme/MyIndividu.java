@@ -2,16 +2,11 @@ package algorithme;
 
 import java.util.ArrayList;
 
-public class MyIndividu{
-	
-	private double score;
-	private ArrayList<Double> Coords = null;
+public class MyIndividu extends Individu{
 
-	
-	public MyIndividu(double x) {
-		
+	public MyIndividu(double x, double y) {
 		Coords = new ArrayList<Double>(); 
-		setCoords(x);
+		setCoords(x,y);
 	}
 	
 
@@ -27,17 +22,21 @@ public class MyIndividu{
 		return Coords;
 	}
 
-	public void setCoords(double x) {
+	public void setCoords(double x, double y) {
 		Coords.add(x) ;
-		Coords.add(Math.pow(x,2));//-5*x+1
+		Coords.add(y) ;
+		Coords.add(Math.pow(x,2)+Math.pow(y,2));//-5*x+1
 	}
 	
 	@Override
 	public String toString() {
 		
-		return "x : " + Coords.get(0)+ " , f(x) : "+ Coords.get(1);
+		return "x : " + Coords.get(0)+"  , y : " + Coords.get(1)+ " , f(x,y) : "+ Coords.get(2);
 		
 	}
+
+
+	
 
 
 	

@@ -1,5 +1,11 @@
 package algorithme;
 
+import java.util.ArrayList;
+
 public abstract class Individu {
-	public int i=0;
+	protected double score;
+	protected ArrayList<Double> Coords = null;
+	
+	public void setCoords() {
+	}
 }
