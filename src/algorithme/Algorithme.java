@@ -59,8 +59,8 @@ public class Algorithme<T> {
 	public void LancerAlgorithme()
 	{
 		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
-		Croisement<T> croisement = new Croisement();
-		Mutation mutation = new Mutation();
+		Croisement<T> croisement = new Croisement<T>(fct_crea_individu);
+		Mutation<T> mutation = new Mutation<T>();
 		
 		switch(type_selection_parent) {
 			case 0:
@@ -83,7 +83,7 @@ public class Algorithme<T> {
 			
 			liste_selection = selection_parent.methodeSelection(population);
 			
-			liste_croisement = croisement.methodeCroisement(liste_selection);
+			liste_croisement = croisement.CrossoverPopulation(liste_selection);
 			
 			population.AjoutIndividus(liste_croisement);
 			
