@@ -1,6 +1,8 @@
 package algorithme;
 
-public abstract class SelectionMethode {
+import java.util.List;
+
+public abstract class SelectionMethode<T> {
 	
-	public abstract Population methodeSelection(Population p);
+	public abstract List<Individu<T>> methodeSelection(Population<T> p);
 }

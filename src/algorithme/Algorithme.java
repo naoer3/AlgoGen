@@ -5,32 +5,33 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /***
  * Classe contenant l'ensemble de l'algorithme
  * @author Antoine BLAINEAU
  *
  */
-public class Algorithme {
+public class Algorithme<T> {
 
 	/***
-	 * Création des variables
+	 * Creation des variables
 	 * population: Liste des individus
-	 * methode: méthode de sélection des individus parents
-	 * taille_pop: Taille de la population utilisée au sein de l'algorithme
-	 * mutation: Pourcentage d'éléments mutés
-	 * croisement: Pourcentage d'éléments croisés
-	 * Bornes_inf: Borne définissant la limite inférieure dans laquelle devront se situer les nouveaux individus 
-	 * Bornes_sup: Borne définissant la limite supérieure dans laquelle devront se situer les nouveaux individus
-	 * type_selection: Définition du type de sélection des individus (élitiste, tournoi, loterie)
-	 * fct_crea_individu: Fonction permettant la création d'individus au sein de la population 
+	 * methode: methode de selection des individus parents
+	 * taille_pop: Taille de la population utilisee au sein de l'algorithme
+	 * mutation: Pourcentage d'elements mutes
+	 * croisement: Pourcentage d'elements croises
+	 * Bornes_inf: Borne definissant la limite inferieure dans laquelle devront se situer les nouveaux individus 
+	 * Bornes_sup: Borne definissant la limite superieure dans laquelle devront se situer les nouveaux individus
+	 * type_selection: Definition du type de selection des individus (elitiste, tournoi, loterie)
+	 * fct_crea_individu: Fonction permettant la creation d'individus au sein de la population 
 	 */
-	private List<Individu> liste_selection = new ArrayList<>();
-	private List<Individu> liste_croisement = new ArrayList<>();
+	private List<Individu<T>> liste_selection = new ArrayList<>();
+	private List<Individu<T>> liste_croisement = new ArrayList<>();
 	
-	private SelectionMethode selection_parent;
-	private SelectionMethode selection_population;
-	private Croisement croisement;
+	private SelectionMethode<T> selection_parent;
+	private SelectionMethode<T> selection_population;
+	private Croisement<T> croisement;
 	private Mutation mutation;
 	
 	private int taille_pop;
@@ -42,8 +43,8 @@ public class Algorithme {
 	private ArrayList<Object> bornes_inf = new ArrayList<>();
 	private ArrayList<Object> bornes_sup = new ArrayList<>();
 	
-	private Function fct_crea_individu;
-	private Function fct_eval_individu;
+	private Supplier<Individu<T>> fct_crea_individu;
+	private Function<Individu<T>,T> fct_eval_individu;
 	
 	/***
 	 * Constructeur de la classe Algorithme
@@ -51,28 +52,30 @@ public class Algorithme {
 	public Algorithme() {}
 	
 	/***
-	 * Méthode contenant l'ensemble de l'algorithme génétique à faire tourner
+	 * Methode contenant l'ensemble de l'algorithme genetique a faire tourner
 	 * @param les_individus
 	 * @param methode
 	 */
 	public void LancerAlgorithme()
 	{
-		Population population = new Population(taille_pop, fct_crea_individu, fct_eval_individu);
+		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
+		Croisement<T> croisement = new Croisement();
+		Mutation mutation = new Mutation();
 		
 		switch(type_selection_parent) {
 			case 0:
-				selection_parent = new LoterieStrategy(taille_pop);
+				selection_parent = new LoterieStrategy<T>(taille_pop);
 			case 1:
-				selection_parent = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_sélection que 0 ou 1. 
+				selection_parent = new ElitisteStrategy<T>(taille_pop);
+			default: // TODO: Generer Exception si autre type_slection que 0 ou 1. 
 		}		
 		
 		switch(type_selection_population) {
 			case 0:
-				selection_population = new LoterieStrategy(taille_pop);
+				selection_population = new LoterieStrategy<T>(taille_pop);
 			case 1:
-				selection_population = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_sélection que 0 ou 1. 
+				selection_population = new ElitisteStrategy<T>(taille_pop);
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}
 
 		do{
@@ -210,14 +213,15 @@ public class Algorithme {
 	}
 	
 	
-	public Function getFct_crea_individu() {
+	public Supplier<Individu<T>> getFct_crea_individu() {
 		return fct_crea_individu;
 	}
 
-	public void setFct_crea_individu(Function fct_crea_individu) {
+	public void setFct_crea_individu(Supplier<Individu<T>> fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
 	
 
 
 }
+	

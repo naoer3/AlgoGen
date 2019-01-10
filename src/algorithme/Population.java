@@ -55,7 +55,7 @@ public class Population<T> {
 		
 		population = new ArrayList<>();
 		
-		//Création d'une nouvelle population
+		//Creation d'une nouvelle population
 		for(int i = 0; i < taillePop; i++) {
 			population.add(constructeur_indiv.get());
 		}
