@@ -8,7 +8,7 @@ import java.util.function.Function;
 /**
  * Definit un individu
  */
-public abstract class Individu<T, R> {
+public abstract class Individu<T> {
 	
 	private List<T> genes;
 	

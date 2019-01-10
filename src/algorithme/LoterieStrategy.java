@@ -3,7 +3,7 @@ package algorithme;
 import java.util.Collections;
 
 
-public class LoterieStrategy extends Selection {
+public class LoterieStrategy extends SelectionMethode {
 	
 	private int myPourcentage = 100;
  
@@ -12,9 +12,8 @@ public class LoterieStrategy extends Selection {
 		setMyPourcentage(Pourcentage);
 	}
 	
-
 	@Override
-	public Population methodeEvaluation(Population p) {
+	public Population methodeSelection(Population p) {
 		Collections.shuffle(p.getPopulation()); 
 		
 		double produit=(myPourcentage*p.getPopulation().size());

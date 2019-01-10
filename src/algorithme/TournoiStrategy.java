@@ -1,6 +1,9 @@
 package algorithme;
 
-public class TournoiStrategy extends Selection {
+
+import java.util.ArrayList;
+
+public class TournoiStrategy extends SelectionMethode {
 		
 	private int myPourcentage = 100;
 	
@@ -10,7 +13,7 @@ public class TournoiStrategy extends Selection {
 	}
 	
 	@Override
-	public Population methodeEvaluation(Population p) { 
+	public Population methodeSelection(Population p) { 
 		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
 		int lastIndex = p.getPopulation().size();
@@ -29,5 +32,5 @@ public class TournoiStrategy extends Selection {
 	public void setMyPourcentage(int myPourcentage) {
 		this.myPourcentage = myPourcentage;
 	}
-}
 
+}
