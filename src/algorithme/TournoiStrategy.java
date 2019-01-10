@@ -1,7 +1,5 @@
 package algorithme;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class TournoiStrategy<T> extends SelectionMethode<T> {

@@ -9,14 +9,15 @@ public class Croisement<T> {
 	
 	Supplier<Individu<T>> creation_individu;
 	
-	public Croisement(Supplier creation_individu) {
+	public Croisement(Supplier<Individu<T>> creation_individu) {
 		this.creation_individu = creation_individu;
 	}
 	
 	public List<Individu<T>> CrossoverPopulation(List<Individu<T>> selection){
-		Individu parent1 = null;
-		Individu parent2 = null;
-		List<Individu<T>> enfants = new ArrayList();
+		Individu<T> parent1 = null;
+		Individu<T> parent2 = null;
+		List<Individu<T>> enfants = new ArrayList<>();
+
 		int nbParents = selection.size();
 		Random rand = new Random();
 		for (int i = 0; i <nbParents-1; i++) {
@@ -27,8 +28,8 @@ public class Croisement<T> {
 		return enfants;
 	}
 	
-	public <T> Individu Crossover(Individu parent1, Individu parent2) {
-		Individu nv_individu = this.creation_individu.get();
+	public Individu<T> Crossover(Individu<T> parent1, Individu<T> parent2) {
+		Individu<T> nv_individu = this.creation_individu.get();
 		Random rand = new Random();
 		int cut_index = rand.nextInt(nv_individu.getNbGenes());
 		List<T> genes = parent1.getListGenes(0, cut_index);
