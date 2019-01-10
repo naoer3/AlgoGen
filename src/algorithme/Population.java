@@ -3,12 +3,10 @@ package algorithme;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
- * Classe représentant un ensemble d'individus qui constitue une population
- * @author mathp
- * @version 1.0
- * @since 1.0
+ * Classe representant un ensemble d'individus qui constitue une population
  * @param <T>
  * @see Individu
  */
@@ -17,12 +15,8 @@ public class Population<T> {
 	/**
 	 * Constructeur d'un nouvel individu
 	 */
-	private Function<T,Individu> constructeur_indiv = null;
-	
-	/**
-	 * Fonction à évaluer dans l'algorithme
-	 */
-	private Function<Individu,T> fct_eval = null;
+	private Supplier<Individu> constructeur_indiv = null;
+
 	
 	/**
 	 * Liste d'individus qui forme la population
@@ -30,47 +24,50 @@ public class Population<T> {
 	private List<Individu> population = null;
 	
 	/**
-	 * Taille souhaitée de la population
+	 * Taille souhaitee de la population
 	 */
 	private int taillePop = 0;
 	
 	/**
 	 * Constructeur de la classe
 	 * Initialise une population
-	 * @param taille Taille souhaitée de la population
-	 * @param fct Fonction créant de nouveaux individus
-	 * @param param Paramètres à donner au constructeur d'individu
-	 * @param eval Fonction d'évaluation de l'algorithme
+	 * @param taille Taille souhaitee de la population
+	 * @param fct Fonction creant de nouveaux individus
+	 * @param param Parametres a� donner au constructeur d'individu
+	 * @param eval Fonction d'evaluation de l'algorithme
 	 */
-	public Population(int taille, Function<T,Individu> fct, T param, Function<Individu,T> eval) {
+	public Population(int taille, Supplier<Individu> fct) {
 		this.taillePop = taille;
 		this.constructeur_indiv = fct;
-		this.fct_eval = eval;
 		
 		population = new ArrayList<Individu>();
 		
 		for(int i = 0; i < taillePop; i++) {
-			population.add(constructeur_indiv.apply(param));
+			population.add(constructeur_indiv.get());
 		}
 	}
 
-	/**
-	 * Evalue la fitness de chaque individu avec la fonction d'évaluation
-	 */
-	public void Evaluate() {
-		for(Individu indiv : population) {
-			indiv.setFitness(fct_eval.apply(indiv));
-		}
-	}
-  
+
     public int getNbIndividu() {
-		return myPopulation.size();
+		return population.size();
 	}
 	
-	public List<Individu> getMyPopulation() {
+	public List<Individu> getPopulation() {
 		return population;
 	}
+	
+	public Individu CrossOver(Individu parent1, Individu parent2) {
+		
+		
+		return null;
+		
+	}
+	
+	public void Croisement (List<Individu> individus) {
+		
+	}
   
+	// TODO
 	@Override
 	public String toString() {
 		String str="";
@@ -78,7 +75,6 @@ public class Population<T> {
 			str+=population.get(i).toString()+"\n";
 		}
 		return str;
-		
 	}
 }
 

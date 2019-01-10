@@ -6,16 +6,11 @@ import java.util.Random;
 import java.util.function.Function;
 
 /**
- * Définit un individu
- * @version 1.0
- * @since 1.0
+ * Definit un individu
  */
 public abstract class Individu<T, R> {
 	
-  protected ArrayList<Double> Coords = null;
-	
-	public void setCoords() {
-	}
+	private List<T> genes;
 	
 	
 	/**
@@ -37,8 +32,28 @@ public abstract class Individu<T, R> {
 	 */
 	public void setFitness(T fitness) {
 		this.fitness = fitness;
-	}	
+	}
 
+	/**
+	 * @return the genes
+	 */
+	public List<T> getGenes() {
+		return genes;
+	}
+
+	/**
+	 * @param genes the genes to set
+	 */
+	public void setGenes(List<T> genes) {
+		this.genes = genes;
+	}	
 	
+	public List<T> getListGenes(int debut, int fin){
+		return genes.subList(debut, fin);
+	}
+	
+	public int getNbGenes() {
+		return genes.size();
+	}
 	
 }

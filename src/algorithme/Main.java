@@ -4,12 +4,12 @@ package algorithme;
 public class Main {
 	
 	private static Population myPop =null;
-	private static EvalMethode myLoterie=null;
+	private static Selection myLoterie=null;
 	private static Individu typeIndividu =null;
 
 	public static void main(String[] args) {
 		
-		setMyPop(new Population(100));
+		//setMyPop(new Population(100));
 		//setMyLoterie(new LoterieStrategy(10));
 		//setMyLoterie(new ElitisteStrategy(5));
 		setMyLoterie(new TournoiStrategy(5));
@@ -26,11 +26,11 @@ public class Main {
 		Main.myPop = myPop;
 	}
 
-	public static EvalMethode getMyLoterie() {
+	public static Selection getMyLoterie() {
 		return myLoterie;
 	}
 
-	public static void setMyLoterie(EvalMethode myLoterie) {
+	public static void setMyLoterie(Selection myLoterie) {
 		Main.myLoterie = myLoterie;
 	}
 
