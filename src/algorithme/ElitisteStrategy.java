@@ -12,7 +12,6 @@ public class ElitisteStrategy<T> extends SelectionMethode<T>{
 	}
 	
 	@Override
-
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
 		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;

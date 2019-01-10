@@ -25,7 +25,6 @@ public class LoterieStrategy<T> extends SelectionMethode<T> {
 		for(int index=firstIndex ; index<=lastIndex;index++) {
 			selection.remove(p.getPopulation().size()-1);
 		}
-		
 		return selection;
 	}
 
