@@ -3,9 +3,9 @@ package algorithme;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Croisement {
+public class Croisement<T> {
 
-	public List<Individu> methodeCroisement(List<Individu> liste)
+	public List<Individu<T>> methodeCroisement(List<Individu<T>> liste)
 	{
 		return liste;
 	}
