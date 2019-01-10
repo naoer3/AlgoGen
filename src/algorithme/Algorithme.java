@@ -2,8 +2,6 @@ package algorithme;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Vector;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -21,8 +19,6 @@ public class Algorithme<T> {
 	 * taille_pop: Taille de la population utilisee au sein de l'algorithme
 	 * mutation: Pourcentage d'elements mutes
 	 * croisement: Pourcentage d'elements croises
-	 * Bornes_inf: Borne definissant la limite inferieure dans laquelle devront se situer les nouveaux individus 
-	 * Bornes_sup: Borne definissant la limite superieure dans laquelle devront se situer les nouveaux individus
 	 * type_selection: Definition du type de selection des individus (elitiste, tournoi, loterie)
 	 * fct_crea_individu: Fonction permettant la creation d'individus au sein de la population 
 	 */
@@ -32,16 +28,13 @@ public class Algorithme<T> {
 	private SelectionMethode<T> selection_parent;
 	private SelectionMethode<T> selection_population;
 	private Croisement<T> croisement;
-	private Mutation mutation;
+	private Mutation<T> mutation;
 	
 	private int taille_pop;
 	private int type_selection_parent;	//0,1 fournit par l'utilisateur
 	private int type_selection_population; //0,1 fournit par l'utilisateur
 	private double prob_mutation;
 	private double prob_croisement;
-	
-	private ArrayList<Object> bornes_inf = new ArrayList<>();
-	private ArrayList<Object> bornes_sup = new ArrayList<>();
 	
 	private Supplier<Individu<T>> fct_crea_individu;
 	private Function<Individu<T>,T> fct_eval_individu;
@@ -59,14 +52,14 @@ public class Algorithme<T> {
 	public void LancerAlgorithme()
 	{
 		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
-		Croisement<T> croisement = new Croisement();
-		Mutation mutation = new Mutation();
+		Croisement<T> croisement = new Croisement<T>(fct_crea_individu);
+		Mutation<T> mutation = new Mutation<T>();
 		
 		switch(type_selection_parent) {
 			case 0:
 				selection_parent = new LoterieStrategy<T>(taille_pop);
 			case 1:
-				selection_parent = new ElitisteStrategy(taille_pop);
+				selection_parent = new ElitisteStrategy<T>(taille_pop);
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}		
 		
@@ -74,25 +67,18 @@ public class Algorithme<T> {
 			case 0:
 				selection_population = new LoterieStrategy<T>(taille_pop);
 			case 1:
-				selection_population = new ElitisteStrategy(taille_pop);
+				selection_population = new ElitisteStrategy<T>(taille_pop);
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}
 
 		do{
-			population.EvaluatePopulation();
-			
-			liste_selection = selection_parent.methodeSelection(population);
-			
-			liste_croisement = croisement.methodeCroisement(liste_selection);
-			
-			population.AjoutIndividus(liste_croisement);
-			
-			mutation.methodeMutation(population);
-			
-			population.EvaluatePopulation();
-			
-			selection_population.methodeSelection(population);
-			
+			population.EvaluatePopulation();			
+			liste_selection = selection_parent.methodeSelection(population);			
+			liste_croisement = croisement.CrossoverPopulation(liste_selection);			
+			population.AjoutIndividus(liste_croisement);			
+			mutation.methodeMutation(population);			
+			population.EvaluatePopulation();			
+			selection_population.methodeSelection(population);			
 		}while(true);
 	}
 
@@ -121,7 +107,7 @@ public class Algorithme<T> {
 	}
 
 	/***
-	 * Setter sur le type de selection_population choici par le client
+	 * Setter sur le type de selection_population choisi par le client
 	 * @param type_selection_population
 	 */
 	public void setType_selection_population(int type_selection_population) {
@@ -175,49 +161,17 @@ public class Algorithme<T> {
 	public void setProb_Croisement(double croisement) {
 		this.prob_croisement = croisement;
 	}
-
-	/***
-	 * Getter de la variable bornes_inf
-	 * @return les bornes inferieures concernant l'encadrement des nouveaux individus
-	 */
-	public ArrayList<Object> getBornes_inf() {
-		return bornes_inf;
-	}
-
-	/***
-	 * Setter sur les bornes inferieures concernant l'encadrement des nouveaux individus 
-	 * @param bornes_inf
-	 */
-	public void setBornes_inf(ArrayList<Object> bornes_inf) {
-		this.bornes_inf = bornes_inf;
-	}
-
-	/***
-	 * Getter de la variable bornes_sup
-	 * @return les bornes superieures concernant l'encadrement des nouveaux individus
-	 */
-	public ArrayList<Object> getBornes_sup() {
-		return bornes_sup;
-	}
-
-	/***
-	 * Setter sur les bornes surperieures concernant l'encadrement des nouveaux individus 
-	 * @param bornes_sup
-	 */
-	public void setBornes_sup(ArrayList<Object> bornes_sup) {
-		this.bornes_sup = bornes_sup;
-	}
 	
 	/***
 	 * Getter de la variable Fct_crea_individu
 	 * @return une fonction permettant la cr�ation d'un individu
 	 */
-	public Supplier getFct_crea_individu() {
+	public Supplier<Individu<T>> getFct_crea_individu() {
 		return fct_crea_individu;
 	}
 
 	/***
-	 * Setter sur la fonction de cr�ation d'un individu
+	 * Setter sur la fonction de creation d'un individu
 	 * @param fct_crea_individu
 	 */
 	public void setFct_crea_individu(Supplier<Individu<T>> fct_crea_individu) {

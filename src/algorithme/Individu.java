@@ -1,9 +1,6 @@
 package algorithme;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Function;
 
 /**
  * Definit un individu
@@ -11,8 +8,7 @@ import java.util.function.Function;
 public abstract class Individu<T> {
 	
 	private List<T> genes;
-	
-	
+		
 	/**
 	 * Score de l'individu
 	 */
