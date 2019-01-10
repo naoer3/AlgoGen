@@ -1,25 +1,31 @@
 package algorithme;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
 /**
- * Définit un individu
- * @version 1.0
- * @since 1.0
+ * Definit un individu
  */
-public class Individu<T> {
-		
-	protected ArrayList<Double> Coords = null;
-			
+public abstract class Individu<T> {
+	
+	private List<T> genes;
+	
+	
 	/**
 	 * Score de l'individu
 	 */
 	private T fitness;
-
+	
+	/**
+	 * Retourne le score de l'individu
+	 * @return fitness de l'individu
+	 */
 	public T getFitness() {
 		return fitness;
 	}
-	
+
 	/**
 	 * Permet de modifier le score de l'individu
 	 * @param fitness la nouvelle fitness de l'individu
@@ -27,20 +33,27 @@ public class Individu<T> {
 	public void setFitness(T fitness) {
 		this.fitness = fitness;
 	}
-	 
-	public ArrayList<Double> getCoords() {
-		return Coords;
+
+	/**
+	 * @return the genes
+	 */
+	public List<T> getGenes() {
+		return genes;
+	}
+
+	/**
+	 * @param genes the genes to set
+	 */
+	public void setGenes(List<T> genes) {
+		this.genes = genes;
+	}	
+	
+	public List<T> getListGenes(int debut, int fin){
+		return genes.subList(debut, fin);
 	}
 	
-	public void setCoords(double x, double y) {
-		Coords.add(x) ;
-		Coords.add(y) ;
-		Coords.add(Math.pow(x,2)+Math.pow(y,2));//-5*x+1
-	}
-	
-	public String toString() {
-		
-		return "x : " + Coords.get(0)+"  , y : " + Coords.get(1)+ " , f(x,y) : "+ Coords.get(2);
+	public int getNbGenes() {
+		return genes.size();
 	}
 	
 }

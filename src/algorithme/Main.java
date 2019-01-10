@@ -25,6 +25,7 @@ public class Main {
 		Main.myPop = myPop;
 	}
 
+
 	public static SelectionMethode getMyLoterie() {
 		return myLoterie;
 	}

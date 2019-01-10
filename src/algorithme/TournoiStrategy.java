@@ -4,7 +4,7 @@ package algorithme;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TournoiStrategy extends SelectionMethode {
+public class TournoiStrategy<T> extends SelectionMethode<T> {
 		
 	private int myPourcentage = 100;
 	
@@ -14,16 +14,16 @@ public class TournoiStrategy extends SelectionMethode {
 	}
 	
 	@Override
-	public List<Individu> methodeSelection(Population p) { 
+	public List<Individu<T>> methodeSelection(Population<T> p) { 
 		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
 		int lastIndex = p.getPopulation().size();
+		List<Individu<T>> selection = p.getPopulation();
 		
 		for(int index=firstIndex ; index<=lastIndex;index++) {
-			p.getPopulation().remove(p.getPopulation().size()-1);
-		}
-		
-		return (List<Individu>)p;
+			selection.remove(p.getPopulation().size()-1);
+		}		
+		return selection;
 	}
 	
 	public int getMyPourcentage() {
@@ -35,4 +35,3 @@ public class TournoiStrategy extends SelectionMethode {
 	}
 
 }
-
