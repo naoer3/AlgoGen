@@ -17,6 +17,7 @@ public class Croisement<T> {
 		Individu<T> parent1 = null;
 		Individu<T> parent2 = null;
 		List<Individu<T>> enfants = new ArrayList<>();
+
 		int nbParents = selection.size();
 		Random rand = new Random();
 		for (int i = 0; i <nbParents-1; i++) {
