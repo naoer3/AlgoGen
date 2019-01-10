@@ -36,4 +36,3 @@ public class TournoiStrategy<T> extends SelectionMethode<T> {
 	}
 
 }
-

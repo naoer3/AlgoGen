@@ -38,7 +38,4 @@ public class LoterieStrategy<T> extends SelectionMethode<T> {
 		this.myPourcentage = myPourcentage;
 	}
 
-
-	
-
 }

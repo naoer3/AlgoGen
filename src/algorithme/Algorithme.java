@@ -213,14 +213,15 @@ public class Algorithme<T> {
 	}
 	
 	
-	public Function getFct_crea_individu() {
+	public Supplier<Individu<T>> getFct_crea_individu() {
 		return fct_crea_individu;
 	}
 
-	public void setFct_crea_individu(Function fct_crea_individu) {
+	public void setFct_crea_individu(Supplier<Individu<T>> fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
 	
 
 
 }
+	
