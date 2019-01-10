@@ -5,18 +5,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class Croisement {
+public class Croisement<T> {
 	
-	Supplier<Individu> creation_individu;
+	Supplier<Individu<T>> creation_individu;
 	
 	public Croisement(Supplier creation_individu) {
 		this.creation_individu = creation_individu;
 	}
 	
-	public List<Individu> CrossoverPopulation(List<Individu> selection){
+	public List<Individu<T>> CrossoverPopulation(List<Individu<T>> selection){
 		Individu parent1 = null;
 		Individu parent2 = null;
-		List<Individu> enfants = new ArrayList();
+		List<Individu<T>> enfants = new ArrayList();
 		int nbParents = selection.size();
 		Random rand = new Random();
 		for (int i = 0; i <nbParents-1; i++) {

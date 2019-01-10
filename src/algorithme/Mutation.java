@@ -3,11 +3,11 @@ package algorithme;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Mutation {
+public class Mutation<T> {
 
-	public List<Individu> methodeMutation(Population p)
+	public List<Individu<T>> methodeMutation(Population p)
 	{
-		List<Individu> liste = new ArrayList<>();
+		List<Individu<T>> liste = new ArrayList<>();
 		return liste;
 	}
 }
