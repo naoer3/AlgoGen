@@ -12,8 +12,7 @@ public class ElitisteStrategy extends SelectionMethode{
 	}
 	
 	@Override
-
-	public Population methodeSelection(Population p) { 
+	public List<Individu> methodeSelection(Population p) { 
 		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
 		int lastIndex = p.getPopulation().size();
@@ -21,7 +20,7 @@ public class ElitisteStrategy extends SelectionMethode{
 		for(int index=firstIndex ; index<=lastIndex;index++) {
 			p.getPopulation().remove(p.getPopulation().size()-1);
 		}
-		return (List<Individu>) p;
+		return (List<Individu>)p;
 	}
 	
 	public int getMyPourcentage() {

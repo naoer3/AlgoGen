@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Random;
 import java.util.Vector;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /***
  * Classe contenant l'ensemble de l'algorithme
  * @author Antoine BLAINEAU
  *
  */
-public class Algorithme {
+public class Algorithme<T> {
 
 	/***
 	 * Création des variables
@@ -42,8 +43,8 @@ public class Algorithme {
 	private ArrayList<Object> bornes_inf = new ArrayList<>();
 	private ArrayList<Object> bornes_sup = new ArrayList<>();
 	
-	private Function fct_crea_individu;
-	private Function fct_eval_individu;
+	private Supplier<Individu<T>> fct_crea_individu;
+	private Function<Individu<T>,T> fct_eval_individu;
 	
 	/***
 	 * Constructeur de la classe Algorithme
@@ -51,7 +52,7 @@ public class Algorithme {
 	public Algorithme() {}
 	
 	/***
-	 * Méthode contenant l'ensemble de l'algorithme génétique à faire tourner
+	 * Methode contenant l'ensemble de l'algorithme génétique à faire tourner
 	 * @param les_individus
 	 * @param methode
 	 */
@@ -64,7 +65,7 @@ public class Algorithme {
 				selection_parent = new LoterieStrategy(taille_pop);
 			case 1:
 				selection_parent = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_sélection que 0 ou 1. 
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}		
 		
 		switch(type_selection_population) {
@@ -72,61 +73,57 @@ public class Algorithme {
 				selection_population = new LoterieStrategy(taille_pop);
 			case 1:
 				selection_population = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_sélection que 0 ou 1. 
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}
 
 		do{
 			population.EvaluatePopulation();
+			
 			liste_selection = selection_parent.methodeSelection(population);
+			
 			liste_croisement = croisement.methodeCroisement(liste_selection);
+			
 			population.AjoutIndividus(liste_croisement);
+			
 			mutation.methodeMutation(population);
+			
+			population.EvaluatePopulation();
+			
 			selection_population.methodeSelection(population);
+			
 		}while(true);
 	}
 
 	/***
-	 * 
-	 * @return
+	 * Getter de la variable type_selection_parent
+	 * @return le type de selection_parent choisi par le client
 	 */
-	public SelectionMethode getSelection_parent() {
-		return selection_parent;
-	}
-
-	public void setSelection_parent(SelectionMethode selection_parent) {
-		this.selection_parent = selection_parent;
-	}
-
-	public SelectionMethode getSelection_population() {
-		return selection_population;
-	}
-
-	public void setSelection_population(SelectionMethode selection_population) {
-		this.selection_population = selection_population;
-	}
-
 	public int getType_selection_parent() {
 		return type_selection_parent;
 	}
 
+	/***
+	 * Setter sur le type de selection_parent choisi par le client
+	 * @param type_selection_parent
+	 */
 	public void setType_selection_parent(int type_selection_parent) {
 		this.type_selection_parent = type_selection_parent;
 	}
 
+	/***
+	 * Getter de la variable type_selection_population
+	 * @return le type de selection_population choisi par le client
+	 */
 	public int getType_selection_population() {
 		return type_selection_population;
 	}
 
+	/***
+	 * Setter sur le type de selection_population choici par le client
+	 * @param type_selection_population
+	 */
 	public void setType_selection_population(int type_selection_population) {
 		this.type_selection_population = type_selection_population;
-	}
-
-	public void setCroisement(Croisement croisement) {
-		this.croisement = croisement;
-	}
-
-	public void setMutation(Mutation mutation) {
-		this.mutation = mutation;
 	}
 
 	/***
@@ -138,7 +135,7 @@ public class Algorithme {
 	}
 
 	/***
-	 * Setter sur la taille de la population souhaitée
+	 * Setter sur la taille de la population souhaitee
 	 * @param taille_pop
 	 */
 	public void setTaille_pop(int taille_pop) {
@@ -146,40 +143,40 @@ public class Algorithme {
 	}
 
 	/***
-	 * Getter du pourcentage de mutation des individus
-	 * @return le pourcentage de mutation
+	 * Getter de la variable prob_mutation
+	 * @return le pourcentage de mutation des individus
 	 */
-	public double getMutation() {
+	public double getProb_Mutation() {
 		return prob_mutation;
 	}
 
 	/***
-	 * Setter sur la variable prob_mutation pour affecter un pourcentage de mutation aux individus selectionnes
+	 * Setter sur le pourcentage de mutation aux individus selectionnes
 	 * @param mutation 
 	 */
-	public void setMutation(double mutation) {
+	public void setProb_Mutation(double mutation) {
 		this.prob_mutation = mutation;
 	}
 
 	/***
-	 * Getter du pourcentage de croisement des individus selectionnes
-	 * @return le pourcentage de croisement
+	 * Getter de la variable prob_croisement 
+	 * @return le pourcentage de croisement des individus selectionnes
 	 */
-	public double getCroisement() {
+	public double getProb_Croisement() {
 		return prob_croisement;
 	}
 
 	/***
-	 * Setter sur la variable prob_croisement pour affecter un pourcentage de croisement aux individus selectionnes
+	 * Setter sur le pourcentage de croisement des individus selectionnes
 	 * @param croisement
 	 */
-	public void setCroisement(double croisement) {
+	public void setProb_Croisement(double croisement) {
 		this.prob_croisement = croisement;
 	}
 
 	/***
-	 * Getter de la liste de bornes inferieures concernant l'encadrement des nouveaux individus
-	 * @return les bornes inférieures
+	 * Getter de la variable bornes_inf
+	 * @return les bornes inferieures concernant l'encadrement des nouveaux individus
 	 */
 	public ArrayList<Object> getBornes_inf() {
 		return bornes_inf;
@@ -194,8 +191,8 @@ public class Algorithme {
 	}
 
 	/***
-	 * Getter de la liste de bornes superieures concernant l'encadrement des nouveaux individus
-	 * @return les bornes superieures
+	 * Getter de la variable bornes_sup
+	 * @return les bornes superieures concernant l'encadrement des nouveaux individus
 	 */
 	public ArrayList<Object> getBornes_sup() {
 		return bornes_sup;
@@ -209,15 +206,20 @@ public class Algorithme {
 		this.bornes_sup = bornes_sup;
 	}
 	
-	
-	public Function getFct_crea_individu() {
+	/***
+	 * Getter de la variable Fct_crea_individu
+	 * @return une fonction permettant la cr�ation d'un individu
+	 */
+	public Supplier getFct_crea_individu() {
 		return fct_crea_individu;
 	}
 
-	public void setFct_crea_individu(Function fct_crea_individu) {
+	/***
+	 * Setter sur la fonction de cr�ation d'un individu
+	 * @param fct_crea_individu
+	 */
+	public void setFct_crea_individu(Supplier fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
 	
-
-
 }

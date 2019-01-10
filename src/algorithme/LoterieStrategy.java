@@ -1,6 +1,7 @@
 package algorithme;
 
 import java.util.Collections;
+import java.util.List;
 
 
 public class LoterieStrategy extends SelectionMethode {
@@ -13,7 +14,7 @@ public class LoterieStrategy extends SelectionMethode {
 	}
 	
 	@Override
-	public Population methodeSelection(Population p) {
+	public List<Individu> methodeSelection(Population p) {
 		Collections.shuffle(p.getPopulation()); 
 		
 		double produit=(myPourcentage*p.getPopulation().size());
@@ -24,7 +25,7 @@ public class LoterieStrategy extends SelectionMethode {
 			p.getPopulation().remove(p.getPopulation().size()-1);
 		}
 		
-		return p;
+		return (List<Individu>)p;
 	}
 
 

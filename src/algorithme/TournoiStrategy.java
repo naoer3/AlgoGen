@@ -2,6 +2,7 @@ package algorithme;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TournoiStrategy extends SelectionMethode {
 		
@@ -13,7 +14,7 @@ public class TournoiStrategy extends SelectionMethode {
 	}
 	
 	@Override
-	public Population methodeSelection(Population p) { 
+	public List<Individu> methodeSelection(Population p) { 
 		double produit=(myPourcentage*p.getPopulation().size());
 		int firstIndex=(int)Math.round(produit/100)+1;
 		int lastIndex = p.getPopulation().size();
@@ -22,7 +23,7 @@ public class TournoiStrategy extends SelectionMethode {
 			p.getPopulation().remove(p.getPopulation().size()-1);
 		}
 		
-		return p;
+		return (List<Individu>)p;
 	}
 	
 	public int getMyPourcentage() {
