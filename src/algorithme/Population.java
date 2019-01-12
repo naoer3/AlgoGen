@@ -7,8 +7,6 @@ import java.util.function.Supplier;
 
 /**
  * Classe representant un ensemble d'individus qui constitue une population
- * @version 1.0
- * @since 1.0
  * @param <T>
  * @see Individu
  */
@@ -37,7 +35,7 @@ public class Population<T> {
 	private int taillePop = 0;
 	
 	/**
-	 * Numéro de la génération en cours
+	 * Numero de la generation en cours
 	 */
 	private int current_generation = 0;
 	
@@ -53,12 +51,15 @@ public class Population<T> {
 		this.constructeur_indiv = fct;
 		this.fct_eval = eval;
 		
-		population = new ArrayList<>();
+		this.population = new ArrayList<>();
 		
 		//Creation d'une nouvelle population
 		for(int i = 0; i < taillePop; i++) {
-			population.add(constructeur_indiv.get());
+			this.population.add(constructeur_indiv.get());
 		}
+		
+		//System.out.println(toString());
+
 	}
 
 	/// Methodes
@@ -125,7 +126,7 @@ public class Population<T> {
 	}
 	
 	/**
-	 * Getter de l'attribut taillePop qui décrit la taille de la population souhaitée
+	 * Getter de l'attribut taillePop qui decrit la taille de la population souhaitee
 	 * @return taillePop
 	 */
 	public int getTaillePop() {
@@ -133,7 +134,7 @@ public class Population<T> {
 	}
 	
 	/**
-	 * Getter de l'attribut current_generation qui décrit le numéro de génération en cours
+	 * Getter de l'attribut current_generation qui decrit le numero de generation en cours
 	 * @return current_generation
 	 */
 	public int getCurrent_generation() {
@@ -144,7 +145,8 @@ public class Population<T> {
 	@Override
 	public String toString() {
 		String str="";
-		for(int i=0;i<taillePop;i++) {
+
+		for(int i=0;i<population.size();i++) {
 			str+=population.get(i).toString()+"\n";
 		}
 		return str;		

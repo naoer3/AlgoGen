@@ -16,8 +16,7 @@ public class Croisement<T> {
 	public List<Individu<T>> CrossoverPopulation(List<Individu<T>> selection){
 		Individu<T> parent1 = null;
 		Individu<T> parent2 = null;
-		List<Individu<T>> enfants = new ArrayList<>();
-
+		List<Individu<T>> enfants = new ArrayList<Individu<T>>();
 		int nbParents = selection.size();
 		Random rand = new Random();
 		for (int i = 0; i <nbParents-1; i++) {

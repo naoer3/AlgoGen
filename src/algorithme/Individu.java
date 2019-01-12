@@ -6,14 +6,14 @@ import java.util.List;
  * Definit un individu
  */
 public abstract class Individu<T> {
-	
+
 	private List<T> genes;
-		
+
 	/**
 	 * Score de l'individu
 	 */
 	private T fitness;
-	
+
 	/**
 	 * Retourne le score de l'individu
 	 * @return fitness de l'individu
@@ -42,14 +42,35 @@ public abstract class Individu<T> {
 	 */
 	public void setGenes(List<T> genes) {
 		this.genes = genes;
+	}
+
+	public void setGene(int index, T gene) {
+		this.genes.set(index, gene);
 	}	
-	
+
 	public List<T> getListGenes(int debut, int fin){
 		return genes.subList(debut, fin);
 	}
-	
+
 	public int getNbGenes() {
 		return genes.size();
 	}
-	
+
+	public T getGene(int index){
+		return genes.get(index);
+	}
+
+	// TODO
+	public String toString() {
+		String str ="";
+		for(int i=0;i<genes.size();i++) {
+			if(i!=0)
+				str+=" / ";
+			str+=genes.get(i).toString();
+		}
+		if(fitness != null)
+			str+=" => " + fitness.toString();
+		return str;		
+	}
+
 }
