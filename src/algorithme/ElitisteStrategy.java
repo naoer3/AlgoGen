@@ -29,6 +29,8 @@ public class ElitisteStrategy<T> extends SelectionMethode<T>{
 		setPourcentage(pct);
 	}
 	
+	/// Methodes
+	
 	/**
 	 * Selectionne un pourcentage de parents avec le meilleur score dans la population
 	 * @param Population
@@ -36,6 +38,7 @@ public class ElitisteStrategy<T> extends SelectionMethode<T>{
 	 */
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
+		p.sortPopulation();
 		List<Individu<T>> list_select = new ArrayList<>();
 		int taille_population =p.getPopulation().size();
 		int taille_liste=taille_population*pourcentage;
@@ -48,6 +51,8 @@ public class ElitisteStrategy<T> extends SelectionMethode<T>{
 		}
 		return list_select;
 	}
+	
+	/// Getter et Setter
 	
 	/**
 	 * Getter de l'attribut pourcentage

@@ -28,6 +28,8 @@ public class LoterieStrategy<T> extends SelectionMethode<T> {
 		setPourcentage(pct);
 	}
 	
+	/// Methodes
+	
 	/**
 	 * Selectionne un pourcentage de parents aléatoirement dans la population
 	 * @param Population
@@ -50,6 +52,8 @@ public class LoterieStrategy<T> extends SelectionMethode<T> {
 		return list_select;
 	}
 
+	/// Getter et Setter
+	
 	/**
 	 * Getter de l'attribut pourcentage
 	 * @return pourcentage
