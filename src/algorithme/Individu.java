@@ -13,7 +13,7 @@ public abstract class Individu<T> {
 	 * Score de l'individu
 	 */
 	private T fitness;
-
+  
 	/**
 	 * Retourne le score de l'individu
 	 * @return fitness de l'individu

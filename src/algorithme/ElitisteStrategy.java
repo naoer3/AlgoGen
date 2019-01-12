@@ -1,36 +1,73 @@
 package algorithme;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
+
+/**
+ * Classe deffinisant la metode de selection de type elitiste
+ * @version 1.0
+ * @since 1.0
+ * @param <T>
+ * @see SelectionMethode
+ */
 public class ElitisteStrategy<T> extends SelectionMethode<T>{
 
-	private int myPourcentage = 100;
+	/**
+	 * Pourcentage souhaitee de parents selectione
+	 */
+	private int pourcentage = 0;
 	
-	public ElitisteStrategy(int Pourcentage)
+	/**
+	 * Constructeur de la classe
+	 * Initialise une ElitisteStrategy
+	 * @param Pourcentage souhaitee de parents selectione
+	 */
+	public ElitisteStrategy(int pct)
 	{
-		setMyPourcentage(Pourcentage);
+		setPourcentage(pct);
 	}
 	
+	/// Methodes
+	
+	/**
+	 * Selectionne un pourcentage de parents avec le meilleur score dans la population
+	 * @param Population
+	 * @see Population
+	 */
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
-		double produit=(myPourcentage*p.getPopulation().size());
-		int firstIndex=(int)Math.round(produit/100)+1;
-		int lastIndex = p.getPopulation().size();
-		List<Individu<T>> selection = p.getPopulation();
+		p.sortPopulation();
+		List<Individu<T>> list_select = new ArrayList<>();
+		int taille_population =p.getPopulation().size();
+		int taille_liste=taille_population*pourcentage;
+		taille_liste=(int)Math.round(taille_liste/100)+1;
 		
-		
-		for(int index=firstIndex ; index<=lastIndex;index++) {
-			selection.remove(p.getPopulation().size()-1);
+		//System.out.println(taille_liste);
+		for(int index=0 ; index<=taille_liste;index++) {
+			
+			list_select.add((Individu<T>)p.getPopulation().get(index));
 		}
-		return selection;
+		return list_select;
 	}
 	
-	public int getMyPourcentage() {
-		return myPourcentage;
+	/// Getter et Setter
+	
+	/**
+	 * Getter de l'attribut pourcentage
+	 * @return pourcentage
+	 */
+	public int getPourcentage() {
+		return pourcentage;
 	}
 
-	public void setMyPourcentage(int myPourcentage) {
-		this.myPourcentage = myPourcentage;
+	/**
+	 * Setter de l'attribut pourcentage
+	 * @param pourcentage
+	 */
+	public void setPourcentage(int pct) {
+		this.pourcentage = pct;
 	}
 
 }
