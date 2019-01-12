@@ -1,20 +1,38 @@
 package algorithme;
 
 import java.util.ArrayList;
-
 import java.util.List;
 import java.util.Random;
 
-
+/**
+ * Classe deffinisant la metode de selection de type loterie
+ * @version 1.0
+ * @since 1.0
+ * @param <T>
+ * @see SelectionMethode
+ */
 public class LoterieStrategy<T> extends SelectionMethode<T> {
 	
-	private int pourcentage = 100;
+	/**
+	 * Pourcentage souhaitee de parents selectione
+	 */
+	private int pourcentage = 0;
  
+	/**
+	 * Constructeur de la classe
+	 * Initialise une LoterieStrategy
+	 * @param Pourcentage souhaitee de parents selectione
+	 */
 	public LoterieStrategy(int pct)
 	{
 		setPourcentage(pct);
 	}
 	
+	/**
+	 * Selectionne un pourcentage de parents aléatoirement dans la population
+	 * @param Population
+	 * @see Population
+	 */
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
 		List<Individu<T>> list_select = new ArrayList<>();
@@ -32,11 +50,18 @@ public class LoterieStrategy<T> extends SelectionMethode<T> {
 		return list_select;
 	}
 
-
+	/**
+	 * Getter de l'attribut pourcentage
+	 * @return pourcentage
+	 */
 	public int getPourcentage() {
 		return pourcentage;
 	}
 
+	/**
+	 * Setter de l'attribut pourcentage
+	 * @param pourcentage
+	 */
 	public void setPourcentage(int pct) {
 		this.pourcentage = pct;
 	}
