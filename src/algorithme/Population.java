@@ -1,6 +1,8 @@
 package algorithme;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -96,6 +98,16 @@ public class Population<T> {
 	 */
 	public void NewGeneration() {
 		current_generation++;
+	}
+	
+	public void sortPopulation() {
+		Collections.sort(population, new Comparator<Individu<T>>() {
+	        @Override
+	        public int compare(Individu<T> indiv1, Individu<T> indiv2)
+	        {
+	            return  (((Double) indiv1.getFitness()).compareTo((Double)indiv2.getFitness()));
+	        }
+	    });
 	}
 	
 	/// Getter et Setter
