@@ -1,40 +1,44 @@
 package algorithme;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 public class LoterieStrategy<T> extends SelectionMethode<T> {
 	
-	private int myPourcentage = 100;
+	private int pourcentage = 100;
  
-	public LoterieStrategy(int Pourcentage)
+	public LoterieStrategy(int pct)
 	{
-		setMyPourcentage(Pourcentage);
+		setMyPourcentage(pct);
 	}
 	
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
-		Collections.shuffle(p.getPopulation()); 
+		List<Individu<T>> list_select = new ArrayList<>();
 		
-		double produit=(myPourcentage*p.getPopulation().size());
-		int firstIndex=(int)Math.round(produit/100)+1;
-		int lastIndex = p.getPopulation().size();
-		List<Individu<T>> selection = p.getPopulation();
+		int taille_population =p.getPopulation().size();
+		int taille_liste=taille_population*pourcentage;
 		
-		for(int index=firstIndex ; index<=lastIndex;index++) {
-			selection.remove(p.getPopulation().size()-1);
+		taille_liste=(int)Math.round(taille_liste/100)+1;
+		
+		System.out.println(taille_liste);
+
+		for(int index=0 ; index<=taille_liste;index++) {
+
+			list_select.add((Individu<T>)p.getPopulation().get(index));
 		}
-		return selection;
+		return list_select;
 	}
 
 
 	public int getMyPourcentage() {
-		return myPourcentage;
+		return pourcentage;
 	}
 
 	public void setMyPourcentage(int myPourcentage) {
-		this.myPourcentage = myPourcentage;
+		this.pourcentage = myPourcentage;
 	}
 
 }
