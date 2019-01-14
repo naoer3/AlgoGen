@@ -3,7 +3,7 @@ package algorithme;
 
 public class Main {
 	
-	private static Population myPop =null;
+	private static Population myPop = null;
 	private static SelectionMethode myLoterie=null;
 	private static Individu typeIndividu =null;
 

@@ -10,29 +10,40 @@ import java.util.function.Supplier;
 /***
  * Classe contenant l'ensemble de l'algorithme
  * @author Antoine BLAINEAU
- *
  */
 public class Algorithme<T> {
 
 	/***
-	 * Creation des variables
-	 * population: Liste des individus
-	 * methode: methode de selection des individus parents
-	 * taille_pop: Taille de la population utilisee au sein de l'algorithme
-	 * mutation: Pourcentage d'elements mutes
-	 * croisement: Pourcentage d'elements croises
-	 * Bornes_inf: Borne definissant la limite inferieure dans laquelle devront se situer les nouveaux individus 
-	 * Bornes_sup: Borne definissant la limite superieure dans laquelle devront se situer les nouveaux individus
-	 * type_selection: Definition du type de selection des individus (elitiste, tournoi, loterie)
-	 * fct_crea_individu: Fonction permettant la creation d'individus au sein de la population 
-	 */
+	* VARIABLES GLOBALES
+	* 
+	* liste_selection: Liste contenant les individus sélectionnes parmi la population de base
+	* liste_croisement: Liste contenant les individus enfants nés du croisement de certains individus de la liste_selection
+	* 
+	* selection_parent: Objet SelectionMethode permettant d'affecter une evaluation a la population "mere" en fonction de la demande du client
+	* selection_population: Objet SelectionMethode permettant d'affecter une evaluation a la nouvelle population en fonction de la demande du client
+	* croisement: Objet Croisement permettant de generer des croisement entre les individus selectionnes
+	* mutation: Objet Mutation permettant de generer des mutations sur des individus selectionnes
+	* 
+	* taille_pop: Taille de la population utilisee au sein de l'algorithme
+	* type_selection_parent: Methode de selection d'individus, au sein de la population "mere", choisie par le client (elitiste, loterie)
+	* type_selection_population: Methode de selection d'individus, au sein de la nouvelle population, choisie par le client (elitiste, loterie)
+	* prob_mutation: Pourcentage d'elements mutes
+	* prob_croisement: Pourcentage d'elements croises
+	* 
+	* Bornes_inf: Borne definissant la limite inferieure dans laquelle devront se situer les nouveaux individus 
+	* Bornes_sup: Borne definissant la limite superieure dans laquelle devront se situer les nouveaux individus
+	* 
+	* fct_crea_individu: Fonction permettant la creation d'individus au sein de la population
+	* fct_eval_individu: Fonction permettant d'évaluer les individus au sein d'une population
+	*/
+	
 	private List<Individu<T>> liste_selection = new ArrayList<>();
 	private List<Individu<T>> liste_croisement = new ArrayList<>();
 	
 	private SelectionMethode<T> selection_parent;
 	private SelectionMethode<T> selection_population;
 	private Croisement<T> croisement;
-	private Mutation mutation;
+	private Mutation<T> mutation;
 	
 	private int taille_pop;
 	private int type_selection_parent;	//0,1 fournit par l'utilisateur
@@ -67,7 +78,10 @@ public class Algorithme<T> {
 				selection_parent = new LoterieStrategy<T>(taille_pop);
 			case 1:
 				selection_parent = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
+			break;
+			default: 
+				System.out.println("Vous devez choisir une valeur égale à 0 ou 1");
+				// TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}		
 		
 		switch(type_selection_population) {
@@ -75,7 +89,10 @@ public class Algorithme<T> {
 				selection_population = new LoterieStrategy<T>(taille_pop);
 			case 1:
 				selection_population = new ElitisteStrategy(taille_pop);
-			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
+			break;
+			default: 
+				System.out.println("Vous devez choisir une valeur égale à 0 ou 1");
+				// TODO: Generer Exception si autre type_selection que 0 ou 1. 
 		}
 
 		do{
