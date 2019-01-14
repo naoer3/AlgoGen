@@ -16,14 +16,14 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	/**
 	 * Pourcentage souhaitee de parents selectione
 	 */
-	private int pourcentage = 0;
+	private Double pourcentage = 0.0;
  
 	/**
 	 * Constructeur de la classe
 	 * Initialise une LoterieStrategy
 	 * @param Pourcentage souhaitee de parents selectione
 	 */
-	public LoterieStrategy(int pct)
+	public LoterieStrategy(Double pct)
 	{
 		setPourcentage(pct);
 	}
@@ -40,8 +40,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 		List<Individu<T>> list_select = new ArrayList<>();
 		int nombreAleatoire =0;
 		int taille_population =p.getPopulation().size();
-		int taille_liste=taille_population*pourcentage;
-		taille_liste=(int)Math.round(taille_liste/100)+1;
+		int taille_liste = ((Double)(taille_population*pourcentage)).intValue();
 		Random rand = new Random(); 
 		
 		//System.out.println(taille_liste);
@@ -58,7 +57,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	 * Getter de l'attribut pourcentage
 	 * @return pourcentage
 	 */
-	public int getPourcentage() {
+	public Double getPourcentage() {
 		return pourcentage;
 	}
 
@@ -66,7 +65,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	 * Setter de l'attribut pourcentage
 	 * @param pourcentage
 	 */
-	public void setPourcentage(int pct) {
+	public void setPourcentage(Double pct) {
 		this.pourcentage = pct;
 	}
 

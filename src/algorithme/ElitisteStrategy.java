@@ -23,11 +23,9 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	 * Initialise une ElitisteStrategy
 	 * @param Pourcentage souhaite de parents selectionnes
 	 */
-	public ElitisteStrategy(int pct)
+	public ElitisteStrategy(Double pct)
 	{
-		//setPourcentage(pct);	// TODO
-		setPourcentage(0.3);
-		//Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
+		setPourcentage(pct);	// TODO Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
 	}
 	
 	/// Methodes
@@ -43,8 +41,6 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 		List<Individu<T>> list_select = new ArrayList<>();
 		int taille_population = p.getPopulation().size();
 		int taille_liste = ((Double)(taille_population*pourcentage)).intValue();
-		//taille_liste=(int)Math.round(taille_liste/100)+1;
-		
 		//System.out.println(taille_liste);
 		for(int index = 0; index <= taille_liste; index++) {
 			
