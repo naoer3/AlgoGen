@@ -15,10 +15,15 @@ public class Individu<T> {
 	 */
 	private T fitness;
 
-	
+	// TODO a laisser ?! ne laisse pas le choix à l'utilisateur
 	public Individu(List<T> genes){
 		this.genes = genes;
 	}
+	
+	// TODO a enlever (juste pour corriger le bug)
+	public Individu(){
+	}
+	
 	
 	/**
 	 * Retourne le score de l'individu
