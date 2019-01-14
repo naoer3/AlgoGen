@@ -2,65 +2,69 @@ package algorithme;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.Vector;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 /***
  * Classe contenant l'ensemble de l'algorithme
- * @author Antoine BLAINEAU
+ *
  */
-public class Algorithme<T> {
+public class Algorithme<T extends Comparable<T>> {
 
 	/***
-	* VARIABLES GLOBALES
-	* 
-	* liste_selection: Liste contenant les individus sélectionnes parmi la population de base
-	* liste_croisement: Liste contenant les individus enfants nés du croisement de certains individus de la liste_selection
-	* 
-	* selection_parent: Objet SelectionMethode permettant d'affecter une evaluation a la population "mere" en fonction de la demande du client
-	* selection_population: Objet SelectionMethode permettant d'affecter une evaluation a la nouvelle population en fonction de la demande du client
-	* croisement: Objet Croisement permettant de generer des croisement entre les individus selectionnes
-	* mutation: Objet Mutation permettant de generer des mutations sur des individus selectionnes
-	* 
-	* taille_pop: Taille de la population utilisee au sein de l'algorithme
-	* type_selection_parent: Methode de selection d'individus, au sein de la population "mere", choisie par le client (elitiste, loterie)
-	* type_selection_population: Methode de selection d'individus, au sein de la nouvelle population, choisie par le client (elitiste, loterie)
-	* prob_mutation: Pourcentage d'elements mutes
-	* prob_croisement: Pourcentage d'elements croises
-	* 
-	* Bornes_inf: Borne definissant la limite inferieure dans laquelle devront se situer les nouveaux individus 
-	* Bornes_sup: Borne definissant la limite superieure dans laquelle devront se situer les nouveaux individus
-	* 
-	* fct_crea_individu: Fonction permettant la creation d'individus au sein de la population
-	* fct_eval_individu: Fonction permettant d'évaluer les individus au sein d'une population
-	*/
-	
+	 * Creation des variables
+	 * population: Liste des individus
+	 * methode: methode de selection des individus parents
+	 * taille_pop: Taille de la population utilisee au sein de l'algorithme
+	 * mutation: Pourcentage d'elements mutes
+	 * croisement: Pourcentage d'elements croises
+	 * type_selection: Definition du type de selection des individus (elitiste, tournoi, loterie)
+	 * fct_crea_individu: Fonction permettant la creation d'individus au sein de la population 
+	 */
 	private List<Individu<T>> liste_selection = new ArrayList<>();
 	private List<Individu<T>> liste_croisement = new ArrayList<>();
-	
+	private List<Individu<T>> liste_mutation = new ArrayList<>();
+	private Population<T> population;
+
 	private SelectionMethode<T> selection_parent;
 	private SelectionMethode<T> selection_population;
 	private Croisement<T> croisement;
 	private Mutation<T> mutation;
-	
+	private CritereArret<T> critere_arret;
+
 	private int taille_pop;
+
 	private int type_selection_parent;	//0,1 fournit par l'utilisateur
 	private int type_selection_population; //0,1 fournit par l'utilisateur
-	private double prob_mutation;
-	private double prob_croisement;
-	
-	private ArrayList<Object> bornes_inf = new ArrayList<>();
-	private ArrayList<Object> bornes_sup = new ArrayList<>();
-	
+	private double prob_mutation = 3; // defaut
+	private int X_iterations;
+	private int X_non_evolution_pop;
+	private int X_non_evolutions_idividu;
+	private int duree;
+	private int nb_enfants;
+
 	private Supplier<Individu<T>> fct_crea_individu;
 	private Function<Individu<T>,T> fct_eval_individu;
+	private Function<Individu<T>,Individu<T>> fct_mutation;
 	
+
 	/***
 	 * Constructeur de la classe Algorithme
 	 */
-	public Algorithme() {}
+	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
+			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
+		this.taille_pop = taille;
+		this.type_selection_parent = select_parent;
+		this.type_selection_population = select_pop;
+		this.prob_mutation = prob_mut;
+		this.nb_enfants = nb_enfants;
+		this.fct_crea_individu = fct_crea;
+		this.fct_eval_individu = fct_eval;
+	}
+
+	// TODO a enlever (juste pour corriger le bug rapidement)
+	public Algorithme() {
+	}
 	
 	/***
 	 * Methode contenant l'ensemble de l'algorithme genetique a faire tourner
@@ -69,50 +73,83 @@ public class Algorithme<T> {
 	 */
 	public void LancerAlgorithme()
 	{
+		
+		/*	
 		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		Croisement<T> croisement = new Croisement<T>(fct_crea_individu);
 		Mutation<T> mutation = new Mutation<T>();
-		
-		switch(type_selection_parent) {
+		*/
+		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
+		croisement = new Croisement<T>(fct_crea_individu);
+		mutation = new Mutation<T>(fct_mutation, prob_mutation);
+		// duree_donnee en s, X iterations, X_non_evolution_pop, X_non_evolutions_idividu (si 0 pas pris en compte)
+		critere_arret = new CritereArret<T>(duree, X_iterations, X_non_evolution_pop, X_non_evolutions_idividu);
+		// TODO il manque une strategie
+		// TODO
+		try {
+			switch(type_selection_parent) {
 			case 0:
+				// TODO Donner nb_enfants 
 				selection_parent = new LoterieStrategy<T>(taille_pop);
 			case 1:
-				selection_parent = new ElitisteStrategy(taille_pop);
-			break;
-			default: 
-				System.out.println("Vous devez choisir une valeur égale à 0 ou 1");
-				// TODO: Generer Exception si autre type_selection que 0 ou 1. 
-		}		
-		
-		switch(type_selection_population) {
+				selection_parent = new ElitisteStrategy<T>(taille_pop);
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
+			}		
+		}
+		catch(Exception ex) {
+			ex.toString();
+		}
+
+		// TODO 
+		try {
+			switch(type_selection_population) {
 			case 0:
 				selection_population = new LoterieStrategy<T>(taille_pop);
 			case 1:
-				selection_population = new ElitisteStrategy(taille_pop);
-			break;
-			default: 
-				System.out.println("Vous devez choisir une valeur égale à 0 ou 1");
-				// TODO: Generer Exception si autre type_selection que 0 ou 1. 
+				selection_population = new ElitisteStrategy<T>(taille_pop);
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
+			}
+		}
+		catch(Exception ex) {
+			ex.toString();
 		}
 
 		do{
+			//System.out.println( "Population : " + population.toString());
+			
 			population.EvaluatePopulation();
 			
+			//System.out.println( "Population : " + population.toString());
+
 			liste_selection = selection_parent.methodeSelection(population);
 			
+			//System.out.println( "liste_selection : " + liste_selection.toString());
+
 			liste_croisement = croisement.CrossoverPopulation(liste_selection);
 			
-			population.AjoutIndividus(liste_croisement);
+			//System.out.println( "liste_croisement taille : " + liste_croisement.size());
+			//System.out.println( "liste_croisement : " + liste_croisement);
+
 			
-			mutation.methodeMutation(population);
+			population.AjoutIndividus(liste_croisement);	
 			
-			population.EvaluatePopulation();
+			//System.out.println( "Population : " + population.toString());
+
 			
+			liste_mutation = mutation.doMutation(population.getPopulation());
+			//System.out.println("liste_mutation "+liste_mutation.toString() );
+			population.setPopulation(liste_mutation);
+			population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
-			
-			System.out.println("A retirer, juste pour puller !");
-			
-		}while(true);
+			//System.out.println("Nï¿½ gï¿½neration : " + population.getCurrent_generation());
+			//System.out.println(population.toString());
+			population.NewGeneration();
+
+			// TODO observer ?
+		}while(critere_arret.getEtat(population));
+		
+		System.out.println("Arret");
+		System.out.println("Best individu : "+population.getBest());
 	}
 
 	/***
@@ -140,7 +177,7 @@ public class Algorithme<T> {
 	}
 
 	/***
-	 * Setter sur le type de selection_population choici par le client
+	 * Setter sur le type de selection_population choisi par le client
 	 * @param type_selection_population
 	 */
 	public void setType_selection_population(int type_selection_population) {
@@ -179,69 +216,122 @@ public class Algorithme<T> {
 		this.prob_mutation = mutation;
 	}
 
-	/***
-	 * Getter de la variable prob_croisement 
-	 * @return le pourcentage de croisement des individus selectionnes
-	 */
-	public double getProb_Croisement() {
-		return prob_croisement;
-	}
 
-	/***
-	 * Setter sur le pourcentage de croisement des individus selectionnes
-	 * @param croisement
-	 */
-	public void setProb_Croisement(double croisement) {
-		this.prob_croisement = croisement;
-	}
-
-	/***
-	 * Getter de la variable bornes_inf
-	 * @return les bornes inferieures concernant l'encadrement des nouveaux individus
-	 */
-	public ArrayList<Object> getBornes_inf() {
-		return bornes_inf;
-	}
-
-	/***
-	 * Setter sur les bornes inferieures concernant l'encadrement des nouveaux individus 
-	 * @param bornes_inf
-	 */
-	public void setBornes_inf(ArrayList<Object> bornes_inf) {
-		this.bornes_inf = bornes_inf;
-	}
-
-	/***
-	 * Getter de la variable bornes_sup
-	 * @return les bornes superieures concernant l'encadrement des nouveaux individus
-	 */
-	public ArrayList<Object> getBornes_sup() {
-		return bornes_sup;
-	}
-
-	/***
-	 * Setter sur les bornes surperieures concernant l'encadrement des nouveaux individus 
-	 * @param bornes_sup
-	 */
-	public void setBornes_sup(ArrayList<Object> bornes_sup) {
-		this.bornes_sup = bornes_sup;
-	}
-	
 	/***
 	 * Getter de la variable Fct_crea_individu
-	 * @return une fonction permettant la crï¿½ation d'un individu
+	 * @return une fonction permettant la creation d'un individu
 	 */
-	public Supplier getFct_crea_individu() {
-		return fct_crea_individu;
+	public Supplier<Individu<T>> getFct_crea_individu() {
+		return this.fct_crea_individu;
 	}
 
 	/***
-	 * Setter sur la fonction de crï¿½ation d'un individu
+	 * Setter sur la fonction de creation d'un individu
 	 * @param fct_crea_individu
 	 */
 	public void setFct_crea_individu(Supplier<Individu<T>> fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
 	
-}
+	/***
+	 * Getter de la variable Fct_mutation_individu
+	 * @return une fonction permettant la mutation d'un individu
+	 */
+	public Function<Individu<T>, Individu<T>> getFct_mutation_individu() {
+		return this.fct_mutation;
+	}
+
+	/***
+	 * Setter sur la fonction de mutation d'un individu
+	 * @param fct_mutation_individu
+	 */
+	public void setFct_mutation_individu(Function<Individu<T>, Individu<T>> fct_mutation) {
+		this.fct_mutation = fct_mutation;
+	}
 	
+	/***
+	 * Getter de la variable Fct_eval_individu
+	 * @return une fonction permettant l'evaluation d'un individu
+	 */
+	public Function<Individu<T>, T> getFct_eval_individu() {
+		return this.fct_eval_individu;
+	}
+
+	/***
+	 * Setter sur la fonction de l'evaluation d'un individu
+	 * @param fct_mutation_individu
+	 */
+	public void setFct_eval_individu(Function<Individu<T>, T> fct_eval_individu) {
+		this.fct_eval_individu = fct_eval_individu;
+	}
+	
+	/**
+	 * @return the x_iterations
+	 */
+	public int getX_iterations() {
+		return X_iterations;
+	}
+
+	/**
+	 * @param x_iterations the x_iterations to set
+	 */
+	public void setX_iterations(int x_iterations) {
+		X_iterations = x_iterations;
+	}
+
+	/**
+	 * @return the x_non_evolution_pop
+	 */
+	public int getX_non_evolution_pop() {
+		return X_non_evolution_pop;
+	}
+
+	/**
+	 * @param x_non_evolution_pop the x_non_evolution_pop to set
+	 */
+	public void setX_non_evolution_pop(int x_non_evolution_pop) {
+		X_non_evolution_pop = x_non_evolution_pop;
+	}
+
+	/**
+	 * @return the x_non_evolutions_idividu
+	 */
+	public int getX_non_evolutions_idividu() {
+		return X_non_evolutions_idividu;
+	}
+
+	/**
+	 * @param x_non_evolutions_idividu the x_non_evolutions_idividu to set
+	 */
+	public void setX_non_evolutions_idividu(int x_non_evolutions_idividu) {
+		X_non_evolutions_idividu = x_non_evolutions_idividu;
+	}
+
+	/**
+	 * @return the duree
+	 */
+	public int getDuree() {
+		return duree;
+	}
+
+	/**
+	 * @param duree the duree to set
+	 */
+	public void setDuree(int duree) {
+		this.duree = duree;
+	}
+
+	/**
+	 * @return the nb_enfants
+	 */
+	public int getNb_enfants() {
+		return nb_enfants;
+	}
+
+	/**
+	 * @param nb_enfants the nb_enfants to set
+	 */
+	public void setNb_enfants(int nb_enfants) {
+		this.nb_enfants = nb_enfants;
+	}
+}

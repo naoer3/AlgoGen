@@ -1,6 +1,7 @@
 package algorithme;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -12,7 +13,8 @@ import java.util.function.Supplier;
  * @param <T>
  * @see Individu
  */
-public class Population<T> {
+public class Population<T extends Comparable<T>>{
+	
 	
 	/// Attributs
 	
@@ -37,7 +39,7 @@ public class Population<T> {
 	private int taillePop = 0;
 	
 	/**
-	 * Numéro de la génération en cours
+	 * Numero de la generation en cours
 	 */
 	private int current_generation = 0;
 	
@@ -53,12 +55,15 @@ public class Population<T> {
 		this.constructeur_indiv = fct;
 		this.fct_eval = eval;
 		
-		population = new ArrayList<>();
+		this.population = new ArrayList<>();
 		
 		//Creation d'une nouvelle population
 		for(int i = 0; i < taillePop; i++) {
-			population.add(constructeur_indiv.get());
+			this.population.add(constructeur_indiv.get());
 		}
+		
+		//System.out.println(toString());
+
 	}
 
 	/// Methodes
@@ -86,9 +91,11 @@ public class Population<T> {
 	 * @param liste_individus
 	 */
 	public void AjoutIndividus(List<Individu<T>> liste_individus) {
-		for(Individu<T> individu : liste_individus) {
+		population.addAll(liste_individus);
+		// TODO
+		/*for(Individu<T> individu : liste_individus) {
 			population.add(individu);
-		}
+		}*/
 	}
 	
 	/**
@@ -98,10 +105,16 @@ public class Population<T> {
 		current_generation++;
 	}
 	
+	public void sortPopulation() {
+		Collections.sort(population, new ComparatorIndividu<T>());
+	}
+
+
+	
 	/// Getter et Setter
 	
 	/**
-	 * Getter de l'attribut population qui définit tous les individus de notre population
+	 * Getter de l'attribut population qui definit tous les individus de notre population
 	 * @return population
 	 */
 	public List<Individu<T>> getPopulation() {
@@ -125,7 +138,7 @@ public class Population<T> {
 	}
 	
 	/**
-	 * Getter de l'attribut taillePop qui décrit la taille de la population souhaitée
+	 * Getter de l'attribut taillePop qui decrit la taille de la population souhaitee
 	 * @return taillePop
 	 */
 	public int getTaillePop() {
@@ -133,7 +146,7 @@ public class Population<T> {
 	}
 	
 	/**
-	 * Getter de l'attribut current_generation qui décrit le numéro de génération en cours
+	 * Getter de l'attribut current_generation qui decrit le numero de generation en cours
 	 * @return current_generation
 	 */
 	public int getCurrent_generation() {
@@ -144,9 +157,15 @@ public class Population<T> {
 	@Override
 	public String toString() {
 		String str="";
+
 		for(int i=0;i<taillePop;i++) {
 			str+=population.get(i).toString()+"\n";
 		}
 		return str;		
 	}
+	
+	public Individu getBest() {
+		return this.population.get(0);
+	}
+
 }
