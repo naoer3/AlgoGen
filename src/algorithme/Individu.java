@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Definit un individu
  */
-public abstract class Individu<T> {
+public class Individu<T> {
 	
 	private List<T> genes;
 		
@@ -14,7 +14,10 @@ public abstract class Individu<T> {
 	 */
 	private T fitness;
 	
-
+	public Individu(List<T> genes){
+		this.genes = genes;
+	}
+	
 	/**
 	 * Retourne le score de l'individu
 	 * @return fitness de l'individu

@@ -42,7 +42,16 @@ public class Algorithme<T> {
 	/***
 	 * Constructeur de la classe Algorithme
 	 */
-	public Algorithme() {}
+	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
+			double prob_crois, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
+		this.taille_pop = taille;
+		this.type_selection_parent = select_parent;
+		this.type_selection_population = select_pop;
+		this.prob_mutation = prob_mut;
+		this.prob_croisement = prob_crois;
+		this.fct_crea_individu = fct_crea;
+		this.fct_eval_individu = fct_eval;
+	}
 	
 	/***
 	 * Methode contenant l'ensemble de l'algorithme genetique a faire tourner
