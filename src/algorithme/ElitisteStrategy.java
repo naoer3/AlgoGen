@@ -16,7 +16,7 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	/**
 	 * Pourcentage souhaite de parents selectione
 	 */
-	private int pourcentage = 0;
+	private Double pourcentage = 0.0;
 	
 	/**
 	 * Constructeur de la classe
@@ -25,7 +25,9 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	 */
 	public ElitisteStrategy(int pct)
 	{
-		setPourcentage(pct);
+		//setPourcentage(pct);	// TODO
+		setPourcentage(0.3);
+		//Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
 	}
 	
 	/// Methodes
@@ -39,14 +41,14 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
 		p.sortPopulation();
 		List<Individu<T>> list_select = new ArrayList<>();
-		int taille_population =p.getPopulation().size();
-		int taille_liste=taille_population*pourcentage;
-		taille_liste=(int)Math.round(taille_liste/100)+1;
+		int taille_population = p.getPopulation().size();
+		int taille_liste = ((Double)(taille_population*pourcentage)).intValue();
+		//taille_liste=(int)Math.round(taille_liste/100)+1;
 		
 		//System.out.println(taille_liste);
-		for(int index=0 ; index<=taille_liste;index++) {
+		for(int index = 0; index <= taille_liste; index++) {
 			
-			list_select.add((Individu<T>)p.getPopulation().get(index));
+			list_select.add(p.getPopulation().get(index));
 		}
 		return list_select;
 	}
@@ -57,7 +59,7 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	 * Getter de l'attribut pourcentage
 	 * @return pourcentage
 	 */
-	public int getPourcentage() {
+	public Double getPourcentage() {
 		return pourcentage;
 	}
 
@@ -65,7 +67,7 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	 * Setter de l'attribut pourcentage
 	 * @param pourcentage
 	 */
-	public void setPourcentage(int pct) {
+	public void setPourcentage(Double pct) {
 		this.pourcentage = pct;
 	}
 

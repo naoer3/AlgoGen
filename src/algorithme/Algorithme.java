@@ -51,7 +51,16 @@ public class Algorithme<T extends Comparable<T>> {
 	/***
 	 * Constructeur de la classe Algorithme
 	 */
-	public Algorithme() {}
+	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
+			double prob_crois, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
+		this.taille_pop = taille;
+		this.type_selection_parent = select_parent;
+		this.type_selection_population = select_pop;
+		this.prob_mutation = prob_mut;
+		this.prob_croisement = prob_crois;
+		this.fct_crea_individu = fct_crea;
+		this.fct_eval_individu = fct_eval;
+	}
 
 	/***
 	 * Methode contenant l'ensemble de l'algorithme genetique a faire tourner
@@ -60,6 +69,12 @@ public class Algorithme<T extends Comparable<T>> {
 	 */
 	public void LancerAlgorithme()
 	{
+		
+		/*	
+		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
+		Croisement<T> croisement = new Croisement<T>(fct_crea_individu);
+		Mutation<T> mutation = new Mutation<T>();
+		*/
 		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
@@ -122,7 +137,7 @@ public class Algorithme<T extends Comparable<T>> {
 			population.setPopulation(liste_mutation);
 			population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
-			//System.out.println("N° géneration : " + population.getCurrent_generation());
+			//System.out.println("Nï¿½ gï¿½neration : " + population.getCurrent_generation());
 			//System.out.println(population.toString());
 			population.NewGeneration();
 
@@ -315,7 +330,4 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setNb_enfants(int nb_enfants) {
 		this.nb_enfants = nb_enfants;
 	}
-
-
-
 }
