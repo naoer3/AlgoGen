@@ -2,7 +2,7 @@ package algorithme;
 
 import java.util.List;
 
-public class TournoiStrategy<T> extends SelectionMethode<T> {
+public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 		
 	private int myPourcentage = 100;
 	

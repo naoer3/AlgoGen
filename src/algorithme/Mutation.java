@@ -16,7 +16,7 @@ public class Mutation<T> {
 
 	public List<Individu<T>> doMutation(List<Individu<T>> individus)
 	{
-		System.out.println("Mutation - Avant : " + individus);
+		//System.out.println("Mutation - Avant : " + individus);
 
 		Random rand = new Random();
 		for (Individu<T> individu : individus) {
@@ -24,7 +24,7 @@ public class Mutation<T> {
 				individu = doIndividuMutation(individu);
 			}
 		}
-		System.out.println("Mutation - Après : " + individus);
+		//System.out.println("Mutation - Après : " + individus);
 		return individus;
 	}
 	

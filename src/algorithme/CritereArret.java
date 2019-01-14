@@ -1,6 +1,6 @@
 package algorithme;
 
-public class CritereArret<T> {
+public class CritereArret<T extends Comparable<T>> {
 
 	// TODO phoneState ??
 

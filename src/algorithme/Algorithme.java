@@ -9,7 +9,7 @@ import java.util.function.Supplier;
  * Classe contenant l'ensemble de l'algorithme
  *
  */
-public class Algorithme<T> {
+public class Algorithme<T extends Comparable<T>> {
 
 	/***
 	 * Creation des variables
@@ -24,6 +24,7 @@ public class Algorithme<T> {
 	private List<Individu<T>> liste_selection = new ArrayList<>();
 	private List<Individu<T>> liste_croisement = new ArrayList<>();
 	private List<Individu<T>> liste_mutation = new ArrayList<>();
+	private Population<T> population;
 
 	private SelectionMethode<T> selection_parent;
 	private SelectionMethode<T> selection_population;
@@ -45,7 +46,7 @@ public class Algorithme<T> {
 	private Supplier<Individu<T>> fct_crea_individu;
 	private Function<Individu<T>,T> fct_eval_individu;
 	private Function<Individu<T>,Individu<T>> fct_mutation;
-
+	
 
 	/***
 	 * Constructeur de la classe Algorithme
@@ -59,8 +60,7 @@ public class Algorithme<T> {
 	 */
 	public void LancerAlgorithme()
 	{
-		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
-		population.toString();
+		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
 		// duree_donnee en s, X iterations, X_non_evolution_pop, X_non_evolutions_idividu (si 0 pas pris en compte)
@@ -96,39 +96,41 @@ public class Algorithme<T> {
 		}
 
 		do{
-			System.out.println( "Population : " + population.toString());
+			//System.out.println( "Population : " + population.toString());
 			
 			population.EvaluatePopulation();
 			
-			System.out.println( "Population : " + population.toString());
+			//System.out.println( "Population : " + population.toString());
 
 			liste_selection = selection_parent.methodeSelection(population);
 			
-			System.out.println( "liste_selection : " + liste_selection.toString());
+			//System.out.println( "liste_selection : " + liste_selection.toString());
 
 			liste_croisement = croisement.CrossoverPopulation(liste_selection);
 			
-			System.out.println( "liste_croisement : " + liste_croisement.toString());
+			//System.out.println( "liste_croisement taille : " + liste_croisement.size());
+			//System.out.println( "liste_croisement : " + liste_croisement);
 
 			
 			population.AjoutIndividus(liste_croisement);	
 			
-			System.out.println( "Population : " + population.toString());
+			//System.out.println( "Population : " + population.toString());
 
 			
 			liste_mutation = mutation.doMutation(population.getPopulation());
-			System.out.println("liste_mutation "+liste_mutation.toString() );
+			//System.out.println("liste_mutation "+liste_mutation.toString() );
 			population.setPopulation(liste_mutation);
 			population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
-			System.out.println("N° géneration : " + population.getCurrent_generation());
-			System.out.println(population.toString());
+			//System.out.println("N° géneration : " + population.getCurrent_generation());
+			//System.out.println(population.toString());
 			population.NewGeneration();
 
 			// TODO observer ?
 		}while(critere_arret.getEtat(population));
 		
 		System.out.println("Arret");
+		System.out.println("Best individu : "+population.getBest());
 	}
 
 	/***

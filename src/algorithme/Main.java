@@ -41,20 +41,16 @@ public class Main {
 		};		
 		
 		algo.setDuree(30);
-		algo.setX_iterations(10);
-		algo.setTaille_pop(10);
+		algo.setX_iterations(1000);
+		algo.setTaille_pop(200);
 		algo.setProb_Mutation(3);
+		algo.setNb_enfants(20);
 		algo.setFct_crea_individu(CreateIndividu);
 		algo.setFct_mutation_individu(Mutation);
 		algo.setFct_eval_individu(Evaluation);
 		algo.setType_selection_parent(1);
 		algo.setType_selection_population(1);
 		algo.LancerAlgorithme();
-
-		//fctcration
-		//fctmutation
-		//andim sur lequel des genes + random de la valeur
-		//fcteveluation
 
 		//setMyPop(new Population(100));
 		//setMyLoterie(new LoterieStrategy(10));

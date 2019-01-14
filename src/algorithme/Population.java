@@ -2,7 +2,6 @@ package algorithme;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -14,7 +13,8 @@ import java.util.function.Supplier;
  * @param <T>
  * @see Individu
  */
-public class Population<T> {
+public class Population<T extends Comparable<T>>{
+	
 	
 	/// Attributs
 	
@@ -91,9 +91,11 @@ public class Population<T> {
 	 * @param liste_individus
 	 */
 	public void AjoutIndividus(List<Individu<T>> liste_individus) {
-		for(Individu<T> individu : liste_individus) {
+		population.addAll(liste_individus);
+		// TODO
+		/*for(Individu<T> individu : liste_individus) {
 			population.add(individu);
-		}
+		}*/
 	}
 	
 	/**
@@ -104,19 +106,15 @@ public class Population<T> {
 	}
 	
 	public void sortPopulation() {
-		Collections.sort(population, new Comparator<Individu<T>>() {
-	        @Override
-	        public int compare(Individu<T> indiv1, Individu<T> indiv2)
-	        {
-	            return  (((Double) indiv1.getFitness()).compareTo((Double)indiv2.getFitness()));
-	        }
-	    });
+		Collections.sort(population, new ComparatorIndividu<T>());
 	}
+
+
 	
 	/// Getter et Setter
 	
 	/**
-	 * Getter de l'attribut population qui définit tous les individus de notre population
+	 * Getter de l'attribut population qui definit tous les individus de notre population
 	 * @return population
 	 */
 	public List<Individu<T>> getPopulation() {
@@ -165,4 +163,9 @@ public class Population<T> {
 		}
 		return str;		
 	}
+	
+	public Individu getBest() {
+		return this.population.get(0);
+	}
+
 }

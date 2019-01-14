@@ -19,8 +19,9 @@ public class Croisement<T> {
 		List<Individu<T>> enfants = new ArrayList<Individu<T>>();
 		int nbParents = selection.size();
 		Random rand = new Random();
+		// TODO gerer pas prendre le meme parent
 		for (int i = 0; i <nbParents-1; i++) {
-			parent1 = selection.get(rand.nextInt(nbParents));			
+			parent1 = selection.get(rand.nextInt(nbParents));
 			parent2 = selection.get(rand.nextInt(nbParents));
 			enfants.add(Crossover(parent1,parent2));
 		}
@@ -30,10 +31,10 @@ public class Croisement<T> {
 	public Individu<T> Crossover(Individu<T> parent1, Individu<T> parent2) {
 		Individu<T> nv_individu = this.creation_individu.get();
 		Random rand = new Random();
-		int cut_index = rand.nextInt(nv_individu.getNbGenes());
-		List<T> genes = parent1.getListGenes(0, cut_index);
-		// TODO
-		genes.addAll(parent2.getListGenes(cut_index-1, nv_individu.getNbGenes()));
+		int cut_index = rand.nextInt(nv_individu.getNbGenes()-1)+1;
+		List<T> genes = new ArrayList<>();
+		genes.addAll(parent1.getListGenes(0, cut_index));
+		genes.addAll(parent2.getListGenes(cut_index, nv_individu.getNbGenes()));
 		nv_individu.setGenes(genes);
 		return nv_individu;
 		
