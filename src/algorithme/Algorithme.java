@@ -382,3 +382,4 @@ public class Algorithme<T extends Comparable<T>> {
 		this.pourcentage_selection_population = pourcentage_selection_population;
 	}
 }
+

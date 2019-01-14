@@ -43,9 +43,9 @@ public class Main {
 		algo.setFct_crea_individu(CreateIndividu);
 		algo.setFct_mutation_individu(Mutation);
 		algo.setFct_eval_individu(Evaluation);
-		algo.setTaille_tournoi(4);//TODO : je ne sais pas si c'est à mettre la
-		algo.setPourcentage_selection_parent(0.3);//TODO : je ne sais pas si c'est à mettre la
-		algo.setPourcentage_selection_population(0.3);//TODO : je ne sais pas si c'est à mettre la
+		algo.setTaille_tournoi(4);//TODO : je ne sais pas si c'est ï¿½ mettre la
+		algo.setPourcentage_selection_parent(0.3);//TODO : je ne sais pas si c'est ï¿½ mettre la
+		algo.setPourcentage_selection_population(0.3);//TODO : je ne sais pas si c'est ï¿½ mettre la
 		algo.setType_selection_parent(1);
 		algo.setType_selection_population(1);
 		algo.LancerAlgorithme();
@@ -101,3 +101,4 @@ public class Main {
 		Algorithme<Double> algo = new Algorithme<>(taille_pop, selection_parent, selection_population, prob_mutation, prob_croisement, fct_crea, fct_eval);
 		algo.LancerAlgorithme();
 	}*/}
+
