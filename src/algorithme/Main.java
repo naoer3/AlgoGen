@@ -7,7 +7,11 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Main {
-  
+
+	private static Population myPop = null;
+	private static SelectionMethode myLoterie=null;
+	private static Individu typeIndividu =null;
+
 	public static void main(String[] args) {
 
 		Algorithme<Integer> algo = new Algorithme<>();
