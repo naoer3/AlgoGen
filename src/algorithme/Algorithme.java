@@ -110,6 +110,8 @@ public class Algorithme<T> {
 			
 			selection_population.methodeSelection(population);
 			
+			System.out.println("A retirer, juste pour puller !");
+			
 		}while(true);
 	}
 
