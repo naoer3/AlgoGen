@@ -7,11 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Main {
-
-	private static Population myPop = null;
-	private static SelectionMethode myLoterie=null;
-	private static Individu typeIndividu =null;
-
+  
 	public static void main(String[] args) {
 
 		Algorithme<Integer> algo = new Algorithme<>();
@@ -47,6 +43,9 @@ public class Main {
 		algo.setFct_crea_individu(CreateIndividu);
 		algo.setFct_mutation_individu(Mutation);
 		algo.setFct_eval_individu(Evaluation);
+		algo.setTaille_tournoi(4);//TODO : je ne sais pas si c'est � mettre la
+		algo.setPourcentage_selection_parent(0.3);//TODO : je ne sais pas si c'est � mettre la
+		algo.setPourcentage_selection_population(0.3);//TODO : je ne sais pas si c'est � mettre la
 		algo.setType_selection_parent(1);
 		algo.setType_selection_population(1);
 		algo.LancerAlgorithme();
@@ -102,3 +101,4 @@ public class Main {
 		Algorithme<Double> algo = new Algorithme<>(taille_pop, selection_parent, selection_population, prob_mutation, prob_croisement, fct_crea, fct_eval);
 		algo.LancerAlgorithme();
 	}*/}
+

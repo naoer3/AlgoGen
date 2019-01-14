@@ -33,6 +33,9 @@ public class Algorithme<T extends Comparable<T>> {
 	private CritereArret<T> critere_arret;
 
 	private int taille_pop;
+	private Double pourcentage_selection_parent;
+	private Double pourcentage_selection_population;
+	private int taille_tournoi;
 
 	private int type_selection_parent;	//0,1 fournit par l'utilisateur
 	private int type_selection_population; //0,1 fournit par l'utilisateur
@@ -90,9 +93,11 @@ public class Algorithme<T extends Comparable<T>> {
 			switch(type_selection_parent) {
 			case 0:
 				// TODO Donner nb_enfants 
-				selection_parent = new LoterieStrategy<T>(taille_pop);
+				selection_parent = new LoterieStrategy<T>(pourcentage_selection_parent);
 			case 1:
-				selection_parent = new ElitisteStrategy<T>(taille_pop);
+				selection_parent = new ElitisteStrategy<T>(pourcentage_selection_parent);
+			case 2:
+				selection_population = new TournoiStrategy<T>(pourcentage_selection_parent,taille_tournoi);
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
 			}		
 		}
@@ -104,9 +109,9 @@ public class Algorithme<T extends Comparable<T>> {
 		try {
 			switch(type_selection_population) {
 			case 0:
-				selection_population = new LoterieStrategy<T>(taille_pop);
+				selection_population = new LoterieStrategy<T>(pourcentage_selection_population);
 			case 1:
-				selection_population = new ElitisteStrategy<T>(taille_pop);
+				selection_population = new ElitisteStrategy<T>(pourcentage_selection_population);
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 			}
 		}
@@ -334,4 +339,47 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setNb_enfants(int nb_enfants) {
 		this.nb_enfants = nb_enfants;
 	}
+
+	/**
+	 * @return taille du tournoi de selection
+	 */
+	public int getTaille_tournoi() {
+		return taille_tournoi;
+	}
+
+	/**
+	 * @param taille du tournoi de selection to set
+	 */
+	public void setTaille_tournoi(int taille_tournoi) {
+		this.taille_tournoi = taille_tournoi;
+	}
+
+	/**
+	 * @param Pourcentage de selection des parent
+	 */
+	public Double getPourcentage_selection_parent() {
+		return pourcentage_selection_parent;
+	}
+
+	/**
+	 * @param Pourcentage de selection des parent to set
+	 */
+	public void setPourcentage_selection_parent(Double pourcentage_selection_parent) {
+		this.pourcentage_selection_parent = pourcentage_selection_parent;
+	}
+
+	/**
+	 * @param Pourcentage de selection de la population
+	 */
+	public Double getPourcentage_selection_population() {
+		return pourcentage_selection_population;
+	}
+
+	/**
+	 * @param Pourcentage de selection de la population to set
+	 */
+	public void setPourcentage_selection_population(Double pourcentage_selection_population) {
+		this.pourcentage_selection_population = pourcentage_selection_population;
+	}
 }
+
