@@ -5,14 +5,16 @@ import java.util.List;
 /**
  * Definit un individu
  */
+
 public class Individu<T> {
-	
+
 	private List<T> genes;
-		
+
 	/**
 	 * Score de l'individu
 	 */
 	private T fitness;
+
 	
 	public Individu(List<T> genes){
 		this.genes = genes;
@@ -23,7 +25,7 @@ public class Individu<T> {
 	 * @return fitness de l'individu
 	 */
 	public T getFitness() {
-		return fitness;
+		return this.fitness;
 	}
 
 	/**
@@ -38,7 +40,7 @@ public class Individu<T> {
 	 * @return the genes
 	 */
 	public List<T> getGenes() {
-		return genes;
+		return this.genes;
 	}
 
 	/**
@@ -46,14 +48,35 @@ public class Individu<T> {
 	 */
 	public void setGenes(List<T> genes) {
 		this.genes = genes;
+	}
+
+	public void setGene(int index, T gene) {
+		this.genes.set(index, gene);
 	}	
-	
+
 	public List<T> getListGenes(int debut, int fin){
-		return genes.subList(debut, fin);
+		return this.genes.subList(debut, fin);
 	}
-	
+
 	public int getNbGenes() {
-		return genes.size();
+		return this.genes.size();
 	}
-	
+
+	public T getGene(int index){
+		return this.genes.get(index);
+	}
+
+	// TODO
+	public String toString() {
+		String str ="";
+		System.out.println(genes);
+		for (T t : genes) {
+			str += t.toString();
+			str += " ";
+		}
+		if(this.fitness != null)
+			str+=" => " + this.fitness.toString();
+		return str;		
+	}
+
 }

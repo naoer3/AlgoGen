@@ -11,7 +11,7 @@ import java.util.Random;
  * @param <T>
  * @see SelectionMethode
  */
-public class LoterieStrategy<T> extends SelectionMethode<T> {
+public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 	
 	/**
 	 * Pourcentage souhaitee de parents selectione

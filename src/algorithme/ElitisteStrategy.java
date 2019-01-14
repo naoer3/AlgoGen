@@ -2,27 +2,26 @@ package algorithme;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 /**
- * Classe deffinisant la metode de selection de type elitiste
+ * Classe definissant la methode de selection de type elitiste
  * @version 1.0
  * @since 1.0
  * @param <T>
  * @see SelectionMethode
  */
-public class ElitisteStrategy<T> extends SelectionMethode<T>{
+public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<T>{
 
 	/**
-	 * Pourcentage souhaitee de parents selectione
+	 * Pourcentage souhaite de parents selectione
 	 */
 	private Double pourcentage = 0.0;
 	
 	/**
 	 * Constructeur de la classe
 	 * Initialise une ElitisteStrategy
-	 * @param Pourcentage souhaitee de parents selectione
+	 * @param Pourcentage souhaite de parents selectionnes
 	 */
 	public ElitisteStrategy(int pct)
 	{
