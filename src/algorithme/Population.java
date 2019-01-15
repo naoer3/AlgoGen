@@ -14,8 +14,7 @@ import java.util.function.Supplier;
  * @see Individu
  */
 public class Population<T extends Comparable<T>>{
-	
-	
+		
 	/// Attributs
 	
 	/**
@@ -42,6 +41,8 @@ public class Population<T extends Comparable<T>>{
 	 * Numero de la generation en cours
 	 */
 	private int current_generation = 0;
+	
+	//Constructeur
 	
 	/**
 	 * Constructeur de la classe
@@ -92,10 +93,6 @@ public class Population<T extends Comparable<T>>{
 	 */
 	public void AjoutIndividus(List<Individu<T>> liste_individus) {
 		population.addAll(liste_individus);
-		// TODO
-		/*for(Individu<T> individu : liste_individus) {
-			population.add(individu);
-		}*/
 	}
 	
 	/**
@@ -105,11 +102,18 @@ public class Population<T extends Comparable<T>>{
 		current_generation++;
 	}
 	
+	// TODO : commentaire, que fait le comparator
 	public void sortPopulation() {
 		Collections.sort(population, new ComparatorIndividu<T>());
 	}
-
-
+	
+	/**
+	 * Retourne l'individu avec la meilleure fitness
+	 * @return le meilleur individu de la population
+	 */
+	public Individu<T> getBest() {
+		return this.population.get(0);
+	}
 	
 	/// Getter et Setter
 	
@@ -163,9 +167,4 @@ public class Population<T extends Comparable<T>>{
 		}
 		return str;		
 	}
-	
-	public Individu getBest() {
-		return this.population.get(0);
-	}
-
 }
