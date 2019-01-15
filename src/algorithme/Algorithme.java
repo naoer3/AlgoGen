@@ -76,12 +76,6 @@ public class Algorithme<T extends Comparable<T>> {
 	 */
 	public void LancerAlgorithme()
 	{
-		
-		/*	
-		Population<T> population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
-		Croisement<T> croisement = new Croisement<T>(fct_crea_individu);
-		Mutation<T> mutation = new Mutation<T>();
-		*/
 		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);

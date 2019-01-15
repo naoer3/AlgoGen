@@ -5,9 +5,11 @@ import java.util.List;
 /**
  * Definit un individu
  */
-
 public class Individu<T> {
 
+	/**
+	 * Liste des gènes d'un individu
+	 */
 	private List<T> genes;
 
 	/**
@@ -49,24 +51,45 @@ public class Individu<T> {
 	}
 
 	/**
-	 * @param genes the genes to set
+	 * Setter de l'attribut genes
+	 * @param genes Nouvelle valeur de genes
 	 */
 	public void setGenes(List<T> genes) {
 		this.genes = genes;
 	}
 
+	/**
+	 * Change la valeur d'un gene a un emplacement donne
+	 * @param index Emplacement du gene dans la liste
+	 * @param gene Valeur du nouveau gene
+	 */
 	public void setGene(int index, T gene) {
 		this.genes.set(index, gene);
 	}	
 
+	/**
+	 * Retourne la liste des genes entre un emplacement debut et un emplacement fin
+	 * @param debut Index du debut de la liste a retourner
+	 * @param fin Index de fin de la liste a retourner
+	 * @return la liste de genes
+	 */
 	public List<T> getListGenes(int debut, int fin){
 		return this.genes.subList(debut, fin);
 	}
 
+	/**
+	 * Retourne le nombre de genes d'un individu
+	 * @return nombre de genes
+	 */
 	public int getNbGenes() {
 		return this.genes.size();
 	}
 
+	/**
+	 * Retourne un gene pour un indice donne
+	 * @param index
+	 * @return le gene a l'indice index
+	 */
 	public T getGene(int index){
 		return this.genes.get(index);
 	}
