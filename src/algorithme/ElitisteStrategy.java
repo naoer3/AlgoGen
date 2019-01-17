@@ -14,18 +14,25 @@ import java.util.List;
 public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<T>{
 
 	/**
-	 * Pourcentage souhaite de parents selectione
+	 * Nombre d'individu souhaitee
 	 */
-	private Double pourcentage = 0.0;
+	private int nb_individu = 0;
+	
+	/**
+	 * Conservation ou non du meilleur individu
+	 */
+	private boolean keep_best;
+ 
 	
 	/**
 	 * Constructeur de la classe
 	 * Initialise une ElitisteStrategy
 	 * @param Pourcentage souhaite de parents selectionnes
 	 */
-	public ElitisteStrategy(Double pct)
+	public ElitisteStrategy(int nbIndividu, boolean keepbest)
 	{
-		setPourcentage(pct);	// TODO Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
+		setNb_individu(nbIndividu);
+		setKeep_best(keepbest);	// TODO Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
 	}
 	
 	/// Methodes
@@ -37,11 +44,16 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	 */
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
-		p.sortPopulation();
 		List<Individu<T>> list_select = new ArrayList<>();
-		int taille_population = p.getPopulation().size();
-		int taille_liste = ((Double)(taille_population*pourcentage)).intValue();
-		//System.out.println(taille_liste);
+		p.sortPopulation();
+		int taille_liste;
+		if(keep_best) {
+			taille_liste = nb_individu-1;
+			list_select.add(p.getBest());
+		}
+		else {
+			taille_liste = nb_individu;
+		}
 		for(int index = 0; index <= taille_liste; index++) {
 			
 			list_select.add(p.getPopulation().get(index));
@@ -51,20 +63,32 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	
 	/// Getter et Setter
 	
-	/**
-	 * Getter de l'attribut pourcentage
-	 * @return pourcentage
-	 */
-	public Double getPourcentage() {
-		return pourcentage;
-	}
+		/**
+		 * @return the nb_individu
+		 */
+		public int getNb_individu() {
+			return nb_individu;
+		}
 
-	/**
-	 * Setter de l'attribut pourcentage
-	 * @param pourcentage
-	 */
-	public void setPourcentage(Double pct) {
-		this.pourcentage = pct;
-	}
+		/**
+		 * @param nb_individu the nb_individu to set
+		 */
+		public void setNb_individu(int nb_individu) {
+			this.nb_individu = nb_individu;
+		}
+		
+		/**
+		 * @return the keep_best
+		 */
+		public boolean isKeep_best() {
+			return keep_best;
+		}
+
+		/**
+		 * @param keep_best the keep_best to set
+		 */
+		public void setKeep_best(boolean keep_best) {
+			this.keep_best = keep_best;
+		}
 
 }
