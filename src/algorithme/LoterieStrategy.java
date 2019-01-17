@@ -13,10 +13,6 @@ import java.util.Random;
  */
 public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 	
-	/**
-	 * Nombre d'individu souhaitee
-	 */
-	private int nb_individu = 0;
 	
 	/**
 	 * Conservation ou non du meilleur individu
@@ -70,19 +66,6 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 
 	/// Getter et Setter
 	
-	/**
-	 * @return the nb_individu
-	 */
-	public int getNb_individu() {
-		return nb_individu;
-	}
-
-	/**
-	 * @param nb_individu the nb_individu to set
-	 */
-	public void setNb_individu(int nb_individu) {
-		this.nb_individu = nb_individu;
-	}
 	
 	/**
 	 * @return the keep_best
