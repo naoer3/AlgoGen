@@ -373,28 +373,28 @@ public class Algorithme<T extends Comparable<T>> {
 	/**
 	 * @param Pourcentage de selection des parent
 	 */
-	public int getPourcentage_selection_parent() {
+	public int getNb_selection_parent() {
 		return nb_selection_parent;
 	}
 
 	/**
 	 * @param Pourcentage de selection des parent to set
 	 */
-	public void setPourcentage_selection_parent(int nb_selection_parent) {
+	public void setNb_selection_parent(int nb_selection_parent) {
 		this.nb_selection_parent = nb_selection_parent;
 	}
 
 	/**
 	 * @param Pourcentage de selection de la population
 	 */
-	public int getPourcentage_selection_population() {
+	public int getNb_selection_population() {
 		return nb_selection_population;
 	}
 
 	/**
 	 * @param Pourcentage de selection de la population to set
 	 */
-	public void setPourcentage_selection_population(int nb_selection_population) {
+	public void setNb_selection_population(int nb_selection_population) {
 		this.nb_selection_population = nb_selection_population;
 	}
 }
