@@ -5,39 +5,38 @@ import java.util.List;
 
 
 /**
- * Classe definissant la methode de selection de type elitiste
+ * Classe permettant de selectionner des individus au sein d'une population selon la methode "Elitiste"
  * @version 1.0
  * @since 1.0
  * @param <T>
- * @see SelectionMethode
  */
 public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<T>{
 
-	
-	
-	/**
-	 * Conservation ou non du meilleur individu
+	/***
+	 * Declaration des variables globales
+	 * nb_individu: Nombre d'individus selectionnes
+	 * keep_best: Booleen permettant d'indiquer si l'on conserve le meilleur individu ou non
 	 */
+	private int nb_individu = 0;
 	private boolean keep_best;
  
 	
 	/**
-	 * Constructeur de la classe
-	 * Initialise une ElitisteStrategy
-	 * @param Pourcentage souhaite de parents selectionnes
+	 * Constructeur de la classe ElitisteStrategy
+	 * @param1 nbIndividu
+	 * @param2 keepbest
 	 */
 	public ElitisteStrategy(int nbIndividu, boolean keepbest)
 	{
 		setNb_individu(nbIndividu);
 		setKeep_best(keepbest);	// TODO Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
 	}
-	
-	/// Methodes
+
 	
 	/**
-	 * Selectionne un pourcentage de parents avec le meilleur score dans la population
+	 * methodeSelection: Permet la selection d'individus au sein d'une population
 	 * @param Population
-	 * @see Population
+	 * @return Liste des individus selectionnes
 	 */
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
@@ -58,18 +57,33 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 		return list_select;
 	}
 	
-	/// Getter et Setter
-	
+		/**
+		 * Getter de la variable nb_individu
+		 * @return le nombre d'individus selectionnes
+		 */
+		public int getNb_individu() {
+			return nb_individu;
+		}
+
+		/**
+		 * Setter sur le nombre d'individus selectionnes
+		 * @param nb_individu
+		 */
+		public void setNb_individu(int nb_individu) {
+			this.nb_individu = nb_individu;
+		}
 		
 		/**
-		 * @return the keep_best
+		 * Getter de la variable keep_best
+		 * @return un booleen pour savoir si l'on conserve le meilleur individu ou non 
 		 */
 		public boolean isKeep_best() {
 			return keep_best;
 		}
 
 		/**
-		 * @param keep_best the keep_best to set
+		 * Setter sur le booleen permettant de conserver le meilleur individu ou non
+		 * @param keep_best
 		 */
 		public void setKeep_best(boolean keep_best) {
 			this.keep_best = keep_best;

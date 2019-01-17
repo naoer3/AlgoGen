@@ -6,23 +6,26 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Classe deffinisant la metode de selection de type Tournoi
+ * Classe permettant d'appliquer la methode de selection "Tournoi" sur une population
  * @version 1.0
  * @since 1.0
  * @param <T>
  * @see SelectionMethode
  */
 public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
-	
-	/**
-	 * Taille du tournoi souhaitee
+
+	/***
+	 * Declaration des variables globales
+	 * nb_individu: Nombre d'individus Ã  selectionner
+	 * taille_tournoi: Taille du tournoi permettant de selectionner les individus
 	 */
+	private int nb_individu = 0;
 	private int taille_tournoi = 0;
  
 	/**
-	 * Constructeur de la classe
-	 * Initialise une TournoiStrategy
-	 * @param Pourcentage souhaitee de parents selectione
+	 * Constructeur de la classe TournoiStrategy
+	 * @param1: nbIndividu
+	 * @param2: tailleTournoi 
 	 */
 	public TournoiStrategy(int nbIndividu,int tailleTournoi)
 	{
@@ -30,12 +33,10 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 		setTailleTournoi(tailleTournoi);
 	}
 	
-	/// Methodes
-	
 	/**
-	 * Selectionne un pourcentage de parents aléatoirement dans la population
+	 * methodeSelection: Permet de retourner une liste d'individus selectionnes selon l'application
+	 * d'un tournoi sur ces derniers. Suivant la taille predefinie, les individus sont compares et les meilleurs sont selectionnes
 	 * @param Population
-	 * @see Population
 	 */
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
@@ -56,19 +57,26 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 		}
 		return list_select;
 	}
-
-	/// Getter et Setter
 	
+	/***
+	 * Getter de la variable nb_individu
+	 * @return le nombre d'individus selectionnes
+	 */
+	public int getNb_individu() {
+		return nb_individu;
+	}
 	
-	/**
-	 * @param tailleTournoi the tailleTournoi to set
+	/***
+	 * Getter de la variable taille_tournoi
+	 * @return la taille du tournoi
 	 */
 	public int getTailleTournoi() {
 		return taille_tournoi;
 	}
 
-	/**
-	 * @param tailleTournoi the tailleTournoi to set
+	/***
+	 * Setter sur la taille du tournoi
+	 * @param tailleTournoi
 	 */
 	public void setTailleTournoi(int tailleTournoi) {
 		this.taille_tournoi = tailleTournoi;
