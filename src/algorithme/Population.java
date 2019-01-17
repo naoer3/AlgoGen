@@ -23,11 +23,6 @@ public class Population<T extends Comparable<T>>{
 	private Supplier<Individu<T>> constructeur_indiv = null;
 	
 	/**
-	 * Fonction a evaluer dans l'algorithme
-	 */
-	private Function<Individu<T>,T> fct_eval = null;
-	
-	/**
 	 * Liste d'individus qui forme la population
 	 */
 	private List<Individu<T>> population = null;
@@ -56,10 +51,9 @@ public class Population<T extends Comparable<T>>{
 	 * @param fct Fonction creant de nouveaux individus
 	 * @param eval Fonction d'evaluation de l'algorithme
 	 */
-	public Population(int taille, Supplier<Individu<T>> fct, Function<Individu<T>,T> eval) {
+	public Population(int taille, Supplier<Individu<T>> fct) {
 		this.taillePop = taille;
 		this.constructeur_indiv = fct;
-		this.fct_eval = eval;
 		
 		this.population = new ArrayList<>();
 		
@@ -79,23 +73,23 @@ public class Population<T extends Comparable<T>>{
 
 	/// Methodes
 	
-	/**
+	/*/**
 	 * Evalue la fitness de toute la population
 	 * @see Evaluate
 	 */
-	public void EvaluatePopulation() {
+	/*public void EvaluatePopulation() {
 		for(Individu<T> individu : this.population) {
 			this.Evaluate(individu);
 		}
-	}
+	}*/
 	
 	/**
 	 * Evalue la fitness d'un individu donne
 	 * @param individu
 	 */
-	public void Evaluate(Individu<T> individu) {
+	/*public void Evaluate(Individu<T> individu) {
 		individu.setFitness(fct_eval.apply(individu));
-	}	
+	}*/	
 	
 	/**
 	 * Ajoute une liste d'individus a la population existante
