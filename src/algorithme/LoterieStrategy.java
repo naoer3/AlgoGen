@@ -14,22 +14,31 @@ import java.util.Random;
 public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 	
 	/**
-	 * Pourcentage souhaitee de parents selectione
+	 * Nombre d'individu souhaitee
 	 */
-	private Double pourcentage = 0.0;
+	private int nb_individu = 0;
+	
+	/**
+	 * Conservation ou non du meilleur individu
+	 */
+	private boolean keep_best;
  
+	
+
 	/**
 	 * Constructeur de la classe
 	 * Initialise une LoterieStrategy
 	 * @param Pourcentage souhaitee de parents selectione
 	 */
-	public LoterieStrategy(Double pct)
+	public LoterieStrategy(int nbIndividu, boolean keepbest)
 	{
-		setPourcentage(pct);
+		setNb_individu(nbIndividu);
+		setKeep_best(keepbest);
 	}
 	
 	/// Methodes
 	
+
 	/**
 	 * Selectionne un pourcentage de parents aléatoirement dans la population
 	 * @param Population
@@ -38,12 +47,20 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	@Override
 	public List<Individu<T>> methodeSelection(Population<T> p) { 
 		List<Individu<T>> list_select = new ArrayList<>();
+		int taille_liste;
+		if(keep_best) {
+			taille_liste = nb_individu-1;
+			p.sortPopulation();
+			list_select.add(p.getBest());
+		}
+		else {
+			taille_liste = nb_individu;
+		}
+		
 		int nombreAleatoire =0;
 		int taille_population =p.getPopulation().size();
-		int taille_liste = ((Double)(taille_population*pourcentage)).intValue();
-		Random rand = new Random(); 
 		
-		//System.out.println(taille_liste);
+		Random rand = new Random(); 
 		for(int index=0 ; index<=taille_liste;index++) {
 			nombreAleatoire = rand.nextInt(taille_population + 1);
 			list_select.add((Individu<T>)p.getPopulation().get(nombreAleatoire));
@@ -54,19 +71,31 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	/// Getter et Setter
 	
 	/**
-	 * Getter de l'attribut pourcentage
-	 * @return pourcentage
+	 * @return the nb_individu
 	 */
-	public Double getPourcentage() {
-		return pourcentage;
+	public int getNb_individu() {
+		return nb_individu;
 	}
 
 	/**
-	 * Setter de l'attribut pourcentage
-	 * @param pourcentage
+	 * @param nb_individu the nb_individu to set
 	 */
-	public void setPourcentage(Double pct) {
-		this.pourcentage = pct;
+	public void setNb_individu(int nb_individu) {
+		this.nb_individu = nb_individu;
+	}
+	
+	/**
+	 * @return the keep_best
+	 */
+	public boolean isKeep_best() {
+		return keep_best;
+	}
+
+	/**
+	 * @param keep_best the keep_best to set
+	 */
+	public void setKeep_best(boolean keep_best) {
+		this.keep_best = keep_best;
 	}
 
 }

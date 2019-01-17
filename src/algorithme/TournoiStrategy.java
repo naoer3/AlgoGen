@@ -15,12 +15,12 @@ import java.util.Random;
 public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 	
 	/**
-	 * Pourcentage souhaitee de parents selectione
+	 * Nombre d'individu souhaitee
 	 */
-	private Double pourcentage = 0.0;
+	private int nb_individu = 0;
 	
 	/**
-	 * Pourcentage souhaitee de parents selectione
+	 * Taille du tournoi souhaitee
 	 */
 	private int taille_tournoi = 0;
  
@@ -29,9 +29,9 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	 * Initialise une TournoiStrategy
 	 * @param Pourcentage souhaitee de parents selectione
 	 */
-	public TournoiStrategy(Double pct,int tailleTournoi)
+	public TournoiStrategy(int nbIndividu,int tailleTournoi)
 	{
-		setPourcentage(pct);
+		setNb_individu(nbIndividu);
 		setTailleTournoi(tailleTournoi);
 	}
 	
@@ -48,10 +48,9 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 		List<Individu<T>> list_tournoi = new ArrayList<>();
 		int nombreAleatoire =0;
 		int taille_population =p.getPopulation().size();
-		int taille_liste = ((Double)(taille_population*pourcentage)).intValue();
+		int taille_liste = nb_individu;
 		Random rand = new Random(); 
 		
-		//System.out.println(taille_liste);
 		for(int index=0 ; index<=taille_liste;index++) {
 			for(int i=0 ; i<=taille_tournoi;i++) {
 				nombreAleatoire = rand.nextInt(taille_population + 1);
@@ -66,25 +65,30 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	/// Getter et Setter
 	
 	/**
-	 * Getter de l'attribut pourcentage
-	 * @return pourcentage
+	 * @return the nb_individu
 	 */
-	public Double getPourcentage() {
-		return pourcentage;
+	public int getNb_individu() {
+		return nb_individu;
 	}
 
 	/**
-	 * Setter de l'attribut pourcentage
-	 * @param pourcentage
+	 * @param nb_individu the nb_individu to set
 	 */
-	public void setPourcentage(Double pct) {
-		this.pourcentage = pct;
+	public void setNb_individu(int nb_individu) {
+		this.nb_individu = nb_individu;
 	}
-
+	
+	
+	/**
+	 * @param tailleTournoi the tailleTournoi to set
+	 */
 	public int getTailleTournoi() {
 		return taille_tournoi;
 	}
 
+	/**
+	 * @param tailleTournoi the tailleTournoi to set
+	 */
 	public void setTailleTournoi(int tailleTournoi) {
 		this.taille_tournoi = tailleTournoi;
 	}
