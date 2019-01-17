@@ -54,6 +54,7 @@ public class Algorithme<T extends Comparable<T>> {
 	/***
 	 * Constructeur de la classe Algorithme
 	 */
+	// TODO design pattern monteur ??
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;

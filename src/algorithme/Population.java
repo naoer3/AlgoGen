@@ -42,6 +42,11 @@ public class Population<T extends Comparable<T>>{
 	 */
 	private int current_generation = 0;
 	
+	/**
+	 * Meilleur individu de la population
+	 */
+	private Individu<T> bestIndividu = new Individu<>();
+	
 	//Constructeur
 	
 	/**
@@ -65,6 +70,11 @@ public class Population<T extends Comparable<T>>{
 		
 		//System.out.println(toString());
 
+	}
+	
+	// TODO à voir si utile
+	public Population() {
+		
 	}
 
 	/// Methodes
@@ -105,6 +115,7 @@ public class Population<T extends Comparable<T>>{
 	// TODO : commentaire, que fait le comparator
 	public void sortPopulation() {
 		Collections.sort(population, new ComparatorIndividu<T>());
+		bestIndividu = this.population.get(0);
 	}
 	
 	/**
@@ -112,7 +123,7 @@ public class Population<T extends Comparable<T>>{
 	 * @return le meilleur individu de la population
 	 */
 	public Individu<T> getBest() {
-		return this.population.get(0);
+		return bestIndividu;
 	}
 	
 	/// Getter et Setter
