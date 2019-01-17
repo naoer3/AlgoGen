@@ -41,6 +41,7 @@ public class Algorithme<T extends Comparable<T>> {
 	private List<Individu<T>> parents = new ArrayList<>();
 	private List<Individu<T>> enfants = new ArrayList<>();
 	private List<Individu<T>> population_mutee = new ArrayList<>();
+	private List<CritereArretMethode<T>> criteres = new ArrayList<>();
 	private Population<T> population;
 
 	private SelectionMethode<T> selection_parent;
@@ -48,6 +49,10 @@ public class Algorithme<T extends Comparable<T>> {
 	private Croisement<T> croisement;
 	private Mutation<T> mutation;
 	private CritereArret<T> critere_arret;
+	private CritereArretMethode<T> critere_duree;
+	private CritereArretMethode<T> critere_individu;
+	private CritereArretMethode<T> critere_population;
+	private CritereArretMethode<T> critere_ireration;
 
 	private int taille_pop;
 	private int nb_selection_parent;
@@ -96,6 +101,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 */
 	public void LancerAlgorithme()
 	{
+		boolean continu_algorithme=false;
 		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
@@ -149,11 +155,34 @@ public class Algorithme<T extends Comparable<T>> {
 			//System.out.println("Nouvelle generation : " + population.getCurrent_generation());
 			//System.out.println(population.toString());
 			population.NewGeneration();
-			// TODO observer ?
-		}while(critere_arret.getEtat(population));
+			
+			for(CritereArretMethode<T> c : criteres) {
+				if(c.getEtat(population))
+					continu_algorithme=true;
+			}
+		}while(continu_algorithme);
 	
 		System.out.println("Arret");
 		System.out.println("Best individu : "+population.getBest());
+	}
+	
+	public void SelectCritere(boolean ajout_duree, boolean ajout_iterations, boolean ajout_evolution_pop, boolean ajout_evolutions_idividu) {
+		if(ajout_duree) {
+			critere_duree=new CritereDuree<T>(duree);
+			criteres.add(critere_duree);
+		}
+		if(ajout_iterations) {
+			critere_ireration=new CritereIteration<T>(x_iterations_algo);
+			criteres.add(critere_ireration);
+		}
+		if(ajout_evolution_pop) {
+			critere_population=new CritereEvolutionPopulation<T>(x_stagnation_population);
+			criteres.add(critere_population);
+		}
+		if(ajout_evolutions_idividu) {
+			critere_individu=new CritereEvolutionIndividu<T>(x_stagnation_individu);
+			criteres.add(critere_individu);
+		}
 	}
 
 	/***
