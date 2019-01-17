@@ -5,14 +5,33 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Supplier;
 
+/**
+ * Classe permettant de generer des croisements entre les individus d'une population
+ * @version 1.0
+ * @since 1.0
+ * @param <T>
+ */
 public class Croisement<T> {
 	
+	/***
+	 * Declaration des variables
+	 * creation_individu: Fonction permettant de creer un individu
+	 */
 	Supplier<Individu<T>> creation_individu;
 	
+	/***
+	 * Constructeur de la classe Croisement
+	 * @param creation_individu
+	 */
 	public Croisement(Supplier<Individu<T>> creation_individu) {
 		this.creation_individu = creation_individu;
 	}
 	
+	/***
+	 * CrossoverPopulation: Methode permettant d'effectuer des croisements au sein d'une population
+	 * @param selection
+	 * @return une liste d'enfants
+	 */
 	public List<Individu<T>> CrossoverPopulation(List<Individu<T>> selection){
 		Individu<T> parent1 = null;
 		Individu<T> parent2 = null;
@@ -28,6 +47,12 @@ public class Croisement<T> {
 		return enfants;
 	}
 	
+	/***
+	 * Crossover: Methode permettant d'effectuer le croisement de deux parents particuliers
+	 * @param1 parent1
+	 * @param2 parent2
+	 * @return un enfant
+	 */
 	public Individu<T> Crossover(Individu<T> parent1, Individu<T> parent2) {
 		Individu<T> nv_individu = this.creation_individu.get();
 		Random rand = new Random();
