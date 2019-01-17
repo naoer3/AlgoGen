@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+
 public class Main {
   
 	public static void main(String[] args) {
@@ -44,8 +45,8 @@ public class Main {
 		algo.setFct_mutation_individu(Mutation);
 		algo.setFct_eval_individu(Evaluation);
 		algo.setTaille_tournoi(4);//TODO : je ne sais pas si c'est � mettre la
-		algo.setPourcentage_selection_parent(0.3);//TODO : je ne sais pas si c'est � mettre la
-		algo.setPourcentage_selection_population(0.3);//TODO : je ne sais pas si c'est � mettre la
+		algo.setNb_selection_parent(3);//TODO : je ne sais pas si c'est � mettre la
+		algo.setNb_selection_population(3);//TODO : je ne sais pas si c'est � mettre la
 		algo.setType_selection_parent(1);
 		algo.setType_selection_population(1);
 		algo.LancerAlgorithme();
