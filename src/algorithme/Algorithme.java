@@ -85,7 +85,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param fct_crea: Fonction de cr�ation d'un individu
 	 * @param fct_eval: Fonction de d'�valuation d'un individu
 	 */
-  // TODO design pattern monteur
+	// TODO design pattern facade (� noter)
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -96,16 +96,17 @@ public class Algorithme<T extends Comparable<T>> {
 		this.fct_crea_individu = fct_crea;
 		this.fct_eval_individu = fct_eval;
 	}
-	
+
 	/***
 	 * Methode LancerAlgorithme qui contient l'appel des methoes necessaire au traitement genetique d'une population
 	 */
 	public void LancerAlgorithme()
 	{
-		boolean continu_algorithme=false;
-		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
+    		boolean continu_algorithme=false;
+		population = new Population<T>(taille_pop, fct_crea_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
+		fitnessEval = new FitnessEval<T>(fct_eval_individu);
 		
 		// TODO il manque une strategie
 		try {
@@ -113,10 +114,13 @@ public class Algorithme<T extends Comparable<T>> {
 			case 0:
 				// TODO Donner nb_enfants 
 				selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
+				break;
 			case 1:
 				selection_parent = new ElitisteStrategy<T>(nb_selection_parent, false);
+				break;
 			case 2:
 				selection_parent = new TournoiStrategy<T>(nb_selection_parent,taille_tournoi);
+				break;
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
 			}		
 		}
@@ -128,8 +132,10 @@ public class Algorithme<T extends Comparable<T>> {
 			switch(type_selection_population) {
 			case 0:
 				selection_population = new LoterieStrategy<T>(nb_selection_population, true);
+				break;
 			case 1:
 				selection_population = new ElitisteStrategy<T>(nb_selection_population, true);
+				break;
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 			}
 		}
@@ -139,11 +145,18 @@ public class Algorithme<T extends Comparable<T>> {
 
 		do{
 			//System.out.println( "Population : " + population.toString());
-			population.EvaluatePopulation();
+			
+			System.out.println("##################Debut evaluation#######################");
+			fitnessEval.EvaluatePopulation(population.getPopulation());
+			System.out.println("##################Debut evaluation#######################");
+
+
 			//System.out.println( "Population : " + population.toString());
 			parents = selection_parent.methodeSelection(population);
+
 			//System.out.println( "parents : " + parents.toString());
 			enfants = croisement.CrossoverPopulation(parents);
+
 			//System.out.println( "enfants taille : " + enfants.size());
 			//System.out.println( "enfants : " + enfants);
 			population.AjoutIndividus(enfants);	
@@ -151,11 +164,16 @@ public class Algorithme<T extends Comparable<T>> {
 			population_mutee = mutation.doMutation(population.getPopulation());
 			//System.out.println("population_mutee "+population_mutee.toString() );
 			population.setPopulation(population_mutee);
-			population.EvaluatePopulation();			
+
+			fitnessEval.EvaluatePopulation(population.getPopulation());
+
+
+			//population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
 			//System.out.println("Nouvelle generation : " + population.getCurrent_generation());
 			//System.out.println(population.toString());
 			population.NewGeneration();
+
 			
 			for(CritereArretMethode<T> c : criteres) {
 				if(c.getEtat(population))
@@ -266,7 +284,7 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setFct_crea_individu(Supplier<Individu<T>> fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
-	
+
 	/***
 	 * Getter de la variable Fct_mutation_individu
 	 * @return une fonction permettant la mutation d'un individu
@@ -282,7 +300,7 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setFct_mutation_individu(Function<Individu<T>, Individu<T>> fct_mutation) {
 		this.fct_mutation = fct_mutation;
 	}
-	
+
 	/***
 	 * Getter de la variable Fct_eval_individu
 	 * @return une fonction permettant l'evaluation d'un individu
@@ -298,6 +316,7 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setFct_eval_individu(Function<Individu<T>, T> fct_eval_individu) {
 		this.fct_eval_individu = fct_eval_individu;
 	}
+
 	
 	/***
 	 * Getter de la variable x_iterations_algo
