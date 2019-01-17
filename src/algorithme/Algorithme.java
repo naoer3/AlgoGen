@@ -6,9 +6,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * Classe deffinisant la methode de selection de type Tournoi
- * @version 1.7
- * @since 1.6
+ * Classe permettant d'executer un algorithme genetique sur une population
+ * @version 1.0
+ * @since 1.0
  * @param <T>
  */
 public class Algorithme<T extends Comparable<T>> {
