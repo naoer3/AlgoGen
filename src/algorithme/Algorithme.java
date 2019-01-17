@@ -49,7 +49,7 @@ public class Algorithme<T extends Comparable<T>> {
 	private SelectionMethode<T> selection_population;
 	private Croisement<T> croisement;
 	private Mutation<T> mutation;
-	private CritereArret<T> critere_arret;
+
 	private CritereArretMethode<T> critere_duree;
 	private CritereArretMethode<T> critere_individu;
 	private CritereArretMethode<T> critere_population;
@@ -106,7 +106,7 @@ public class Algorithme<T extends Comparable<T>> {
 		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
-		critere_arret = new CritereArret<T>(duree, x_iterations_algo, x_stagnation_population, x_stagnation_individu);
+		
 		// TODO il manque une strategie
 		try {
 			switch(type_selection_parent) {
