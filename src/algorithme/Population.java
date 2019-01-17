@@ -51,6 +51,11 @@ public class Population<T extends Comparable<T>>{
 		//System.out.println(toString());
 
 	}
+	
+	// TODO à voir si utile
+	public Population() {
+		
+	}
 
 	/**
 	 * Methode EvaluatePopulation: Evalue le score de toute la population
@@ -89,6 +94,7 @@ public class Population<T extends Comparable<T>>{
 	 */
 	public void sortPopulation() {
 		Collections.sort(population, new ComparatorIndividu<T>());
+		bestIndividu = this.population.get(0);
 	}
 	
 	/***
@@ -96,7 +102,7 @@ public class Population<T extends Comparable<T>>{
 	 * @return le meilleur individu de la population
 	 */
 	public Individu<T> getBest() {
-		return this.population.get(0);
+		return bestIndividu;
 	}
 	
 	/***

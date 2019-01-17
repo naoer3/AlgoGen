@@ -27,7 +27,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * taille_pop: Taille de la population fournie par le client
 	 * taille_tournoi: Taille permettant l'application de la methode tournoi sur la population
 	 * type_selection_parent: Type de selection des parents sur la population (fournit par le client)
-	 * type_selection_population: Type de selection de la nouvelle population sur la population mutée (fournit par le client)
+	 * type_selection_population: Type de selection de la nouvelle population sur la population mutï¿½e (fournit par le client)
 	 * prob_mutation: Pourcentage de mutation par defaut de l'algorithme (ici: 3 si non fournit par le client)
 	 * x_iterations_algo: Nombre d'iterations effectuees par l'algorithme (critere d'arret fournit ou non par le client)
 	 * x_stagnation_population: Nombre d'iterations pour lesquelles la population n'evolue pas (critere d'arret fournit ou non par le client)
@@ -75,9 +75,9 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param select_parent: Mode de selection des parents
 	 * @param select_pop: Mode de selection de la population
 	 * @param prob_mut: Pourcentage de mutation
-	 * @param nb_enfants: Nombre d'enfants souhaités
-	 * @param fct_crea: Fonction de création d'un individu
-	 * @param fct_eval: Fonction de d'évaluation d'un individu
+	 * @param nb_enfants: Nombre d'enfants souhaitï¿½s
+	 * @param fct_crea: Fonction de crï¿½ation d'un individu
+	 * @param fct_eval: Fonction de d'ï¿½valuation d'un individu
 	 */
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
@@ -396,4 +396,3 @@ public class Algorithme<T extends Comparable<T>> {
 		this.nb_selection_population = nb_selection_population;
 	}
 }
-

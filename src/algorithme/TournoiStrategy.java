@@ -13,10 +13,10 @@ import java.util.Random;
  * @see SelectionMethode
  */
 public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
-	
+
 	/***
 	 * Declaration des variables globales
-	 * nb_individu: Nombre d'individus à selectionner
+	 * nb_individu: Nombre d'individus Ã  selectionner
 	 * taille_tournoi: Taille du tournoi permettant de selectionner les individus
 	 */
 	private int nb_individu = 0;
@@ -65,15 +65,6 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	public int getNb_individu() {
 		return nb_individu;
 	}
-
-	/***
-	 * Setter sur le nombre d'individus selectionnes
-	 * @param nb_individu
-	 */
-	public void setNb_individu(int nb_individu) {
-		this.nb_individu = nb_individu;
-	}
-	
 	
 	/***
 	 * Getter de la variable taille_tournoi

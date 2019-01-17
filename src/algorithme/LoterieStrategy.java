@@ -12,7 +12,7 @@ import java.util.Random;
  * @see SelectionMethode
  */
 public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
-	
+
 	/***
 	 * Declaration des variables globales
 	 * nb_individu: Nombre d'individus selectionnes
@@ -34,7 +34,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	
 
 	/**
-	 * methodeSelection: Permet de selectionner un pourcentage de parents aléatoirement dans la population
+	 * methodeSelection: Permet de selectionner un pourcentage de parents alÃ©atoirement dans la population
 	 * @param Population
 	 */
 	@Override
