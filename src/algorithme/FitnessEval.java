@@ -2,10 +2,17 @@ package algorithme;
 
 import java.util.function.Function;
 
+/**
+ * Classe permettant d'evaluer une population
+ * @version 1.0
+ * @since 1.0
+ * @param <T>
+ */
 public class FitnessEval<T> {
 	
-	/**
-	 * Fonction a  evaluer dans l'algorithme
+	/***
+	 * Declaration des variables globales
+	 * calc_fitness:
 	 */
 	private Function<Individu<T>,T> calc_finess = null;
 	
