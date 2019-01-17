@@ -6,24 +6,39 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /***
- * Classe contenant l'ensemble de l'algorithme
- *
+ * Classe Algorithme 
+ * Permet l'appel des differentes etapes du traitement d'une population donnee
  */
 public class Algorithme<T extends Comparable<T>> {
 
 	/***
 	 * Creation des variables
-	 * population: Liste des individus
-	 * methode: methode de selection des individus parents
-	 * taille_pop: Taille de la population utilisee au sein de l'algorithme
-	 * mutation: Pourcentage d'elements mutes
-	 * croisement: Pourcentage d'elements croises
-	 * type_selection: Definition du type de selection des individus (elitiste, tournoi, loterie)
-	 * fct_crea_individu: Fonction permettant la creation d'individus au sein de la population 
+	 * parents: Liste des individus selectionnes par l'agorithme
+	 * enfants: Liste d'individus enfants suite a l'application des croisements sur les parents
+	 * population_mutee:  Liste d'individus suite a l'application des mutations
+	 * population: Liste d'individus mere, donnee par le client
+	 * selection_parent: Objet permettant de definir la methode de selection pour les parents
+	 * selection_population: Objet permettant de definir la methode de selection pour une population
+	 * croisement: Objet permettant l'appel des methodes de croisement 
+	 * mutation: Objet permettant l'appel des methodes de mutation
+	 * critere_arret: Objet permettant l'appel des methodes concernant les eventuels criteres d'arret
+	 * taille_pop: Taille de la population fournie par le client
+	 * taille_tournoi: Taille permettant l'application de la methode tournoi sur la population
+	 * type_selection_parent: Type de selection des parents sur la population (fournit par le client)
+	 * type_selection_population: Type de selection de la nouvelle population sur la population mutée (fournit par le client)
+	 * prob_mutation: Pourcentage de mutation par defaut de l'algorithme (ici: 3 si non fournit par le client)
+	 * x_iterations_algo: Nombre d'iterations effectuees par l'algorithme (critere d'arret fournit ou non par le client)
+	 * x_stagnation_population: Nombre d'iterations pour lesquelles la population n'evolue pas (critere d'arret fournit ou non par le client)
+	 * x_stagnation_individu: Nombre d'iterations pour lesquelles un individu n'evolue pas (critere d'arret fournit ou non par le client)
+	 * duree: Duree maximum d'execution de l'algorithme (fournit par le client)
+	 * nb_enfants: Nombre d'enfants souhaites (fournit par le client)
+	 * fct_crea_individu: Fonction permettant la creation d'un individu (fournit par le client)
+	 * fct_eval_individu: Fonction permettant l'evaluation d'un individu (fournit par le client)
+	 * fct_mutation: Fontion permettant la mutation d'un individu (fournit par le client)
 	 */
-	private List<Individu<T>> liste_selection = new ArrayList<>();
-	private List<Individu<T>> liste_croisement = new ArrayList<>();
-	private List<Individu<T>> liste_mutation = new ArrayList<>();
+	private List<Individu<T>> parents = new ArrayList<>();
+	private List<Individu<T>> enfants = new ArrayList<>();
+	private List<Individu<T>> population_mutee = new ArrayList<>();
 	private Population<T> population;
 
 	private SelectionMethode<T> selection_parent;
@@ -33,16 +48,16 @@ public class Algorithme<T extends Comparable<T>> {
 	private CritereArret<T> critere_arret;
 
 	private int taille_pop;
-	private Double pourcentage_selection_parent;
-	private Double pourcentage_selection_population;
+	private int nb_selection_parent;
+	private int nb_selection_population;
 	private int taille_tournoi;
 
 	private int type_selection_parent;	//0,1 fournit par l'utilisateur
 	private int type_selection_population; //0,1 fournit par l'utilisateur
 	private double prob_mutation = 3; // defaut
-	private int X_iterations;
-	private int X_non_evolution_pop;
-	private int X_non_evolutions_idividu;
+	private int x_iterations_algo;
+	private int x_stagnation_population;
+	private int x_stagnation_individu;
 	private int duree;
 	private int nb_enfants;
 
@@ -52,7 +67,14 @@ public class Algorithme<T extends Comparable<T>> {
 	
 
 	/***
-	 * Constructeur de la classe Algorithme
+	 * 
+	 * @param taille
+	 * @param select_parent
+	 * @param select_pop
+	 * @param prob_mut
+	 * @param nb_enfants
+	 * @param fct_crea
+	 * @param fct_eval
 	 */
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
@@ -79,19 +101,19 @@ public class Algorithme<T extends Comparable<T>> {
 		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
-		// duree_donnee en s, X iterations, X_non_evolution_pop, X_non_evolutions_idividu (si 0 pas pris en compte)
-		critere_arret = new CritereArret<T>(duree, X_iterations, X_non_evolution_pop, X_non_evolutions_idividu);
+		// duree_donnee en s, X iterations, x_stagnation_population, x_stagnation_individu (si 0 pas pris en compte)
+		critere_arret = new CritereArret<T>(duree, x_iterations_algo, x_stagnation_population, x_stagnation_individu);
 		// TODO il manque une strategie
 		// TODO
 		try {
 			switch(type_selection_parent) {
 			case 0:
 				// TODO Donner nb_enfants 
-				selection_parent = new LoterieStrategy<T>(pourcentage_selection_parent);
+				selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
 			case 1:
-				selection_parent = new ElitisteStrategy<T>(pourcentage_selection_parent);
+				selection_parent = new ElitisteStrategy<T>(nb_selection_parent, false);
 			case 2:
-				selection_population = new TournoiStrategy<T>(pourcentage_selection_parent,taille_tournoi);
+				selection_parent = new TournoiStrategy<T>(nb_selection_parent,taille_tournoi);
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
 			}		
 		}
@@ -103,9 +125,9 @@ public class Algorithme<T extends Comparable<T>> {
 		try {
 			switch(type_selection_population) {
 			case 0:
-				selection_population = new LoterieStrategy<T>(pourcentage_selection_population);
+				selection_population = new LoterieStrategy<T>(nb_selection_population, true);
 			case 1:
-				selection_population = new ElitisteStrategy<T>(pourcentage_selection_population);
+				selection_population = new ElitisteStrategy<T>(nb_selection_population, true);
 			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 			}
 		}
@@ -120,24 +142,24 @@ public class Algorithme<T extends Comparable<T>> {
 			
 			//System.out.println( "Population : " + population.toString());
 
-			liste_selection = selection_parent.methodeSelection(population);
+			parents = selection_parent.methodeSelection(population);
 			
-			//System.out.println( "liste_selection : " + liste_selection.toString());
+			//System.out.println( "parents : " + parents.toString());
 
-			liste_croisement = croisement.CrossoverPopulation(liste_selection);
+			enfants = croisement.CrossoverPopulation(parents);
 			
-			//System.out.println( "liste_croisement taille : " + liste_croisement.size());
-			//System.out.println( "liste_croisement : " + liste_croisement);
+			//System.out.println( "enfants taille : " + enfants.size());
+			//System.out.println( "enfants : " + enfants);
 
 			
-			population.AjoutIndividus(liste_croisement);	
+			population.AjoutIndividus(enfants);	
 			
 			//System.out.println( "Population : " + population.toString());
 
 			
-			liste_mutation = mutation.doMutation(population.getPopulation());
-			//System.out.println("liste_mutation "+liste_mutation.toString() );
-			population.setPopulation(liste_mutation);
+			population_mutee = mutation.doMutation(population.getPopulation());
+			//System.out.println("population_mutee "+population_mutee.toString() );
+			population.setPopulation(population_mutee);
 			population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
 			//System.out.println("Nï¿½ gï¿½neration : " + population.getCurrent_generation());
@@ -268,42 +290,42 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @return the x_iterations
 	 */
 	public int getX_iterations() {
-		return X_iterations;
+		return x_iterations_algo;
 	}
 
 	/**
 	 * @param x_iterations the x_iterations to set
 	 */
 	public void setX_iterations(int x_iterations) {
-		X_iterations = x_iterations;
+		x_iterations_algo = x_iterations;
 	}
 
 	/**
 	 * @return the x_non_evolution_pop
 	 */
 	public int getX_non_evolution_pop() {
-		return X_non_evolution_pop;
+		return x_stagnation_population;
 	}
 
 	/**
 	 * @param x_non_evolution_pop the x_non_evolution_pop to set
 	 */
 	public void setX_non_evolution_pop(int x_non_evolution_pop) {
-		X_non_evolution_pop = x_non_evolution_pop;
+		x_stagnation_population = x_non_evolution_pop;
 	}
 
 	/**
 	 * @return the x_non_evolutions_idividu
 	 */
 	public int getX_non_evolutions_idividu() {
-		return X_non_evolutions_idividu;
+		return x_stagnation_individu;
 	}
 
 	/**
 	 * @param x_non_evolutions_idividu the x_non_evolutions_idividu to set
 	 */
 	public void setX_non_evolutions_idividu(int x_non_evolutions_idividu) {
-		X_non_evolutions_idividu = x_non_evolutions_idividu;
+		x_stagnation_individu = x_non_evolutions_idividu;
 	}
 
 	/**
@@ -351,29 +373,29 @@ public class Algorithme<T extends Comparable<T>> {
 	/**
 	 * @param Pourcentage de selection des parent
 	 */
-	public Double getPourcentage_selection_parent() {
-		return pourcentage_selection_parent;
+	public int getPourcentage_selection_parent() {
+		return nb_selection_parent;
 	}
 
 	/**
 	 * @param Pourcentage de selection des parent to set
 	 */
-	public void setPourcentage_selection_parent(Double pourcentage_selection_parent) {
-		this.pourcentage_selection_parent = pourcentage_selection_parent;
+	public void setPourcentage_selection_parent(int nb_selection_parent) {
+		this.nb_selection_parent = nb_selection_parent;
 	}
 
 	/**
 	 * @param Pourcentage de selection de la population
 	 */
-	public Double getPourcentage_selection_population() {
-		return pourcentage_selection_population;
+	public int getPourcentage_selection_population() {
+		return nb_selection_population;
 	}
 
 	/**
 	 * @param Pourcentage de selection de la population to set
 	 */
-	public void setPourcentage_selection_population(Double pourcentage_selection_population) {
-		this.pourcentage_selection_population = pourcentage_selection_population;
+	public void setPourcentage_selection_population(int nb_selection_population) {
+		this.nb_selection_population = nb_selection_population;
 	}
 }
 
