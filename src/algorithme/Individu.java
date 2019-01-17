@@ -18,6 +18,12 @@ public class Individu<T> {
 	private List<T> genes;
 	private T fitness;
 
+	/***
+	 * Constructeur de la classe Individu
+	 */
+	public Individu() {}
+	
+	
 	// TODO a laisser ?! ne laisse pas le choix à l'utilisateur
 	public Individu(List<T> genes){
 		this.genes = genes;
