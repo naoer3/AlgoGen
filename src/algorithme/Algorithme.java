@@ -25,7 +25,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * taille_pop: Taille de la population fournie par le client
 	 * taille_tournoi: Taille permettant l'application de la methode tournoi sur la population
 	 * type_selection_parent: Type de selection des parents sur la population (fournit par le client)
-	 * type_selection_population: Type de selection de la nouvelle population sur la population mut�e (fournit par le client)
+	 * type_selection_population: Type de selection de la nouvelle population sur la population mutée (fournit par le client)
 	 * prob_mutation: Pourcentage de mutation par defaut de l'algorithme (ici: 3 si non fournit par le client)
 	 * x_iterations_algo: Nombre d'iterations effectuees par l'algorithme (critere d'arret fournit ou non par le client)
 	 * x_stagnation_population: Nombre d'iterations pour lesquelles la population n'evolue pas (critere d'arret fournit ou non par le client)
@@ -67,7 +67,6 @@ public class Algorithme<T extends Comparable<T>> {
 	
 
 	/***
-	 * 
 	 * @param taille
 	 * @param select_parent
 	 * @param select_pop
@@ -76,6 +75,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param fct_crea
 	 * @param fct_eval
 	 */
+  // TODO design pattern monteur
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -162,7 +162,7 @@ public class Algorithme<T extends Comparable<T>> {
 			population.setPopulation(population_mutee);
 			population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
-			//System.out.println("N� g�neration : " + population.getCurrent_generation());
+			//System.out.println("Nï¿½ gï¿½neration : " + population.getCurrent_generation());
 			//System.out.println(population.toString());
 			population.NewGeneration();
 
@@ -371,14 +371,14 @@ public class Algorithme<T extends Comparable<T>> {
 	}
 
 	/**
-	 * @param Pourcentage de selection des parent
+	 * @param Nb de parents souhaite
 	 */
 	public int getNb_selection_parent() {
 		return nb_selection_parent;
 	}
 
 	/**
-	 * @param Pourcentage de selection des parent to set
+	 * @param nb_selection_parent to set
 	 */
 	public void setNb_selection_parent(int nb_selection_parent) {
 		this.nb_selection_parent = nb_selection_parent;
