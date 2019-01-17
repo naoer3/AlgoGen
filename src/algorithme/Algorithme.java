@@ -6,9 +6,9 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
- * Classe deffinisant la methode de selection de type Tournoi
- * @version 1.7
- * @since 1.6
+ * Classe permettant d'executer un algorithme genetique sur une population
+ * @version 1.0
+ * @since 1.0
  * @param <T>
  */
 public class Algorithme<T extends Comparable<T>> {
@@ -27,7 +27,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * taille_pop: Taille de la population fournie par le client
 	 * taille_tournoi: Taille permettant l'application de la methode tournoi sur la population
 	 * type_selection_parent: Type de selection des parents sur la population (fournit par le client)
-	 * type_selection_population: Type de selection de la nouvelle population sur la population mutée (fournit par le client)
+	 * type_selection_population: Type de selection de la nouvelle population sur la population mut�e (fournit par le client)
 	 * prob_mutation: Pourcentage de mutation par defaut de l'algorithme (ici: 3 si non fournit par le client)
 	 * x_iterations_algo: Nombre d'iterations effectuees par l'algorithme (critere d'arret fournit ou non par le client)
 	 * x_stagnation_population: Nombre d'iterations pour lesquelles la population n'evolue pas (critere d'arret fournit ou non par le client)
@@ -79,7 +79,6 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param fct_crea: Fonction de cr�ation d'un individu
 	 * @param fct_eval: Fonction de d'�valuation d'un individu
 	 */
-  // TODO design pattern monteur
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -397,4 +396,3 @@ public class Algorithme<T extends Comparable<T>> {
 		this.nb_selection_population = nb_selection_population;
 	}
 }
-
