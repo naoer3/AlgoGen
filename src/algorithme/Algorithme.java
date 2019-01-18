@@ -48,6 +48,7 @@ public class Algorithme<T extends Comparable<T>> {
 	private SelectionMethode<T> selection_population;
 	private Croisement<T> croisement;
 	private Mutation<T> mutation;
+	private FitnessEval<T> fitnessEval;
 
 	private CritereArretMethode<T> critere_duree;
 	private CritereArretMethode<T> critere_individu;
