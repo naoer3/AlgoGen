@@ -112,15 +112,19 @@ public class Algorithme<T extends Comparable<T>> {
 
 			if(duree < 0) throw new IllegalArgumentException("Duree must be greater than zero: " + duree);			
 			else if(duree > 0)add_critere_duree = true;
+			
 			if(x_iterations_algo < 0) throw new IllegalArgumentException("Nb_iterations must be greater than zero: " + x_iterations_algo);
 			else if(x_iterations_algo > 0) add_critere_iteration = true;
+			
 			if(x_stagnation_population < 0) throw new IllegalArgumentException("Stagnation_population must be greater than zero: " + x_stagnation_population);
 			else if(x_stagnation_population > 0) add_critere_population = true;
+			
 			if(x_stagnation_individu < 0) throw new IllegalArgumentException("Stagnation_individu must be greater than zero: " + x_stagnation_individu);
 			else if(x_stagnation_individu > 0) add_critere_individu = true;
-      if(taille_tournoi<=2 && type_selection_parent==2)
+			
+			if(taille_tournoi<=2 && type_selection_parent==2)
 				throw new IllegalArgumentException("Taille du tournoi doit etre superieur a  2: " + taille_tournoi);
-			if(nb_enfants<=taille_pop)
+			if(nb_enfants>=taille_pop)
 				throw new IllegalArgumentException("Le nombre d'enfant doit inferieur a la taille de la population: " + nb_enfants);
 			if(taille_pop<=0)
 				throw new IllegalArgumentException("Taille popopulation doit etre superieur a zero: " + taille_pop);
@@ -203,6 +207,13 @@ public class Algorithme<T extends Comparable<T>> {
 		return population.getBest().getGenes();
 	}
 
+	/**
+	 * Definit les criteres utilises dans l'algorithme
+	 * @param ajout_duree
+	 * @param ajout_iterations
+	 * @param ajout_evolution_pop
+	 * @param ajout_evolutions_idividu
+	 */
 	public void SelectCritere(boolean ajout_duree, boolean ajout_iterations, boolean ajout_evolution_pop, boolean ajout_evolutions_idividu) {
 		if(ajout_duree) {
 			critere_duree=new CritereDuree<T>(duree);

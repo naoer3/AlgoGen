@@ -23,6 +23,7 @@ public class RunFitness<T> implements Runnable {
 	 * index partage entre les threads
 	 */
 	private static Integer index = 0;
+	
 	/**
 	 * index servant a effectuer des modifications sur un individu specifique
 	 */
@@ -55,9 +56,7 @@ public class RunFitness<T> implements Runnable {
 			Individu<T> individu = individus.get(workedIndex);
 			this.Evaluate(individu);
 		}
-
 	}
-
 
 	/**
 	 * Evalue la fitness d'un individu avec la fonction d'evaluation
