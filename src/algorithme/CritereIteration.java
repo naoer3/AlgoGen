@@ -22,10 +22,8 @@ public class CritereIteration<T extends Comparable<T>> extends CritereArretMetho
 	@Override
 	public boolean getEtat(Population<T> population) {
 		int current_generation = population.getCurrent_generation();
-		if(current_generation>= critere) 
-			return false;
-		else 
-			return true;
+		if(current_generation>= critere) return false;
+		else return true;
 	}
 
 }

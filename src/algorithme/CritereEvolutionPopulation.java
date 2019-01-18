@@ -41,10 +41,8 @@ public class CritereEvolutionPopulation<T extends Comparable<T>> extends Critere
 			nbSamePop = 1;
 		lastPop = currentPop;
 		
-		if(nbSamePop>=critere) 
-			return false;
-		else
-			return true;
+		if(nbSamePop>=critere) return false;
+		else return true;
 	}
 
 }
