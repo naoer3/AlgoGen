@@ -3,7 +3,6 @@ package algorithme;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -100,7 +99,7 @@ public class Population<T extends Comparable<T>>{
 	}
 	
 	/**
-	 * Incremente le numero de la generation courrante
+	 * Incremente le numero de la generation courante
 	 */
 	public void NewGeneration() {
 		current_generation++;
