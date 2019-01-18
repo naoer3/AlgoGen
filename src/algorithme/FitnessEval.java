@@ -4,25 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class FitnessEval<T extends Comparable<T>>{
 
-	/**
-	 * Fonction a  evaluer dans l'algorithme
+
+/**
+ * Classe permettant d'evaluer une population
+ * @version 1.0
+ * @since 1.0
+ * @param <T>
+ */
+public class FitnessEval<T> {
+	
+	/***
+	 * Declaration des variables globales
+	 * calc_fitness:
 	 */
 	private Function<Individu<T>,T> calc_finess = null;
 
 	/**
 	 * Constructeur de la classe
-	 * @param fct_finess Fonction d'évaluation de l'algorithme
+	 * @param fct_finess Fonction d'Ã©valuation de l'algorithme
 	 */
 	public FitnessEval(Function<Individu<T>,T> fct_finess){
 		this.calc_finess = fct_finess;
 	}
 
-	/**
-	 * Retourne les individus evalues passes en parametres
-	 * @param liste d'individus a evaluer
-	 * @return liste d'individus evalues
+	
+	/*/**
+	 * Evalue la fitness d'un individu avec la fonction d'evaluation
+	 * @param individu Individu a Ã©valuer
 	 */
 	public List<Individu<T>> EvaluatePopulation(List<Individu<T>> individus) {
 
@@ -32,6 +41,7 @@ public class FitnessEval<T extends Comparable<T>>{
 
 		for (int i = 1; i <= nb_threads; i++) {
 			threads.add(new Thread (new RunFitness<T>(individus, calc_finess)));
+
 		}
 
 		for (Thread thread : threads) {
