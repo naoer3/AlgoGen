@@ -1,5 +1,9 @@
 package algorithme;
 
+/**
+ * Classe qui controle le critere d'arret evolution individu
+ * @param <T>
+ */
 public class CritereEvolutionIndividu<T extends Comparable<T>> extends CritereArretMethode<T> {
 
 	private Individu<T> lastBestIndividu = new Individu<T>();

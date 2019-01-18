@@ -54,8 +54,8 @@ public class Algorithme<T extends Comparable<T>> {
 	private int nb_selection_population;
 	private int taille_tournoi;
 
-	private int type_selection_parent;	//0,1 fournit par l'utilisateur
-	private int type_selection_population; //0,1 fournit par l'utilisateur
+	private int type_selection_parent;	//0 ou 1 fournit par l'utilisateur
+	private int type_selection_population; //0 ou 1 fournit par l'utilisateur
 	private double prob_mutation = 3; // defaut
 	private int x_iterations_algo;
 	private int x_stagnation_population;
@@ -75,9 +75,9 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param select_parent: Mode de selection des parents
 	 * @param select_pop: Mode de selection de la population
 	 * @param prob_mut: Pourcentage de mutation
-	 * @param nb_enfants: Nombre d'enfants souhait�s
-	 * @param fct_crea: Fonction de cr�ation d'un individu
-	 * @param fct_eval: Fonction de d'�valuation d'un individu
+	 * @param nb_enfants: Nombre d'enfants souhaites
+	 * @param fct_crea: Fonction de creation d'un individu
+	 * @param fct_eval: Fonction de d'evaluation d'un individu
 	 */
   // TODO design pattern monteur
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
@@ -92,7 +92,7 @@ public class Algorithme<T extends Comparable<T>> {
 	}
 	
 	/***
-	 * Methode LancerAlgorithme qui contient l'appel des methoes necessaire au traitement genetique d'une population
+	 * Methode LancerAlgorithme qui contient l'appel des methodes necessaire au traitement genetique d'une population
 	 */
 	public void LancerAlgorithme()
 	{
@@ -103,14 +103,13 @@ public class Algorithme<T extends Comparable<T>> {
 		// TODO il manque une strategie
 		try {
 			switch(type_selection_parent) {
-			case 0:
-				// TODO Donner nb_enfants 
-				selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
-			case 1:
-				selection_parent = new ElitisteStrategy<T>(nb_selection_parent, false);
-			case 2:
-				selection_parent = new TournoiStrategy<T>(nb_selection_parent,taille_tournoi);
-			default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
+				case 0:
+					selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
+				case 1:
+					selection_parent = new ElitisteStrategy<T>(nb_selection_parent, false);
+				case 2:
+					selection_parent = new TournoiStrategy<T>(nb_selection_parent,taille_tournoi);
+				default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
 			}		
 		}
 		catch(Exception ex) {
@@ -119,11 +118,11 @@ public class Algorithme<T extends Comparable<T>> {
 
 		try {
 			switch(type_selection_population) {
-			case 0:
-				selection_population = new LoterieStrategy<T>(nb_selection_population, true);
-			case 1:
-				selection_population = new ElitisteStrategy<T>(nb_selection_population, true);
-			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
+				case 0:
+					selection_population = new LoterieStrategy<T>(nb_selection_population, true);
+				case 1:
+					selection_population = new ElitisteStrategy<T>(nb_selection_population, true);
+				default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 			}
 		}
 		catch(Exception ex) {

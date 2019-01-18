@@ -8,8 +8,6 @@ import java.util.function.Supplier;
 
 /**
  * Classe representant un ensemble d'individus qui constitue une population
- * @version 1.0
- * @since 1.0
  * @param <T>
  * @see Individu
  */
@@ -67,14 +65,6 @@ public class Population<T extends Comparable<T>>{
 		for(int i = 0; i < taillePop; i++) {
 			this.population.add(constructeur_indiv.get());
 		}
-		
-		//System.out.println(toString());
-
-	}
-	
-	// TODO à voir si utile
-	public Population() {
-		
 	}
 
 	/// Methodes
@@ -112,7 +102,9 @@ public class Population<T extends Comparable<T>>{
 		current_generation++;
 	}
 	
-	// TODO : commentaire, que fait le comparator
+	/**
+	 * Trie les individus selon leur fitness
+	 */
 	public void sortPopulation() {
 		Collections.sort(population, new ComparatorIndividu<T>());
 		bestIndividu = this.population.get(0);
@@ -166,16 +158,5 @@ public class Population<T extends Comparable<T>>{
 	 */
 	public int getCurrent_generation() {
 		return current_generation;
-	}
-	
-	// TODO
-	@Override
-	public String toString() {
-		String str="";
-
-		for(int i=0;i<taillePop;i++) {
-			str+=population.get(i).toString()+"\n";
-		}
-		return str;		
 	}
 }
