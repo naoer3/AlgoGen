@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-/**
- * Classe deffinisant la methode de selection de type Tournoi
- * @version 1.7
- * @since 1.6
- * @param <T>
+/***
+ * Classe Algorithme 
+ * Permet l'appel des differentes etapes du traitement d'une population donnee
  */
 public class Algorithme<T extends Comparable<T>> {
 
@@ -18,6 +16,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * parents: Liste des individus selectionnes par l'agorithme
 	 * enfants: Liste d'individus enfants suite a l'application des croisements sur les parents
 	 * population_mutee:  Liste d'individus suite a l'application des mutations
+	 * evaluated_population : Liste d'individus suite a l'evaluation
 	 * population: Liste d'individus mere, donnee par le client
 	 * selection_parent: Objet permettant de definir la methode de selection pour les parents
 	 * selection_population: Objet permettant de definir la methode de selection pour une population
@@ -41,6 +40,7 @@ public class Algorithme<T extends Comparable<T>> {
 	private List<Individu<T>> parents = new ArrayList<>();
 	private List<Individu<T>> enfants = new ArrayList<>();
 	private List<Individu<T>> population_mutee = new ArrayList<>();
+	private List<Individu<T>> evaluated_population = new ArrayList<>();
 	private List<CritereArretMethode<T>> criteres = new ArrayList<>();
 	private Population<T> population;
 
@@ -146,10 +146,8 @@ public class Algorithme<T extends Comparable<T>> {
 		do{
 			//System.out.println( "Population : " + population.toString());
 			
-			System.out.println("##################Debut evaluation#######################");
-			fitnessEval.EvaluatePopulation(population.getPopulation());
-			System.out.println("##################Debut evaluation#######################");
-
+			evaluated_population = fitnessEval.EvaluatePopulation(population.getPopulation());
+			population.setPopulation(evaluated_population);
 
 			//System.out.println( "Population : " + population.toString());
 			parents = selection_parent.methodeSelection(population);
@@ -165,8 +163,8 @@ public class Algorithme<T extends Comparable<T>> {
 			//System.out.println("population_mutee "+population_mutee.toString() );
 			population.setPopulation(population_mutee);
 
-			fitnessEval.EvaluatePopulation(population.getPopulation());
-
+			evaluated_population = fitnessEval.EvaluatePopulation(population.getPopulation());
+			population.setPopulation(evaluated_population);
 
 			//population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
