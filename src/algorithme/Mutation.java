@@ -5,9 +5,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 /**
- * Classe permettant d'affecter une mutation sur des individus selectionnes
- * @version 1.0
- * @since 1.0
+ * Classe permettant la mutation d'un individu
  * @param <T>
  */
 public class Mutation<T> {
@@ -20,7 +18,7 @@ public class Mutation<T> {
 	private Function<Individu<T>, Individu<T>> fct_mutation;
 	private double prob_mutation;
 
-	/***
+	/**
 	 * Constructeur de la classe Mutation
 	 * @param fct_mutation
 	 * @param prob_mutation
@@ -37,15 +35,12 @@ public class Mutation<T> {
 	 */
 	public List<Individu<T>> doMutation(List<Individu<T>> individus)
 	{
-		//System.out.println("Mutation - Avant : " + individus);
-
 		Random rand = new Random();
 		for (Individu<T> individu : individus) {
-			if((rand.nextInt(100)+1)<=prob_mutation) {
+			if((rand.nextInt(100)+1) <= prob_mutation) {
 				individu = doIndividuMutation(individu);
 			}
 		}
-		//System.out.println("Mutation - Après : " + individus);
 		return individus;
 	}
 	

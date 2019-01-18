@@ -8,8 +8,6 @@ import java.util.function.Supplier;
 
 /**
  * Classe representant un ensemble d'individus qui constitue une population
- * @version 1.0
- * @since 1.0
  * @param <T>
  * @see Individu
  */
@@ -51,37 +49,27 @@ public class Population<T extends Comparable<T>>{
 		for(int i = 0; i < taillePop; i++) {
 			this.population.add(constructeur_indiv.get());
 		}
-		
-		//System.out.println(toString());
-
-	}
-	
-	// TODO à voir si utile
-	public Population() {
-		
 	}
 
 	/// Methodes
 	
-	/*/**
+	/**
 	 * Evalue la fitness de toute la population
 	 * @see Evaluate
-	/**
-	 * Methode EvaluatePopulation: Evalue le score de toute la population
-	 */
-	/*public void EvaluatePopulation() {
+   **/
+	public void EvaluatePopulation() {
 		for(Individu<T> individu : this.population) {
 			this.Evaluate(individu);
 		}
-	}*/
+	}
 	
 	/**
 	 * Methode Evaluate: Evalue le score d'un individu donne
 	 * @param individu
 	 */
-	/*public void Evaluate(Individu<T> individu) {
+	public void Evaluate(Individu<T> individu) {
 		individu.setFitness(fct_eval.apply(individu));
-	}*/	
+  }
 	
 	/**
 	 * Methode AjutIndividu: Ajoute une liste d'individus a la population existante
@@ -98,8 +86,8 @@ public class Population<T extends Comparable<T>>{
 		current_generation++;
 	}
 	
-	/***
-	 * Methode sortPopulation: Reorganise la population selon le score des individus
+	/**
+	 * Trie les individus selon leur fitness
 	 */
 	public void sortPopulation() {
 		Collections.sort(population, new ComparatorIndividu<T>());
@@ -152,18 +140,5 @@ public class Population<T extends Comparable<T>>{
 	 */
 	public int getCurrent_generation() {
 		return current_generation;
-	}
-	
-	/***
-	 * Methode toString
-	 */
-	@Override
-	public String toString() {
-		String str="";
-
-		for(int i=0;i<taillePop;i++) {
-			str+=population.get(i).toString()+"\n";
-		}
-		return str;		
 	}
 }
