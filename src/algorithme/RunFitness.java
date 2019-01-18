@@ -39,8 +39,6 @@ public class RunFitness<T> implements Runnable {
 	public void Evaluate(Individu<T> individu) {
 		T fitness = calc_finess.apply(individu);
 		individu.setFitness(fitness);
-		//Thread ne partagent pas l'info sur lequel ils ont traité
-		System.out.println("Thread "+i+ " Individu " + individu);
 	}
 
 }

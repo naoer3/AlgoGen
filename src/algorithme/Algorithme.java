@@ -60,9 +60,9 @@ public class Algorithme<T extends Comparable<T>> {
 	private int nb_selection_population;
 	private int taille_tournoi;
 
-	private int type_selection_parent;	//0,1 fournit par l'utilisateur
-	private int type_selection_population; //0,1 fournit par l'utilisateur
-	private double prob_mutation = 3; // defaut
+	private int type_selection_parent;
+	private int type_selection_population;
+	private double prob_mutation = 3;
 	private int x_iterations_algo;
 	private int x_stagnation_population;
 	private int x_stagnation_individu;
@@ -81,11 +81,10 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param select_parent: Mode de selection des parents
 	 * @param select_pop: Mode de selection de la population
 	 * @param prob_mut: Pourcentage de mutation
-	 * @param nb_enfants: Nombre d'enfants souhait�s
-	 * @param fct_crea: Fonction de cr�ation d'un individu
-	 * @param fct_eval: Fonction de d'�valuation d'un individu
+	 * @param nb_enfants: Nombre d'enfants souhaites
+	 * @param fct_crea: Fonction de creation d'un individu
+	 * @param fct_eval: Fonction de d'evaluation d'un individu
 	 */
-	// TODO design pattern facade (� noter)
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -104,14 +103,20 @@ public class Algorithme<T extends Comparable<T>> {
 	{
 		try {
 
+			if(nb_enfants<=taille_pop)
+				throw new IllegalArgumentException("Le nombre d'enfant doit inferieur a la taille de la population: " + nb_enfants);
+			if(taille_pop<=0)
+				throw new IllegalArgumentException("Taille popopulation doit etre superieur a zero: " + taille_pop);
 			if(duree<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Duree must be greater than zero: " + duree);
+				throw new IllegalArgumentException("Duree doit etre superieur a  zero: " + duree);
 			if(x_iterations_algo<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Nb_iterations must be greater than zero: " + x_iterations_algo);
+				throw new IllegalArgumentException("Nb_iterations doit etre superieur a  zero: " + x_iterations_algo);
 			if(x_stagnation_population<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Stagnation_population must be greater than zero: " + x_stagnation_population);
+				throw new IllegalArgumentException("Stagnation_population doit etre superieur a  zero: " + x_stagnation_population);
 			if(x_stagnation_individu<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Stagnation_individu must be greater than zero: " + x_stagnation_individu);
+				throw new IllegalArgumentException("Stagnation_individu doit etre superieur a  zero: " + x_stagnation_individu);
+			if(taille_tournoi<=2 && type_selection_parent==2)
+				throw new IllegalArgumentException("Taille du tournoi doit etre superieur a  2: " + taille_tournoi);
 
 			boolean continu_algorithme=false;
 			population = new Population<T>(taille_pop, fct_crea_individu);
@@ -119,11 +124,9 @@ public class Algorithme<T extends Comparable<T>> {
 			mutation = new Mutation<T>(fct_mutation, prob_mutation);
 			fitnessEval = new FitnessEval<T>(fct_eval_individu);
 
-			// TODO il manque une strategie
 			try {
 				switch(type_selection_parent) {
 				case 0:
-					// TODO Donner nb_enfants 
 					selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
 					break;
 				case 1:
@@ -157,39 +160,28 @@ public class Algorithme<T extends Comparable<T>> {
 			}
 
 			do{
-				//System.out.println( "Population : " + population.toString());
-
-				System.out.println("##################Debut evaluation#######################");
+				
 				fitnessEval.EvaluatePopulation(population.getPopulation());
-				System.out.println("##################Debut evaluation#######################");
-
-
-				//System.out.println( "Population : " + population.toString());
+		
 				parents = selection_parent.methodeSelection(population);
 
-				//System.out.println( "parents : " + parents.toString());
 				enfants = croisement.CrossoverPopulation(parents);
 
-				//System.out.println( "enfants taille : " + enfants.size());
-				//System.out.println( "enfants : " + enfants);
 				population.AjoutIndividus(enfants);	
-				//System.out.println( "Population : " + population.toString());
+				
 				population_mutee = mutation.doMutation(population.getPopulation());
-				//System.out.println("population_mutee "+population_mutee.toString() );
+				
 				population.setPopulation(population_mutee);
 
 				fitnessEval.EvaluatePopulation(population.getPopulation());
 
-
-				//population.EvaluatePopulation();			
 				selection_population.methodeSelection(population);
-				//System.out.println("Nouvelle generation : " + population.getCurrent_generation());
-				//System.out.println(population.toString());
+				
 				population.NewGeneration();
 
 
 				for(CritereArretMethode<T> c : criteres) {
-					if(criteres.isEmpty())//TODO : ne fonctionne visiblement pas
+					if(criteres.isEmpty())
 						throw new IllegalArgumentException("You must select a stop condition");
 
 					if(c.getEtat(population))
@@ -198,7 +190,6 @@ public class Algorithme<T extends Comparable<T>> {
 				}
 			}while(continu_algorithme);
 
-			System.out.println("Arret");
 			System.out.println("Best individu : "+population.getBest());
 			
 		}catch(IllegalArgumentException e) {

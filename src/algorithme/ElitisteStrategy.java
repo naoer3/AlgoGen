@@ -29,7 +29,7 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 	public ElitisteStrategy(int nbIndividu, boolean keepbest)
 	{
 		setNb_individu(nbIndividu);
-		setKeep_best(keepbest);	// TODO Il faut definir si le poucentage est sous forme de 0.3 ou 30 par exemple
+		setKeep_best(keepbest);
 	}
 
 	

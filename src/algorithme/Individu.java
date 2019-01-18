@@ -24,7 +24,6 @@ public class Individu<T> {
 	public Individu() {}
 	
 	
-	// TODO a laisser ?! ne laisse pas le choix à l'utilisateur
 	public Individu(List<T> genes){
 		this.genes = genes;
 	}

@@ -34,7 +34,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	
 
 	/**
-	 * methodeSelection: Permet de selectionner un pourcentage de parents aléatoirement dans la population
+	 * methodeSelection: Permet de selectionner un pourcentage de parents aleatoirement dans la population
 	 * @param Population
 	 */
 	@Override
