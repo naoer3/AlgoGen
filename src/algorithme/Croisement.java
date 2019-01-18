@@ -17,7 +17,7 @@ public class Croisement<T> {
 	 * Declaration des variables
 	 * creation_individu: Fonction permettant de creer un individu
 	 */
-	Supplier<Individu<T>> creation_individu;
+	private Supplier<Individu<T>> creation_individu;
 	
 	/***
 	 * Constructeur de la classe Croisement

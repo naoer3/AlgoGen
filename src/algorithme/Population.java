@@ -27,7 +27,7 @@ public class Population<T extends Comparable<T>>{
 	private List<Individu<T>> population = null;
 	private int taillePop = 0;
 	private int current_generation = 0;
-	private Individu<T>bestIndividu=null;
+	private Individu<T> bestIndividu=null;
 
 	/**
 	 * Constructeur de la classe
