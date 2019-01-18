@@ -37,10 +37,9 @@ public class Main {
 		};		
 		
 		algo.setDuree(30);
-
 		algo.setX_iterations(1000);
-		algo.setX_non_evolution_pop(10);
-		algo.setX_non_evolutions_idividu(30);
+		//algo.setX_non_evolution_pop(500);
+		//algo.setX_non_evolutions_idividu(80);
 		algo.setTaille_pop(200);
 		algo.setProb_Mutation(3);
 		algo.setNb_enfants(20);
@@ -52,7 +51,7 @@ public class Main {
 		algo.setNb_selection_population(3);
 		algo.setType_selection_parent(1);
 		algo.setType_selection_population(1);
-		algo.LancerAlgorithme();
+		List<Integer> best = algo.LancerAlgorithme();
 	}
 }
 

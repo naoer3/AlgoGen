@@ -14,10 +14,8 @@ public class CritereDuree<T extends Comparable<T>> extends CritereArretMethode<T
 	
 	@Override
 	public boolean getEtat(Population<T> population) {
-		if(System.currentTimeMillis() >= stop)
-			return false;
-		else 
-			return true;
+		if(System.currentTimeMillis() >= stop) return false;
+		else return true;
 	}
 
 }

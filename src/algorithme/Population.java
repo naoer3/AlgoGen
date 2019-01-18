@@ -20,10 +20,6 @@ public class Population<T extends Comparable<T>>{
 	 * current_generation: Generation actuelle
 	 */
 	private Supplier<Individu<T>> constructeur_indiv = null;
-	
-	/**
-	 * Liste d'individus qui forme la population
-	 */
 	private List<Individu<T>> population = null;
 	private int taillePop = 0;
 	private int current_generation = 0;

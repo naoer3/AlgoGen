@@ -29,22 +29,18 @@ public class FitnessEval<T> {
 	}
 
 	
-	/*/**
+	/**
 	 * Evalue la fitness d'un individu avec la fonction d'evaluation
-
 	 * @param individu Individu a évaluer
 	 */
 	public List<Individu<T>> EvaluatePopulation(List<Individu<T>> individus) {
-
 
 		int nb_threads = 4;
 
 		List<Thread> threads = new ArrayList<>();
 
 		for (int i = 1; i <= nb_threads; i++) {
-
 			threads.add(new Thread (new RunFitness<T>(individus, calc_finess)));
-
 
 		}
 
@@ -60,9 +56,7 @@ public class FitnessEval<T> {
 			}
 		}
 
-
 		return individus;
-
 
 	}
 }
