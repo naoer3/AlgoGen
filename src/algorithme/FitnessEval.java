@@ -29,7 +29,7 @@ public class FitnessEval<T> {
 	}
 
 	
-	/*/**
+	/**
 	 * Evalue la fitness d'un individu avec la fonction d'evaluation
 	 * @param individu Individu a évaluer
 	 */

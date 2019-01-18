@@ -23,10 +23,8 @@ public class CritereEvolutionIndividu<T extends Comparable<T>> extends CritereAr
 		else
 			nbSameBest = 1;
 		
-		if(nbSameBest>=critere) 
-			return false;
-		else 
-			return true;
+		if(nbSameBest>=critere) return false;
+		else return true;
 	}
 
 }

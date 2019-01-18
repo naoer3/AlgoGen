@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  */
 public class Algorithme<T extends Comparable<T>> {
 
-	/***
+	/**
 	 * Declarations des variables globales
 	 * parents: Liste des individus selectionnes par l'agorithme
 	 * enfants: Liste d'individus enfants suite a l'application des croisements sur les parents
@@ -38,7 +38,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * fct_crea_individu: Fonction permettant la creation d'un individu (fournit par le client)
 	 * fct_eval_individu: Fonction permettant l'evaluation d'un individu (fournit par le client)
 	 * fct_mutation: Fontion permettant la mutation d'un individu (fournit par le client)
-	 */
+	 **/
 	private List<Individu<T>> parents = new ArrayList<>();
 	private List<Individu<T>> enfants = new ArrayList<>();
 	private List<Individu<T>> population_mutee = new ArrayList<>();
@@ -54,7 +54,7 @@ public class Algorithme<T extends Comparable<T>> {
 	private CritereArretMethode<T> critere_duree;
 	private CritereArretMethode<T> critere_individu;
 	private CritereArretMethode<T> critere_population;
-	private CritereArretMethode<T> critere_ireration;
+	private CritereArretMethode<T> critere_iteration;
 
 	private int taille_pop;
 	private int nb_selection_parent;
@@ -86,7 +86,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param fct_crea: Fonction de crï¿½ation d'un individu
 	 * @param fct_eval: Fonction de d'ï¿½valuation d'un individu
 	 */
-	// TODO design pattern facade (ï¿½ noter)
+	
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -101,30 +101,36 @@ public class Algorithme<T extends Comparable<T>> {
 	/***
 	 * Methode LancerAlgorithme qui contient l'appel des methoes necessaire au traitement genetique d'une population
 	 */
-	public void LancerAlgorithme()
+	public List<T> LancerAlgorithme()
 	{
+		boolean add_critere_duree = false;
+		boolean add_critere_iteration = false;
+		boolean add_critere_population = false;
+		boolean add_critere_individu = false;
+		
 		try {
 
-			if(duree<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Duree must be greater than zero: " + duree);
-			if(x_iterations_algo<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Nb_iterations must be greater than zero: " + x_iterations_algo);
-			if(x_stagnation_population<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Stagnation_population must be greater than zero: " + x_stagnation_population);
-			if(x_stagnation_individu<=0 && !(critere_duree==null))
-				throw new IllegalArgumentException("Stagnation_individu must be greater than zero: " + x_stagnation_individu);
-
-			boolean continu_algorithme=false;
+			if(duree < 0) throw new IllegalArgumentException("Duree must be greater than zero: " + duree);			
+			else if(duree > 0)add_critere_duree = true;
+			if(x_iterations_algo < 0) throw new IllegalArgumentException("Nb_iterations must be greater than zero: " + x_iterations_algo);
+			else if(x_iterations_algo > 0) add_critere_iteration = true;
+			if(x_stagnation_population < 0) throw new IllegalArgumentException("Stagnation_population must be greater than zero: " + x_stagnation_population);
+			else if(x_stagnation_population > 0) add_critere_population = true;
+			if(x_stagnation_individu < 0) throw new IllegalArgumentException("Stagnation_individu must be greater than zero: " + x_stagnation_individu);
+			else if(x_stagnation_individu > 0) add_critere_individu = true;
+			
+			this.SelectCritere(add_critere_duree, add_critere_iteration, add_critere_population, add_critere_individu);
+			
+			boolean continu_algorithme=true;
+			
 			population = new Population<T>(taille_pop, fct_crea_individu);
 			croisement = new Croisement<T>(fct_crea_individu);
 			mutation = new Mutation<T>(fct_mutation, prob_mutation);
 			fitnessEval = new FitnessEval<T>(fct_eval_individu);
 
-			// TODO il manque une strategie
 			try {
 				switch(type_selection_parent) {
 				case 0:
-					// TODO Donner nb_enfants 
 					selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
 					break;
 				case 1:
@@ -158,53 +164,36 @@ public class Algorithme<T extends Comparable<T>> {
 			}
 
 			do{
-				//System.out.println( "Population : " + population.toString());
-
-				System.out.println("##################Debut evaluation#######################");
+				//On attribue une fitness à chaque individu de la population
 				fitnessEval.EvaluatePopulation(population.getPopulation());
-				System.out.println("##################Debut evaluation#######################");
-
-
-				//System.out.println( "Population : " + population.toString());
+				//On sélectionne les parents 
 				parents = selection_parent.methodeSelection(population);
-
-				//System.out.println( "parents : " + parents.toString());
+				//Avec ces parents, on crée des enfants
 				enfants = croisement.CrossoverPopulation(parents);
-
-				//System.out.println( "enfants taille : " + enfants.size());
-				//System.out.println( "enfants : " + enfants);
+				//On ajoute les enfants à la population existante
 				population.AjoutIndividus(enfants);	
-				//System.out.println( "Population : " + population.toString());
+				//On mute les individus de la population
 				population_mutee = mutation.doMutation(population.getPopulation());
-				//System.out.println("population_mutee "+population_mutee.toString() );
+				//On change la population pour qu'elle prenne en compte les individus mutes
 				population.setPopulation(population_mutee);
-
+				//On réevalue la population
 				fitnessEval.EvaluatePopulation(population.getPopulation());
-
-
-				//population.EvaluatePopulation();			
+				//On sélectionne les individus de notre population finale
 				selection_population.methodeSelection(population);
-				//System.out.println("Nouvelle generation : " + population.getCurrent_generation());
-				//System.out.println(population.toString());
+				//On incrémente de 1 le nombre de génération de notre population
 				population.NewGeneration();
 
-
 				for(CritereArretMethode<T> c : criteres) {
-					if(criteres.isEmpty())//TODO : ne fonctionne visiblement pas
-						throw new IllegalArgumentException("You must select a stop condition");
-
-					if(c.getEtat(population))
-						continu_algorithme=true;
-					else {continu_algorithme=false;}
+					if(criteres.isEmpty()) throw new IllegalArgumentException("You must select a stop condition");
+					if(!c.getEtat(population)) continu_algorithme=false;
 				}
 			}while(continu_algorithme);
-
-			System.out.println("Arret");
-			System.out.println("Best individu : "+population.getBest());
 			
 		}catch(IllegalArgumentException e) {
 			System.out.println(e.getMessage().toString());
 		}
+		
+		return population.getBest().getGenes();
 	}
 
 	public void SelectCritere(boolean ajout_duree, boolean ajout_iterations, boolean ajout_evolution_pop, boolean ajout_evolutions_idividu) {
@@ -213,8 +202,8 @@ public class Algorithme<T extends Comparable<T>> {
 			criteres.add(critere_duree);
 		}
 		if(ajout_iterations) {
-			critere_ireration=new CritereIteration<T>(x_iterations_algo);
-			criteres.add(critere_ireration);
+			critere_iteration=new CritereIteration<T>(x_iterations_algo);
+			criteres.add(critere_iteration);
 		}
 		if(ajout_evolution_pop) {
 			critere_population=new CritereEvolutionPopulation<T>(x_stagnation_population);
