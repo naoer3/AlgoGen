@@ -38,7 +38,6 @@ public class Croisement<T> {
 		List<Individu<T>> enfants = new ArrayList<Individu<T>>();
 		int nbParents = selection.size();
 		Random rand = new Random();
-		// TODO gerer pas prendre le meme parent
 		for (int i = 0; i <nbParents-1; i++) {
 			parent1 = selection.get(rand.nextInt(nbParents));
 			parent2 = selection.get(rand.nextInt(nbParents));

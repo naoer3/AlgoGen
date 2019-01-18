@@ -28,7 +28,7 @@ public class Algorithme<T extends Comparable<T>> {
 	 * taille_pop: Taille de la population fournie par le client
 	 * taille_tournoi: Taille permettant l'application de la methode tournoi sur la population
 	 * type_selection_parent: Type de selection des parents sur la population (fournit par le client)
-	 * type_selection_population: Type de selection de la nouvelle population sur la population mutÃ©e (fournit par le client)
+	 * type_selection_population: Type de selection de la nouvelle population sur la population mutÃƒÂ©e (fournit par le client)
 	 * prob_mutation: Pourcentage de mutation par defaut de l'algorithme (ici: 3 si non fournit par le client)
 	 * x_iterations_algo: Nombre d'iterations effectuees par l'algorithme (critere d'arret fournit ou non par le client)
 	 * x_stagnation_population: Nombre d'iterations pour lesquelles la population n'evolue pas (critere d'arret fournit ou non par le client)
@@ -61,9 +61,9 @@ public class Algorithme<T extends Comparable<T>> {
 	private int nb_selection_population;
 	private int taille_tournoi;
 
-	private int type_selection_parent;	//0,1 fournit par l'utilisateur
-	private int type_selection_population; //0,1 fournit par l'utilisateur
-	private double prob_mutation = 3; // defaut
+	private int type_selection_parent;
+	private int type_selection_population;
+	private double prob_mutation = 3;
 	private int x_iterations_algo;
 	private int x_stagnation_population;
 	private int x_stagnation_individu;
@@ -82,11 +82,11 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param select_parent: Mode de selection des parents
 	 * @param select_pop: Mode de selection de la population
 	 * @param prob_mut: Pourcentage de mutation
-	 * @param nb_enfants: Nombre d'enfants souhaitï¿½s
-	 * @param fct_crea: Fonction de crï¿½ation d'un individu
-	 * @param fct_eval: Fonction de d'ï¿½valuation d'un individu
+	 * @param nb_enfants: Nombre d'enfants souhaites
+	 * @param fct_crea: Fonction de creation d'un individu
+	 * @param fct_eval: Fonction de d'evaluation d'un individu
 	 */
-	
+
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -118,7 +118,13 @@ public class Algorithme<T extends Comparable<T>> {
 			else if(x_stagnation_population > 0) add_critere_population = true;
 			if(x_stagnation_individu < 0) throw new IllegalArgumentException("Stagnation_individu must be greater than zero: " + x_stagnation_individu);
 			else if(x_stagnation_individu > 0) add_critere_individu = true;
-			
+      if(taille_tournoi<=2 && type_selection_parent==2)
+				throw new IllegalArgumentException("Taille du tournoi doit etre superieur a  2: " + taille_tournoi);
+			if(nb_enfants<=taille_pop)
+				throw new IllegalArgumentException("Le nombre d'enfant doit inferieur a la taille de la population: " + nb_enfants);
+			if(taille_pop<=0)
+				throw new IllegalArgumentException("Taille popopulation doit etre superieur a zero: " + taille_pop);
+      
 			this.SelectCritere(add_critere_duree, add_critere_iteration, add_critere_population, add_critere_individu);
 			
 			boolean continu_algorithme=true;
@@ -164,23 +170,24 @@ public class Algorithme<T extends Comparable<T>> {
 			}
 
 			do{
-				//On attribue une fitness à chaque individu de la population
+
+				//On attribue une fitness Ã  chaque individu de la population
 				fitnessEval.EvaluatePopulation(population.getPopulation());
-				//On sélectionne les parents 
+				//On sÃ©lectionne les parents 
 				parents = selection_parent.methodeSelection(population);
-				//Avec ces parents, on crée des enfants
+				//Avec ces parents, on crÃ©e des enfants
 				enfants = croisement.CrossoverPopulation(parents);
-				//On ajoute les enfants à la population existante
+				//On ajoute les enfants Ã  la population existante
 				population.AjoutIndividus(enfants);	
 				//On mute les individus de la population
 				population_mutee = mutation.doMutation(population.getPopulation());
 				//On change la population pour qu'elle prenne en compte les individus mutes
 				population.setPopulation(population_mutee);
-				//On réevalue la population
+				//On rÃ©evalue la population
 				fitnessEval.EvaluatePopulation(population.getPopulation());
-				//On sélectionne les individus de notre population finale
+				//On sÃ©lectionne les individus de notre population finale
 				selection_population.methodeSelection(population);
-				//On incrémente de 1 le nombre de génération de notre population
+				//On incrÃ©mente de 1 le nombre de gÃ©nÃ©ration de notre population
 				population.NewGeneration();
 
 				for(CritereArretMethode<T> c : criteres) {
