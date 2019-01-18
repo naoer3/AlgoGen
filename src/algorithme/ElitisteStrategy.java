@@ -57,36 +57,36 @@ public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<
 		return list_select;
 	}
 	
-		/**
-		 * Getter de la variable nb_individu
-		 * @return le nombre d'individus selectionnes
-		 */
-		public int getNb_individu() {
-			return nb_individu;
-		}
+	/**
+	 * Getter de la variable nb_individu
+	 * @return le nombre d'individus selectionnes
+	 */
+	public int getNb_individu() {
+		return nb_individu;
+	}
 
-		/**
-		 * Setter sur le nombre d'individus selectionnes
-		 * @param nb_individu
-		 */
-		public void setNb_individu(int nb_individu) {
-			this.nb_individu = nb_individu;
-		}
-		
-		/**
-		 * Getter de la variable keep_best
-		 * @return un booleen pour savoir si l'on conserve le meilleur individu ou non 
-		 */
-		public boolean isKeep_best() {
-			return keep_best;
-		}
+	/**
+	 * Setter sur le nombre d'individus selectionnes
+	 * @param nb_individu
+	 */
+	public void setNb_individu(int nb_individu) {
+		this.nb_individu = nb_individu;
+	}
+	
+	/**
+	 * Getter de la variable keep_best
+	 * @return un booleen pour savoir si l'on conserve le meilleur individu ou non 
+	 */
+	public boolean isKeep_best() {
+		return keep_best;
+	}
 
-		/**
-		 * Setter sur le booleen permettant de conserver le meilleur individu ou non
-		 * @param keep_best
-		 */
-		public void setKeep_best(boolean keep_best) {
-			this.keep_best = keep_best;
-		}
+	/**
+	 * Setter sur le booleen permettant de conserver le meilleur individu ou non
+	 * @param keep_best
+	 */
+	public void setKeep_best(boolean keep_best) {
+		this.keep_best = keep_best;
+	}
 
 }

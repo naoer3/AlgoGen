@@ -37,10 +37,10 @@ public class Main {
 		};		
 		
 		algo.setDuree(30);
-		algo.setX_iterations(1000);
+		algo.setX_iterations(100);
 		//algo.setX_non_evolution_pop(500);
 		//algo.setX_non_evolutions_idividu(80);
-		algo.setTaille_pop(200);
+		algo.setTaille_pop(100);
 		algo.setProb_Mutation(3);
 		algo.setNb_enfants(20);
 		algo.setFct_crea_individu(CreateIndividu);

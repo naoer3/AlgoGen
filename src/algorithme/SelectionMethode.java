@@ -11,7 +11,11 @@ import java.util.List;
  */
 public abstract class SelectionMethode<T extends Comparable<T>> {
 	
+	/**
+	 * Nombre d'individus a selectionner dans la population
+	 */
 	protected int nb_individu;
+	
 	/***
 	 * Signature de la methode methodeSelection utilisee dans les classes derivees
 	 * @param p

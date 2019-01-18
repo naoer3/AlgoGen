@@ -23,7 +23,10 @@ public class Individu<T> {
 	 */
 	public Individu() {}
 	
-	
+	/**
+	 * Constructeur de la classe Individu
+	 * @param genes
+	 */
 	public Individu(List<T> genes){
 		this.genes = genes;
 	}
@@ -95,20 +98,4 @@ public class Individu<T> {
 	public T getGene(int index){
 		return this.genes.get(index);
 	}
-
-	/***
-	 * Methode toString
-	 */
-	public String toString() {
-		String str ="";
-		System.out.println(genes);
-		for (T t : genes) {
-			str += t.toString();
-			str += " ";
-		}
-		if(this.fitness != null)
-			str+=" => " + this.fitness.toString();
-		return str;		
-	}
-
 }
