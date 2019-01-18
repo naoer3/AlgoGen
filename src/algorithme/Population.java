@@ -12,41 +12,26 @@ import java.util.function.Supplier;
  * @see Individu
  */
 public class Population<T extends Comparable<T>>{
-		
-	/// Attributs
 	
 	/**
-	 * Constructeur d'un nouvel individu
+	 * Declaration des variables globales
+	 * constructeur_indiv: Fonction permettant de creer des individus
+	 * fct_eval: Fonction permettant d'evaluer des individus
+	 * population: Population mere
+	 * taillePop: Taille de cette population mere
+	 * current_generation: Generation actuelle
 	 */
 	private Supplier<Individu<T>> constructeur_indiv = null;
 	
 	/**
-	 * Fonction a evaluer dans l'algorithme
-	 */
-	private Function<Individu<T>,T> fct_eval = null;
-	
-	/**
 	 * Liste d'individus qui forme la population
 	 */
+
 	private List<Individu<T>> population = null;
-	
-	/**
-	 * Taille souhaitee de la population
-	 */
 	private int taillePop = 0;
-	
-	/**
-	 * Numero de la generation en cours
-	 */
 	private int current_generation = 0;
-	
-	/**
-	 * Meilleur individu de la population
-	 */
-	private Individu<T> bestIndividu = new Individu<>();
-	
-	//Constructeur
-	
+	private Individu<T>bestIndividu=null;
+
 	/**
 	 * Constructeur de la classe
 	 * Initialise une population
@@ -54,10 +39,9 @@ public class Population<T extends Comparable<T>>{
 	 * @param fct Fonction creant de nouveaux individus
 	 * @param eval Fonction d'evaluation de l'algorithme
 	 */
-	public Population(int taille, Supplier<Individu<T>> fct, Function<Individu<T>,T> eval) {
+	public Population(int taille, Supplier<Individu<T>> fct) {
 		this.taillePop = taille;
 		this.constructeur_indiv = fct;
-		this.fct_eval = eval;
 		
 		this.population = new ArrayList<>();
 		
@@ -72,7 +56,7 @@ public class Population<T extends Comparable<T>>{
 	/**
 	 * Evalue la fitness de toute la population
 	 * @see Evaluate
-	 */
+   **/
 	public void EvaluatePopulation() {
 		for(Individu<T> individu : this.population) {
 			this.Evaluate(individu);
@@ -80,15 +64,15 @@ public class Population<T extends Comparable<T>>{
 	}
 	
 	/**
-	 * Evalue la fitness d'un individu donne
+	 * Methode Evaluate: Evalue le score d'un individu donne
 	 * @param individu
 	 */
 	public void Evaluate(Individu<T> individu) {
 		individu.setFitness(fct_eval.apply(individu));
-	}	
+  }
 	
 	/**
-	 * Ajoute une liste d'individus a la population existante
+	 * Methode AjutIndividu: Ajoute une liste d'individus a la population existante
 	 * @param liste_individus
 	 */
 	public void AjoutIndividus(List<Individu<T>> liste_individus) {
@@ -96,7 +80,7 @@ public class Population<T extends Comparable<T>>{
 	}
 	
 	/**
-	 * Incremente le numero de la generation courrante
+	 * Methode NewGeneration: Incremente le numero de la generation courrante
 	 */
 	public void NewGeneration() {
 		current_generation++;
@@ -110,51 +94,49 @@ public class Population<T extends Comparable<T>>{
 		bestIndividu = this.population.get(0);
 	}
 	
-	/**
-	 * Retourne l'individu avec la meilleure fitness
+	/***
+	 * Getter de la variable fitness
 	 * @return le meilleur individu de la population
 	 */
 	public Individu<T> getBest() {
 		return bestIndividu;
 	}
 	
-	/// Getter et Setter
-	
-	/**
-	 * Getter de l'attribut population qui definit tous les individus de notre population
-	 * @return population
+	/***
+	 * Getter de la variable population
+	 * @return tous les individus de la population
 	 */
 	public List<Individu<T>> getPopulation() {
 		return population;
 	}
 	
-	/**
-	 * Setter de l'attribut population
+	/***
+	 * Setter sur les individus de la population
 	 * @param new_population
 	 */
 	public void setPopulation(List<Individu<T>> new_population) {
 		this.population = new_population;
 	}
 	
-	/**
-	 * Getter de la taille de la population actuelle
-	 * @return population.size()
+	/***
+	 * Getter de la taille de la population
+	 * @return la taille de la population actuelle
 	 */
 	public int getNbIndividu() {
 		return population.size();
 	}
 	
-	/**
-	 * Getter de l'attribut taillePop qui decrit la taille de la population souhaitee
-	 * @return taillePop
+	/***
+	 * Getter de la variable taillePop
+	 * @return la taille de la population souhaitee
 	 */
 	public int getTaillePop() {
 		return taillePop;
 	}
 	
-	/**
-	 * Getter de l'attribut current_generation qui decrit le numero de generation en cours
-	 * @return current_generation
+	/***
+	 * Getter de la variable current_generation
+	 * @return le numero de generation en cours
 	 */
 	public int getCurrent_generation() {
 		return current_generation;

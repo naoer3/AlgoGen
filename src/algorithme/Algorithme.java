@@ -41,21 +41,26 @@ public class Algorithme<T extends Comparable<T>> {
 	private List<Individu<T>> parents = new ArrayList<>();
 	private List<Individu<T>> enfants = new ArrayList<>();
 	private List<Individu<T>> population_mutee = new ArrayList<>();
+	private List<CritereArretMethode<T>> criteres = new ArrayList<>();
 	private Population<T> population;
 
 	private SelectionMethode<T> selection_parent;
 	private SelectionMethode<T> selection_population;
 	private Croisement<T> croisement;
 	private Mutation<T> mutation;
-	private CritereArret<T> critere_arret;
+
+	private CritereArretMethode<T> critere_duree;
+	private CritereArretMethode<T> critere_individu;
+	private CritereArretMethode<T> critere_population;
+	private CritereArretMethode<T> critere_ireration;
 
 	private int taille_pop;
 	private int nb_selection_parent;
 	private int nb_selection_population;
 	private int taille_tournoi;
 
-	private int type_selection_parent;	//0 ou 1 fournit par l'utilisateur
-	private int type_selection_population; //0 ou 1 fournit par l'utilisateur
+	private int type_selection_parent;	//0,1 fournit par l'utilisateur
+	private int type_selection_population; //0,1 fournit par l'utilisateur
 	private double prob_mutation = 3; // defaut
 	private int x_iterations_algo;
 	private int x_stagnation_population;
@@ -75,11 +80,11 @@ public class Algorithme<T extends Comparable<T>> {
 	 * @param select_parent: Mode de selection des parents
 	 * @param select_pop: Mode de selection de la population
 	 * @param prob_mut: Pourcentage de mutation
-	 * @param nb_enfants: Nombre d'enfants souhaites
-	 * @param fct_crea: Fonction de creation d'un individu
-	 * @param fct_eval: Fonction de d'evaluation d'un individu
+	 * @param nb_enfants: Nombre d'enfants souhait�s
+	 * @param fct_crea: Fonction de cr�ation d'un individu
+	 * @param fct_eval: Fonction de d'�valuation d'un individu
 	 */
-  // TODO design pattern monteur
+	// TODO design pattern facade (� noter)
 	public Algorithme(int taille, int select_parent, int select_pop, double prob_mut,
 			int nb_enfants, Supplier<Individu<T>> fct_crea, Function<Individu<T>,T> fct_eval) {
 		this.taille_pop = taille;
@@ -90,26 +95,32 @@ public class Algorithme<T extends Comparable<T>> {
 		this.fct_crea_individu = fct_crea;
 		this.fct_eval_individu = fct_eval;
 	}
-	
+
 	/***
-	 * Methode LancerAlgorithme qui contient l'appel des methodes necessaire au traitement genetique d'une population
+	 * Methode LancerAlgorithme qui contient l'appel des methoes necessaire au traitement genetique d'une population
 	 */
 	public void LancerAlgorithme()
 	{
-		population = new Population<T>(taille_pop, fct_crea_individu, fct_eval_individu);
+    		boolean continu_algorithme=false;
+		population = new Population<T>(taille_pop, fct_crea_individu);
 		croisement = new Croisement<T>(fct_crea_individu);
 		mutation = new Mutation<T>(fct_mutation, prob_mutation);
-		critere_arret = new CritereArret<T>(duree, x_iterations_algo, x_stagnation_population, x_stagnation_individu);
+		fitnessEval = new FitnessEval<T>(fct_eval_individu);
+		
 		// TODO il manque une strategie
 		try {
 			switch(type_selection_parent) {
-				case 0:
-					selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
-				case 1:
-					selection_parent = new ElitisteStrategy<T>(nb_selection_parent, false);
-				case 2:
-					selection_parent = new TournoiStrategy<T>(nb_selection_parent,taille_tournoi);
-				default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
+			case 0:
+				// TODO Donner nb_enfants 
+				selection_parent = new LoterieStrategy<T>(nb_selection_parent, false);
+				break;
+			case 1:
+				selection_parent = new ElitisteStrategy<T>(nb_selection_parent, false);
+				break;
+			case 2:
+				selection_parent = new TournoiStrategy<T>(nb_selection_parent,taille_tournoi);
+				break;
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1.
 			}		
 		}
 		catch(Exception ex) {
@@ -118,11 +129,13 @@ public class Algorithme<T extends Comparable<T>> {
 
 		try {
 			switch(type_selection_population) {
-				case 0:
-					selection_population = new LoterieStrategy<T>(nb_selection_population, true);
-				case 1:
-					selection_population = new ElitisteStrategy<T>(nb_selection_population, true);
-				default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
+			case 0:
+				selection_population = new LoterieStrategy<T>(nb_selection_population, true);
+				break;
+			case 1:
+				selection_population = new ElitisteStrategy<T>(nb_selection_population, true);
+				break;
+			default: // TODO: Generer Exception si autre type_selection que 0 ou 1. 
 			}
 		}
 		catch(Exception ex) {
@@ -131,11 +144,18 @@ public class Algorithme<T extends Comparable<T>> {
 
 		do{
 			//System.out.println( "Population : " + population.toString());
-			population.EvaluatePopulation();
+			
+			System.out.println("##################Debut evaluation#######################");
+			fitnessEval.EvaluatePopulation(population.getPopulation());
+			System.out.println("##################Debut evaluation#######################");
+
+
 			//System.out.println( "Population : " + population.toString());
 			parents = selection_parent.methodeSelection(population);
+
 			//System.out.println( "parents : " + parents.toString());
 			enfants = croisement.CrossoverPopulation(parents);
+
 			//System.out.println( "enfants taille : " + enfants.size());
 			//System.out.println( "enfants : " + enfants);
 			population.AjoutIndividus(enfants);	
@@ -143,16 +163,44 @@ public class Algorithme<T extends Comparable<T>> {
 			population_mutee = mutation.doMutation(population.getPopulation());
 			//System.out.println("population_mutee "+population_mutee.toString() );
 			population.setPopulation(population_mutee);
-			population.EvaluatePopulation();			
+
+			fitnessEval.EvaluatePopulation(population.getPopulation());
+
+
+			//population.EvaluatePopulation();			
 			selection_population.methodeSelection(population);
 			//System.out.println("Nouvelle generation : " + population.getCurrent_generation());
 			//System.out.println(population.toString());
 			population.NewGeneration();
-			// TODO observer ?
-		}while(critere_arret.getEtat(population));
+
+			
+			for(CritereArretMethode<T> c : criteres) {
+				if(c.getEtat(population))
+					continu_algorithme=true;
+			}
+		}while(continu_algorithme);
 	
 		System.out.println("Arret");
 		System.out.println("Best individu : "+population.getBest());
+	}
+	
+	public void SelectCritere(boolean ajout_duree, boolean ajout_iterations, boolean ajout_evolution_pop, boolean ajout_evolutions_idividu) {
+		if(ajout_duree) {
+			critere_duree=new CritereDuree<T>(duree);
+			criteres.add(critere_duree);
+		}
+		if(ajout_iterations) {
+			critere_ireration=new CritereIteration<T>(x_iterations_algo);
+			criteres.add(critere_ireration);
+		}
+		if(ajout_evolution_pop) {
+			critere_population=new CritereEvolutionPopulation<T>(x_stagnation_population);
+			criteres.add(critere_population);
+		}
+		if(ajout_evolutions_idividu) {
+			critere_individu=new CritereEvolutionIndividu<T>(x_stagnation_individu);
+			criteres.add(critere_individu);
+		}
 	}
 
 	/***
@@ -235,7 +283,7 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setFct_crea_individu(Supplier<Individu<T>> fct_crea_individu) {
 		this.fct_crea_individu = fct_crea_individu;
 	}
-	
+
 	/***
 	 * Getter de la variable Fct_mutation_individu
 	 * @return une fonction permettant la mutation d'un individu
@@ -251,7 +299,7 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setFct_mutation_individu(Function<Individu<T>, Individu<T>> fct_mutation) {
 		this.fct_mutation = fct_mutation;
 	}
-	
+
 	/***
 	 * Getter de la variable Fct_eval_individu
 	 * @return une fonction permettant l'evaluation d'un individu
@@ -267,6 +315,7 @@ public class Algorithme<T extends Comparable<T>> {
 	public void setFct_eval_individu(Function<Individu<T>, T> fct_eval_individu) {
 		this.fct_eval_individu = fct_eval_individu;
 	}
+
 	
 	/***
 	 * Getter de la variable x_iterations_algo
@@ -396,4 +445,3 @@ public class Algorithme<T extends Comparable<T>> {
 		this.nb_selection_population = nb_selection_population;
 	}
 }
-

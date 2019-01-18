@@ -10,14 +10,12 @@ import java.util.function.Function;
  */
 public class Mutation<T> {
 	
-	/**
-	 * Fonction decrivant la facon dont l'individu mute
+	/***
+	 * Declaration des variables globales
+	 * fct_mutation: Fonction permettant de muter un individu
+	 * prob_mutation: Pourcentage de la population selectionne pour les mutations
 	 */
 	private Function<Individu<T>, Individu<T>> fct_mutation;
-	
-	/**
-	 * Décrit la propabilite d'un individu en pourcentage qu'un individu mute
-	 */
 	private double prob_mutation;
 
 	/**
@@ -30,10 +28,10 @@ public class Mutation<T> {
 		this.prob_mutation=prob_mutation;
 	}
 
-	/**
-	 * Effectue la mutation pour une liste d'individus
-	 * @param individus Liste d'individus de la population
-	 * @return Liste des individus de la population comprenant ce qui ont mute
+	/***
+	 * doMutation: Methode qui permet de muter une liste d'individus
+	 * @param individus
+	 * @return une liste d'individus mutes
 	 */
 	public List<Individu<T>> doMutation(List<Individu<T>> individus)
 	{
@@ -46,10 +44,10 @@ public class Mutation<T> {
 		return individus;
 	}
 	
-	/**
-	 * Effectue la mutation pour un individu en executant fct_mutation
-	 * @param individu Individu a muter
-	 * @return L'individu mute
+	/***
+	 * doIndividuMutation: Methode permettant d'effecter une mutation sur un indidivu particulier
+	 * @param individu
+	 * @return un individu mute
 	 */
 	public Individu<T> doIndividuMutation(Individu<T> individu){
 		return fct_mutation.apply(individu);

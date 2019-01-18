@@ -42,11 +42,11 @@ public class Main {
 		algo.setX_non_evolutions_idividu(30);
 		algo.setTaille_pop(200);
 		algo.setProb_Mutation(3);
-		algo.setNb_enfants(20);
+		algo.setNb_enfants(3);
 		algo.setFct_crea_individu(CreateIndividu);
 		algo.setFct_mutation_individu(Mutation);
 		algo.setFct_eval_individu(Evaluation);
-		algo.setTaille_tournoi(4);
+		//algo.setTaille_tournoi(4);
 		algo.setNb_selection_parent(3);
 		algo.setNb_selection_population(3);
 		algo.setType_selection_parent(1);
