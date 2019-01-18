@@ -3,7 +3,6 @@ package algorithme;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -16,7 +15,6 @@ public class Population<T extends Comparable<T>>{
 	/**
 	 * Declaration des variables globales
 	 * constructeur_indiv: Fonction permettant de creer des individus
-	 * fct_eval: Fonction permettant d'evaluer des individus
 	 * population: Population mere
 	 * taillePop: Taille de cette population mere
 	 * current_generation: Generation actuelle
@@ -26,7 +24,6 @@ public class Population<T extends Comparable<T>>{
 	/**
 	 * Liste d'individus qui forme la population
 	 */
-
 	private List<Individu<T>> population = null;
 	private int taillePop = 0;
 	private int current_generation = 0;
@@ -51,26 +48,6 @@ public class Population<T extends Comparable<T>>{
 		}
 	}
 
-	/// Methodes
-	
-	/**
-	 * Evalue la fitness de toute la population
-	 * @see Evaluate
-   **/
-	public void EvaluatePopulation() {
-		for(Individu<T> individu : this.population) {
-			this.Evaluate(individu);
-		}
-	}
-	
-	/**
-	 * Methode Evaluate: Evalue le score d'un individu donne
-	 * @param individu
-	 */
-	public void Evaluate(Individu<T> individu) {
-		individu.setFitness(fct_eval.apply(individu));
-  }
-	
 	/**
 	 * Methode AjutIndividu: Ajoute une liste d'individus a la population existante
 	 * @param liste_individus
