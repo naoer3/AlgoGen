@@ -9,29 +9,56 @@ import java.util.function.Function;
 
 public class RunFitness<T> implements Runnable {
 
-	List<Individu<T>> individus = new ArrayList<>();
 	/**
-	 * Fonction a  evaluer dans l'algorithme
+	 * liste d'individus a evaluer
+	 */
+	private List<Individu<T>> individus = new ArrayList<>();
+	
+	/**
+	 * Fonction d'evaluation
 	 */
 	private Function<Individu<T>,T> calc_finess = null;
-	
-	private int i;
-	
-	public RunFitness(int i, List<Individu<T>> individus, Function<Individu<T>,T> fct_fitness) {
+
+	/**
+	 * index partage entre les threads
+	 */
+	private static Integer index = 0;
+	/**
+	 * index servant a effectuer des modifications sur un individu specifique
+	 */
+	private int workedIndex;
+
+	/**
+	 * Constructeur de la classe
+	 * Initialise un runnable
+	 * @param individus liste d'individus a evaluer
+	 * @param fct_fitness fonction utile pour l'evaluation
+	 */
+	public RunFitness(List<Individu<T>> individus, Function<Individu<T>,T> fct_fitness) {
 		this.individus = individus;
 		this.calc_finess = fct_fitness;
-		this.i = i;
 	}
-	
+
+	/**
+	 * Permet l'evaluation de chaque individu par les differents threads tant que la liste n'est pas complétement bloquée
+	 */
 	@Override
 	public void run() {
-		synchronized (individus) {
-			for(Individu<T> individu : individus) {
-				this.Evaluate(individu);
+		while(true) {
+			synchronized (index) {
+				this.workedIndex = index.intValue();
+				if(index<individus.size()) 
+					index ++;
+				else
+					break;
 			}
+			Individu<T> individu = individus.get(workedIndex);
+			this.Evaluate(individu);
 		}
+
 	}
-	
+
+
 	/**
 	 * Evalue la fitness d'un individu avec la fonction d'evaluation
 	 * @param individu Individu a évaluer

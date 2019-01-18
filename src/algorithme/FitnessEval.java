@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 
 
+
 /**
  * Classe permettant d'evaluer une population
  * @version 1.0
@@ -18,7 +19,7 @@ public class FitnessEval<T> {
 	 * calc_fitness:
 	 */
 	private Function<Individu<T>,T> calc_finess = null;
-	
+
 	/**
 	 * Constructeur de la classe
 	 * @param fct_finess Fonction d'évaluation de l'algorithme
@@ -26,25 +27,31 @@ public class FitnessEval<T> {
 	public FitnessEval(Function<Individu<T>,T> fct_finess){
 		this.calc_finess = fct_finess;
 	}
+
 	
 	/*/**
 	 * Evalue la fitness d'un individu avec la fonction d'evaluation
-	 * @param individu Individu a evaluer
-	 */	
-	public void EvaluatePopulation(List<Individu<T>> individus) {
+
+	 * @param individu Individu a évaluer
+	 */
+	public List<Individu<T>> EvaluatePopulation(List<Individu<T>> individus) {
+
 
 		int nb_threads = 4;
-		
+
 		List<Thread> threads = new ArrayList<>();
-		
+
 		for (int i = 1; i <= nb_threads; i++) {
-			threads.add(new Thread (new RunFitness<T>(i, individus, calc_finess)));
+
+			threads.add(new Thread (new RunFitness<T>(individus, calc_finess)));
+
+
 		}
 
 		for (Thread thread : threads) {
 			thread.start();
 		}
-		
+
 		for (Thread thread : threads) {
 			try {
 				thread.join();
@@ -52,5 +59,10 @@ public class FitnessEval<T> {
 				e.printStackTrace();
 			}
 		}
+
+
+		return individus;
+
+
 	}
 }
