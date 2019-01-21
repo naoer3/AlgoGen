@@ -23,6 +23,7 @@ public abstract class SelectionMethode<T extends Comparable<T>> {
 	public abstract List<Individu<T>> methodeSelection(Population<T> p);
 	
 	/**
+	 * Getter de l'attribut de nb_individu
 	 * @return the nb_individu
 	 */
 	public int getNb_individu() {
@@ -30,6 +31,7 @@ public abstract class SelectionMethode<T extends Comparable<T>> {
 	}
 
 	/**
+	 * Setter de l'attribut nb_individu
 	 * @param nb_individu the nb_individu to set
 	 */
 	public void setNb_individu(int nb_individu) {

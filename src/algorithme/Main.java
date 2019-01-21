@@ -11,8 +11,6 @@ public class Main {
   
 	public static void main(String[] args) {
 
-		Algorithme<Integer> algo = new Algorithme<>();
-
 		Supplier<Individu<Integer>> CreateIndividu  = ()-> {
 			Random r = new Random();
 			Individu<Integer> individu = new Individu<Integer>() {};
@@ -36,22 +34,15 @@ public class Main {
 			return individu;
 		};		
 		
+		Algorithme<Integer> algo = new Algorithme<>(100,0,1,3,20,CreateIndividu, Evaluation, Mutation);
 		algo.setDuree(30);
 		algo.setX_iterations(100);
 		//algo.setX_non_evolution_pop(500);
 		//algo.setX_non_evolutions_idividu(80);
-		algo.setTaille_pop(100);
-		algo.setProb_Mutation(3);
-		algo.setNb_enfants(20);
-		algo.setFct_crea_individu(CreateIndividu);
-		algo.setFct_mutation_individu(Mutation);
-		algo.setFct_eval_individu(Evaluation);
 		//algo.setTaille_tournoi(4);
-		algo.setNb_selection_parent(3);
-		algo.setNb_selection_population(3);
-		algo.setType_selection_parent(1);
-		algo.setType_selection_population(1);
+		
 		List<Integer> best = algo.LancerAlgorithme();
+		System.out.println(best);
 	}
 }
 

@@ -7,10 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+/**
+ * Classe qui dans un thread évalue un individu
+ * @param <T>
+ */
 public class RunFitness<T> implements Runnable {
 
 	/**
-	 * liste d'individus a evaluer
+	 * Liste d'individus a evaluer
 	 */
 	private List<Individu<T>> individus = new ArrayList<>();
 	
@@ -20,12 +24,12 @@ public class RunFitness<T> implements Runnable {
 	private Function<Individu<T>,T> calc_finess = null;
 
 	/**
-	 * index partage entre les threads
+	 * Index partage entre les threads
 	 */
 	private static Integer index = 0;
 	
 	/**
-	 * index servant a effectuer des modifications sur un individu specifique
+	 * Index servant a effectuer des modifications sur un individu specifique
 	 */
 	private int workedIndex;
 

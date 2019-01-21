@@ -11,11 +11,13 @@ import java.util.List;
 public class Individu<T> {
 
 	/***
-	 * Declaration des variables globales
-	 * genes: Liste contenant les genes de l'individu
-	 * fitness: Contient le score de l'individu
+	 * Liste contenant les genes de l'individu
 	 */
 	private List<T> genes;
+	
+	/**
+	 * Contient le score de l'individu
+	 */
 	private T fitness;
 
 	/***

@@ -13,12 +13,14 @@ import java.util.Random;
  */
 public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 
-	/***
-	 * Declaration des variables globales
-	 * nb_individu: Nombre d'individus selectionnes
-	 * keep_best: Booleen permettant d'indiquer si l'on conserve le meilleur individu ou non
+	/**
+	 * Nombre d'individus selectionnes
 	 */
 	private int nb_individu = 0;
+	
+	/**
+	 * Booleen permettant d'indiquer si l'on conserve le meilleur individu ou non
+	 */
 	private boolean keep_best;
 
 	/***
@@ -34,7 +36,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	
 
 	/**
-	 * methodeSelection: Permet de selectionner un pourcentage de parents aleatoirement dans la population
+	 * Permet de selectionner un pourcentage de parents aleatoirement dans la population
 	 * @param Population
 	 */
 	@Override
@@ -55,7 +57,7 @@ public class LoterieStrategy<T extends Comparable<T>> extends SelectionMethode<T
 		
 		Random rand = new Random(); 
 		for(int index=0 ; index<=taille_liste;index++) {
-			nombreAleatoire = rand.nextInt(taille_population + 1);
+			nombreAleatoire = rand.nextInt(taille_population);
 			list_select.add((Individu<T>)p.getPopulation().get(nombreAleatoire));
 		}
 		return list_select;

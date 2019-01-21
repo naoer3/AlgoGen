@@ -13,13 +13,13 @@ import java.util.function.Supplier;
  */
 public class Croisement<T> {
 	
-	/***
+	/**
 	 * Declaration des variables
 	 * creation_individu: Fonction permettant de creer un individu
 	 */
 	private Supplier<Individu<T>> creation_individu;
 	
-	/***
+	/**
 	 * Constructeur de la classe Croisement
 	 * @param creation_individu
 	 */
@@ -27,8 +27,8 @@ public class Croisement<T> {
 		this.creation_individu = creation_individu;
 	}
 	
-	/***
-	 * CrossoverPopulation: Methode permettant d'effectuer des croisements au sein d'une population
+	/**
+	 * Methode permettant d'effectuer des croisements au sein d'une population
 	 * @param selection
 	 * @return une liste d'enfants
 	 */
@@ -46,8 +46,8 @@ public class Croisement<T> {
 		return enfants;
 	}
 	
-	/***
-	 * Crossover: Methode permettant d'effectuer le croisement de deux parents particuliers
+	/**
+	 * Methode permettant d'effectuer le croisement de deux parents particuliers
 	 * @param1 parent1
 	 * @param2 parent2
 	 * @return un enfant

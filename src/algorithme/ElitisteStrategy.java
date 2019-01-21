@@ -12,12 +12,14 @@ import java.util.List;
  */
 public class ElitisteStrategy<T extends Comparable<T>> extends SelectionMethode<T>{
 
-	/***
-	 * Declaration des variables globales
-	 * nb_individu: Nombre d'individus selectionnes
-	 * keep_best: Booleen permettant d'indiquer si l'on conserve le meilleur individu ou non
+	/**
+	 * Nombre d'individus selectionnes
 	 */
 	private int nb_individu = 0;
+	
+	/**
+	 * Booleen permettant d'indiquer si l'on conserve le meilleur individu ou non
+	 */
 	private boolean keep_best;
  
 	

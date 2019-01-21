@@ -15,8 +15,7 @@ import java.util.function.Function;
 public class FitnessEval<T> {
 	
 	/***
-	 * Declaration des variables globales
-	 * calc_fitness:
+	 * Fonction a eveluer
 	 */
 	private Function<Individu<T>,T> calc_finess = null;
 
