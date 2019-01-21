@@ -13,16 +13,28 @@ import java.util.function.Supplier;
 public class Population<T extends Comparable<T>>{
 	
 	/**
-	 * Declaration des variables globales
-	 * constructeur_indiv: Fonction permettant de creer des individus
-	 * population: Population mere
-	 * taillePop: Taille de cette population mere
-	 * current_generation: Generation actuelle
+	 * Fonction permettant de creer des individus
 	 */
 	private Supplier<Individu<T>> constructeur_indiv = null;
+	
+	/**
+	 * Population qu'on evalue
+	 */
 	private List<Individu<T>> population = null;
+	
+	/**
+	 * Taille de cette population
+	 */
 	private int taillePop = 0;
+	
+	/**
+	 * Numero de la generation actuelle
+	 */
 	private int current_generation = 0;
+	
+	/**
+	 * Individu avec la meilleure fitness
+	 */
 	private Individu<T> bestIndividu=null;
 
 	/**
@@ -45,7 +57,7 @@ public class Population<T extends Comparable<T>>{
 	}
 
 	/**
-	 * Methode AjutIndividu: Ajoute une liste d'individus a la population existante
+	 * Ajoute une liste d'individus a la population existante
 	 * @param liste_individus
 	 */
 	public void AjoutIndividus(List<Individu<T>> liste_individus) {
@@ -53,7 +65,7 @@ public class Population<T extends Comparable<T>>{
 	}
 	
 	/**
-	 * Methode NewGeneration: Incremente le numero de la generation courrante
+	 * Incremente le numero de la generation courrante
 	 */
 	public void NewGeneration() {
 		current_generation++;

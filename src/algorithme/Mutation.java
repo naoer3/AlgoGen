@@ -11,11 +11,13 @@ import java.util.function.Function;
 public class Mutation<T> {
 	
 	/***
-	 * Declaration des variables globales
-	 * fct_mutation: Fonction permettant de muter un individu
-	 * prob_mutation: Pourcentage de la population selectionne pour les mutations
+	 * Fonction permettant de muter un individu
 	 */
 	private Function<Individu<T>, Individu<T>> fct_mutation;
+	
+	/**
+	 * Pourcentage de la population selectionne pour les mutations
+	 */
 	private double prob_mutation;
 
 	/**
@@ -29,7 +31,7 @@ public class Mutation<T> {
 	}
 
 	/***
-	 * doMutation: Methode qui permet de muter une liste d'individus
+	 * Methode qui permet de muter une liste d'individus
 	 * @param individus
 	 * @return une liste d'individus mutes
 	 */
@@ -45,7 +47,7 @@ public class Mutation<T> {
 	}
 	
 	/***
-	 * doIndividuMutation: Methode permettant d'effecter une mutation sur un indidivu particulier
+	 * Methode permettant d'effecter une mutation sur un indidivu particulier
 	 * @param individu
 	 * @return un individu mute
 	 */

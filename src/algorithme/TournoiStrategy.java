@@ -15,11 +15,13 @@ import java.util.Random;
 public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T> {
 
 	/***
-	 * Declaration des variables globales
-	 * nb_individu: Nombre d'individus a selectionner
-	 * taille_tournoi: Taille du tournoi permettant de selectionner les individus
+	 * Nombre d'individus a selectionner
 	 */
 	private int nb_individu = 0;
+	
+	/**
+	 * Taille du tournoi permettant de selectionner les individus
+	 */
 	private int taille_tournoi = 0;
  
 	/**
@@ -34,7 +36,7 @@ public class TournoiStrategy<T extends Comparable<T>> extends SelectionMethode<T
 	}
 	
 	/**
-	 * methodeSelection: Permet de retourner une liste d'individus selectionnes selon l'application
+	 * Permet de retourner une liste d'individus selectionnes selon l'application
 	 * d'un tournoi sur ces derniers. Suivant la taille predefinie, les individus sont compares et les meilleurs sont selectionnes
 	 * @param Population
 	 */
